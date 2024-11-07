@@ -1,0 +1,14 @@
+*********************************************
+*   PACKAGES/DEPENDENCIES FOR DEVELOPMENT   *
+**********************************************
+Django==5.1.2
+Postgresql==16.3
+
+*************Install with pip3/pip*************
+#DATABASE
+psycopg2==2.9.10
+
+#For HTTPS Development server
+django-extensions==3.2.3
+pyOpenSSL==24.2.1
+Werkzeug==3.1.2
