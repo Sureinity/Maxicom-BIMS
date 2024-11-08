@@ -28,6 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = [config('ALLOWED_HOSTS')]
 
+SESSION_EXPIRE_AT_CLOSE = True
+SESSION_COOKIE_AGE = 10
+
+
 
 # Application definition
 
