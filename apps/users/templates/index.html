@@ -26,7 +26,7 @@
   <!--Navbar Area-->
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"> <img src="{% static 'users/assets/logo-bims.png' %}" alt="logo-bims"
+      <a class="navbar-brand" href="#"> <img src="{% static 'users/assets/logo-bims.png' %}" alt="logo-bims"
           style="height: 2em; width: 6em;"></a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -69,37 +69,25 @@
       <div class="col col-lg-5 col-md-12 d-flex justify-content-center align-items-center">
         <div class="card p-4" style="width:35rem;">
           <div class="card-body">
-<<<<<<< HEAD
-            <form>
+            <form action="{% url 'login' %}" method="POST">
+              {% csrf_token %}
               <h4 class="text-center mt-2 mb-5">LOGIN</h2>
                 <div class="mb-4">
                   <label for="username" class="form-label">Username</label>
-                  <input type="text" class="form-control" id="username" required>
+                  <input type="text" class="form-control" id="username" name="username" required>
                 </div>
                 <div class="mb-4">
                   <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="password" required>
-=======
-            <form method=POST action={% url 'login' %}>
-              {% csrf_token %}
-              <h4 class="text-center m-2 mb-4">LOGIN</h2>
-                <div class="mb-4">
-                  <label for="username" class="form-label">Username</label>
-                  <input type="text" class="form-control" id="username" name="username">
-                </div>
-                <div class="mb-4">
-                  <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="password" name="password">
->>>>>>> bce35843b6a204577ce681cab74b5fd8fe918567
+                  <input type="password" class="form-control" id="password" name="password" required>
                 </div>
 
                 <div class="d-grid pt-4">
                   <button type="submit" class="btn uni-btn px-4">Login</button>
                 </div>
                 {% if messages %}
-                  {% for message in messages %}
-                    <div>{{ message }}</div>
-                  {% endfor %}
+                {% for message in messages %}
+                <div>{{ message }}</div>
+                {% endfor %}
                 {% endif %}
                 <div class="signin text-center pt-4">
                   <p>No account yet? <a href="{% url 'signup' %}" style="color: rgb(0, 206, 165);"><strong>Sign up

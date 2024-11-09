@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" data-bs-theme=" " id="htmlPage">
 
@@ -18,14 +19,14 @@
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static 'users/styles.css'%}">
 </head>
 
 <body>
     <!--Navbar Area-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"> <img src="assets/logo-bims.png" alt="logo-bims"
+            <a class="navbar-brand" href="#"> <img src="{% static 'users/assets/logo-bims.png' %}" alt="logo-bims"
                     style="height: 2em; width: 6em;"></a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -67,7 +68,7 @@
                 <div class="col col-lg-6 col-md-12 col-sm-12">
                     <a href="barcodecamera.html" style="text-decoration: none;">
                         <div class="card option-card text-center d-flex align-items-center m-3 p-2">
-                            <img src="assets/scan.png" class="card-img-top m-4" alt="..."
+                            <img src="{% static 'users/assets/scan.png' %}" class="card-img-top m-4" alt="scan barcode"
                                 style="height: 10rem; width: 10rem;">
                             <div class="card-body">
                                 <p class="card-text">Scan the book via barcode</p>
@@ -78,8 +79,8 @@
                 <div class="col col-lg-6 col-md-12 col-sm-12">
                     <a href="barcodeinput.html" style="text-decoration: none;">
                         <div class="card option-card text-center d-flex align-items-center m-3 p-2">
-                            <img src="assets/input.png" class="card-img-top m-4" alt="..."
-                                style="height: 10rem; width: 10rem;">
+                            <img src="{% static 'users/assets/input.png' %}" class="card-img-top m-4"
+                                alt="input barcode" style="height: 10rem; width: 10rem;">
                             <div class="card-body">
                                 <p class="card-text">Input the barcode</p>
                             </div>
@@ -101,6 +102,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-<script src="function.js"></script>
+<script src="{% static 'users/function.js' %}"></script>
 
 </html>

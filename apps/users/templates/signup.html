@@ -19,14 +19,14 @@
     integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="{% static 'users/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'users/styles.css' %}">
 </head>
 
 <body>
   <!--Navbar Area-->
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"> <img src="{% static 'users/assets/logo-bims.png' %}" alt="logo-bims"
+      <a class="navbar-brand" href="#"> <img src="{% static 'users/assets/logo-bims.png' %}" alt="logo-bims"
           style="height: 2em; width: 6em;"></a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -64,86 +64,61 @@
   <div class="container-fluid mt-5 pt-4">
     <div class="row vh-100">
       <div class="col col-lg-7 d-flex justify-content-center align-items-center d-none d-lg-flex">
-          <img src="{% static 'users/assets/image-book.png' %}" alt="book image" class="img-fluid">
+        <img src="{% static 'users/assets/image-book.png' %}" alt="book image" class="img-fluid">
       </div>
       <div class="col col-lg-5 col-md-12 d-flex justify-content-center align-items-center">
         <div class="card" style="width:35rem;">
           <div class="card-body">
-<<<<<<< HEAD
-            <form class="p-4">
+            <form action="{% url 'signup'%}" method="POST" class="p-4">
+              {% csrf_token %}
               <h4 class="text-center mb-5">SIGN UP</h2>
                 <div class="form-content">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-4">
                         <label for="username" class="form-label">First name</label>
-                        <input type="text" class="form-control" id="firstname" required>
+                        <input type="text" class="form-control" id="firstname" name="firstname" required>
                       </div>
+                      {% if form.firstname.errors %}
+                      <div class="mt-2 text-danger">{{ form.firstname.errors }}</div>
+                      {% endif %}
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="username" class="form-label">Last name</label>
-                        <input type="text" class="form-control" id="lastname" required>
+                        <label for="lastname" class="form-label">Last name</label>
+                        <input type="text" class="form-control" id="lasntname" name="lastname" required>
                       </div>
+                      {% if form.lastname.errors %}
+                      <div class="mt-2 text-danger">{{ form.lastname.errors }}</div>
+                      {% endif %}
+
                     </div>
                   </div>
-=======
-            <form method="POST" action="{% url 'signup' %}">
-              {% csrf_token %}
-              <h4 class="text-center m-2">SIGN UP</h2>
-                <div class="mb-4">
-                  <label for="firstname" class="form-label">First name</label>
-                  <input type="text" class="form-control" id="firstname" name="firstname">
->>>>>>> bce35843b6a204577ce681cab74b5fd8fe918567
                 </div>
-                {% if form.firstname.errors %}
-                <div class="mt-2 text-danger">{{ form.firstname.errors }}</div>
-		            {% endif %}
- 
-                <div class="mb-4">
-                  <label for="lastname" class="form-label">Last name</label>
-                  <input type="text" class="form-control" id="lastname" name="lastname">
-                </div>
-                {% if form.lastname.errors %}
-                <div class="mt-2 text-danger">{{ form.firstname.errors }}</div>
-		            {% endif %}
-
                 <div class="mb-4">
                   <label for="username" class="form-label">Username</label>
-<<<<<<< HEAD
-                  <input type="text" class="form-control" id="username" required>
-=======
-                  <input type="text" class="form-control" id="username" name="username">
->>>>>>> bce35843b6a204577ce681cab74b5fd8fe918567
+                  <input type="text" class="form-control" id="username" name="username" required>
                 </div>
                 {% if form.username.errors %}
                 <div class="mt-2 text-danger">{{ form.username.errors }}</div>
-		            {% endif %}
+                {% endif %}
 
                 <div class="mb-4">
-<<<<<<< HEAD
                   <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="password" required>
-                </div>
-                <div class="mb-4">
-                  <label for="password" class="form-label">Confirm Password</label>
-                  <input type="password" class="form-control" id="confirmpassword" required>
-=======
-                  <label for="password1" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="password1" name="password1">
->>>>>>> bce35843b6a204577ce681cab74b5fd8fe918567
+                  <input type="password" class="form-control" id="password" name="password1" required>
                 </div>
                 {% if form.password1.errors %}
                 <div class="mt-2 text-danger">{{ form.password1.errors }}</div>
-		            {% endif %}
+                {% endif %}
 
                 <div class="mb-4">
                   <label for="password2" class="form-label">Confirm Password</label>
                   <input type="password" class="form-control" id="password2" name="password2">
                 </div>
+
                 {% if form.password2.errors %}
                 <div class="mt-2 text-danger">{{ form.password2.errors }}</div>
-		            {% endif %}
+                {% endif %}
 
 
                 <div class="d-grid pt-4">
@@ -151,7 +126,7 @@
                 </div>
 
                 <div class="signin text-center pt-4">
-                    <p>Already had an account? <a href="{% url 'login' %}" style="color: rgb(0, 206, 165);"><strong>Login
+                  <p>Already had an account? <a href="{% url 'login' %}" style="color: rgb(0, 206, 165);"><strong>Login
                         here.</strong></a></p>
                 </div>
 

@@ -22,15 +22,15 @@ def user_login(request):
             login(request, user)
             return redirect('dashboard')
         else:
-            #request.session['form_data'] = {'username': username}
+            request.session['form_data'] = {'username': username}
             messages.error(request, 'Invalid username or password.')
             return redirect('login')
     
     else:
         # Get stored form data if it exists
         pass
-        #form_data = request.session.pop('form_data', None)
-         #username = form_data.get('username', '') if form_data else ''
+        form_data = request.session.pop('form_data', None)
+        username = form_data.get('username', '') if form_data else ''
         
     return render(request, 'index.html')
 
@@ -43,6 +43,7 @@ def signup(request):
             user.save()
             return redirect('login')
         else:
+            print("error")
             request.session['form_data'] = request.POST
             return redirect('signup')
     else:
@@ -55,6 +56,7 @@ def signup(request):
     context = {
         "form": form
     }
+
     return render(request, "signup.html", context)
 
 def dashboard(request):
@@ -62,4 +64,4 @@ def dashboard(request):
         pass
     else:
         return redirect("login")
-    return render(request, "dashboard.html")
+    return render(request, "mainpage.html")
