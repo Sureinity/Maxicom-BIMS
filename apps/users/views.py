@@ -2,12 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.views.decorators.cache import never_cache
 
 from  django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.decorators import login_required
+from .decorators import redirect_dashboard_if_loggedin
 # Create your views here.
 
+@never_cache
 def user_login(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
@@ -59,9 +62,11 @@ def signup(request):
 
     return render(request, "signup.html", context)
 
+@redirect_dashboard_if_loggedin
 def dashboard(request):
-    if request.user.is_authenticated:
-        pass
-    else:
-        return redirect("login")
     return render(request, "mainpage.html")
+
+@redirect_dashboard_if_loggedin
+def barcode_scan(request):
+    return render(request, "barcode_scanner.html")
+    

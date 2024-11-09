@@ -12,3 +12,6 @@ psycopg2==2.9.10
 django-extensions==3.2.3
 pyOpenSSL==24.2.1
 Werkzeug==3.1.2
+
+NOTE: To run the server in HTTPS, run this following command:
+./manage.py runserver_plus --cert-file cert.crt 0.0.0.0:8000

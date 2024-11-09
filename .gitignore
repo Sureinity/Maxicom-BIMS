@@ -1,4 +1,6 @@
 .env
+cert.crt
+cert.key
 
 ### Django ###
 *.log
