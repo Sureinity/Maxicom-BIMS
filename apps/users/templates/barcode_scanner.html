@@ -79,7 +79,7 @@
         <div class="scanner-laser"></div>
     </div>
     <div id="result"></div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
     <script>
         Quagga.init({
@@ -95,7 +95,7 @@
                 },
             },
             decoder: {
-                readers: ["code_39_reader"],
+                readers: ["code_39_reader", "ean_reader", "ean_8_reader", "upc_reader", "code_128_reader"],
                 debug: {
                     drawBoundingBox: true,
                     showPattern: true
@@ -113,12 +113,46 @@
 
         Quagga.onDetected(function(result) {
             var code = result.codeResult.code;
-            document.getElementById('result').textContent = "Barcode: " + code;
-            // Optional: Add vibration feedback
-            if ("vibrate" in navigator) {
-                navigator.vibrate(200);
-            }
+            sendBarcodeToServer(code)
         });
+
+        function sendBarcodeToServer(barcode) {
+            // Get CSRF token
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            fetch("/scan/process-barcode/", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken
+                },
+                body: 'barcode=' + encodeURIComponent(barcode)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Server response:', data); // Debug log
+                if (data.success) {
+                    document.getElementById('result').textContent = data.message;
+                    console.log('Redirecting to:', data.redirect_url); // Debug log
+                    setTimeout(() => {
+                        window.location.href = data.redirect_url;
+                    }, 1000);
+                } else {
+                    document.getElementById('result').textContent = data.message || 'Error processing barcode';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').textContent = 'Error processing barcode';
+            });
+        }
     </script>
+
+{% csrf_token %}
 </body>
 </html>

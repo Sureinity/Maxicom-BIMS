@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -69,4 +71,29 @@ def dashboard(request):
 @redirect_dashboard_if_loggedin
 def barcode_scan(request):
     return render(request, "barcode_scanner.html")
+
+@redirect_dashboard_if_loggedin
+def process_barcode(request):
+    if request.method == "POST":
+        barcode = request.POST.get('barcode')
+        print(f"Received barcode: {barcode}")
+        
+        redirect_url = reverse('barcode_input')
+        print(f"Redirect URL: {redirect_url}")
+
+        request.session["scanned_barcode"] = barcode
+        
+        return JsonResponse({
+            'success': True,
+            'message': f'Barcode processed: {barcode}',
+            'redirect_url': redirect_url
+        })
+    return JsonResponse({
+        'success': False,
+        'message': 'Invalid request method'
+    })
+
+@redirect_dashboard_if_loggedin
+def barcode_input(request):
+    return render(request, "barcode_input.html")
     

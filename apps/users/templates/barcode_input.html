@@ -1,0 +1,44 @@
+
+<!-- ----------------------------------------------------- -->
+            <!-- TESTING PAGE -->
+    <!-- KEEP THE SAME FILE NAME IF REPLACED/MODIFIED -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Input</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .input-container {
+            margin: 20px 0;
+        }
+        .barcode-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container">
+        <label for="barcode">Scanned Barcode:</label>
+        <input type="text" 
+               id="barcode" 
+               name="barcode" 
+               class="barcode-input" 
+               value="{{ request.session.scanned_barcode }}">
+    </div>
+</body>
+</html> 
