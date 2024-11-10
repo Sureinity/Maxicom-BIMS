@@ -16,6 +16,18 @@
   color: rgb(255, 255, 255);
 }
 
+.sec-btn {
+  background-color: #b7b7b7;
+  outline: 1px solid rgb(41, 41, 41);
+  color: black;
+}
+
+.sec-btn:hover {
+  background-color: #979797;
+  outline: 1px solid rgb(188, 188, 188);
+  color: rgb(255, 255, 255);
+}
+
 .nav-item {
   text-decoration: none;
   list-style: none;
