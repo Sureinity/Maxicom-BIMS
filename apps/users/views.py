@@ -2,15 +2,24 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.views.decorators.cache import never_cache
 
 from  django.contrib.auth.forms import UserCreationForm
+from .forms import ManualInputBarcodeForm
 
 from django.contrib.auth.decorators import login_required
-from .decorators import redirect_dashboard_if_loggedin
+from .decorators import redirect_dashboard_if_loggedin, redirect_login_if_not_loggedin
 # Create your views here.
+
+
+"""
+USER CREATION/AUTHENTICATION W/ SESSION MANAGEMENT
+
+Handles login, signup, and logout with session management. Authenticated users 
+are redirected to a specific URL, while expired sessions redirect to login/
+"""
 
 @never_cache
 def user_login(request):
@@ -39,6 +48,7 @@ def user_login(request):
         
     return render(request, 'index.html')
 
+@redirect_login_if_not_loggedin
 def signup(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
@@ -64,6 +74,19 @@ def signup(request):
 
     return render(request, "signup.html", context)
 
+def user_logout(request):
+    if request.method == "POST":
+        logout(request)
+    return render(request, 'index.html')
+
+
+"""
+BARCODE SCANNING/INPUT
+
+Two methods are implemented: Camera scanning and manual input.
+Scanning uses QuaggaJS library with AJAX for backend integration.
+"""
+
 @redirect_dashboard_if_loggedin
 def dashboard(request):
     return render(request, "mainpage.html")
@@ -73,14 +96,22 @@ def barcode_scan(request):
     return render(request, "barcode_scanner.html")
 
 @redirect_dashboard_if_loggedin
-def process_barcode(request):
+def barcode_input(request):
+    form = ManualInputBarcodeForm()
+    return render(request, "barcode_input.html")
+
+
+# TODO: There is a slight conflict in URL naming that causes 'scanner_process_barcode' to redirect to 'input_process_barcode'. Might check the affected templates later.
+@redirect_dashboard_if_loggedin
+def scanner_process_barcode(request):
     if request.method == "POST":
         barcode = request.POST.get('barcode')
         print(f"Received barcode: {barcode}")
         
-        redirect_url = reverse('barcode_input')
+        redirect_url = reverse('scanner_process_barcode')
         print(f"Redirect URL: {redirect_url}")
 
+        #Uses session to retrieve barcode as input value on template
         request.session["scanned_barcode"] = barcode
         
         return JsonResponse({
@@ -94,6 +125,15 @@ def process_barcode(request):
     })
 
 @redirect_dashboard_if_loggedin
-def barcode_input(request):
-    return render(request, "barcode_input.html")
+def input_process_barcode(request):
+    if request.method == "POST":
+        barcode = request.POST.get("barcode_manual")
+        print(barcode)
+    
+    return render(request, "book_details.html", {"barcode_result": barcode})
+
+        
+
+
+
     
