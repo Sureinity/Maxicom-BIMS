@@ -101,9 +101,8 @@ def barcode_input(request):
     return render(request, "barcode_input.html")
 
 
-# TODO: There is a slight conflict in URL naming that causes 'scanner_process_barcode' to redirect to 'input_process_barcode'. Might check the affected templates later.
 @redirect_dashboard_if_loggedin
-def scanner_process_barcode(request):
+def ajax_scanner_process_barcode(request):
     if request.method == "POST":
         barcode = request.POST.get('barcode')
         print(f"Received barcode: {barcode}")
@@ -123,6 +122,10 @@ def scanner_process_barcode(request):
         'success': False,
         'message': 'Invalid request method'
     })
+
+@redirect_dashboard_if_loggedin
+def scanner_process_barcode(request):
+    return render(request, "book_details.html", {"scanner_process_barcode": request.session.get('scanned_barcode')})
 
 @redirect_dashboard_if_loggedin
 def input_process_barcode(request):

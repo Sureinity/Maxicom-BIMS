@@ -72,10 +72,10 @@
                             <label for="barcode" class="form-label mb-2">
                                 Barcode
                             </label>
-                            {% if request.path == '/input/process-barcode/' %}
-                            <input type="text" class="form-control" id="barcode" name="barcode" value="{{ barcode_result }}" readonlay>
-                            {% elif request.path == '/scan/process-barcode/' %}
-                            <input type="text" class="form-control" id="barcode" name="barcode" value="{{ request.get.scanned_barcode }}" readonlay>
+                            {% if request.path == '/input/book-details/' %}
+                            <input type="text" class="form-control" id="barcode" name="barcode" value="{{ barcode_result }}" readonly>
+                            {% else %}
+                            <input type="text" class="form-control" id="barcode" name="barcode" value="{{ scanner_process_barcode }}" readonly>
                             {% endif %}
                         </div>
 
@@ -120,7 +120,11 @@
                         </div>
 
                         <div class="buttons d-flex justify-content-end gap-3 mt-4 p-3 m-1">
+                          {% if request.path == '/input/book-details/' %}
                             <a href="{% url 'barcode_input' %}">
+                          {% else %}
+                             <a href="{% url 'barcode_scan' %}">
+                          {% endif %}
                                 <button type="button" class="btn sec-btn">Go back</button>
                             </a>
                             <button type="submit" class="btn uni-btn" data-bs-toggle="modal"
