@@ -7,6 +7,14 @@ class User(AbstractUser):
     email = None
     date_joined = None
 
+    ADMIN = 0
+    USER = 1
+    
+    ROLE_CHOICES = [
+        (ADMIN, 'Admin'),
+        (USER, 'User'),
+    ]
+
     id = models.AutoField(primary_key=True, db_column='sys_acc_id')
     username = models.CharField(
         max_length=150,
@@ -17,7 +25,12 @@ class User(AbstractUser):
         },
     )
     password = models.CharField(max_length=128, db_column='sys_password')
-    sys_acc_role = models.CharField(max_length=50)
+    sys_firstname = models.CharField(max_length=150, blank=True)
+    sys_lastname = models.CharField(max_length=150, blank=True)
+    sys_acc_role = models.IntegerField(
+        choices=ROLE_CHOICES,
+        default=USER,
+    )
 
     REQUIRED_FIELDS = ['sys_acc_role']
     USERNAME_FIELD = 'username'

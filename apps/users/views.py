@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import JsonResponse
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.views.decorators.cache import never_cache
 
-from  django.contrib.auth.forms import UserCreationForm
-from .forms import ManualInputBarcodeForm
+from .forms import ManualInputBarcodeForm, CustomUserCreationForm
+from .models import User
 
 from django.contrib.auth.decorators import login_required
 from .decorators import redirect_dashboard_if_loggedin, redirect_login_if_not_loggedin
@@ -29,9 +28,7 @@ def user_login(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
-        
         user = authenticate(request, username=username, password=password)
-        
         if user is not None:
             login(request, user)
             return redirect('dashboard')
@@ -51,7 +48,7 @@ def user_login(request):
 @redirect_login_if_not_loggedin
 def signup(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         print(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -64,14 +61,14 @@ def signup(request):
     else:
         form_data = request.session.pop('form_data', None)
         if form_data:
-            form = UserCreationForm(form_data)
+            form = CustomUserCreationForm(form_data)
         else:
-            form = UserCreationForm()
+            form = CustomUserCreationForm()
 
     context = {
         "form": form
     }
-
+    print(form.errors)
     return render(request, "signup.html", context)
 
 def user_logout(request):

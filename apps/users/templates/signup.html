@@ -76,20 +76,20 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="username" class="form-label">First name</label>
-                        <input type="text" class="form-control" id="firstname" name="firstname" required>
+                        <label for="sys_firstname" class="form-label">First name</label>
+                        <input type="text" class="form-control" id="sys_firstname" name="sys_firstname" required>
                       </div>
-                      {% if form.firstname.errors %}
-                      <div class="mt-2 text-danger">{{ form.firstname.errors }}</div>
+                      {% if form.sys_firstname.errors %}
+                      <div class="mt-2 text-danger">{{ form.sys_firstname.errors }}</div>
                       {% endif %}
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="lastname" class="form-label">Last name</label>
-                        <input type="text" class="form-control" id="lasntname" name="lastname" required>
+                        <label for="lastname" class="form-label">last name</label>
+                        <input type="text" class="form-control" id="sys_lastname" name="sys_lastname" required>
                       </div>
-                      {% if form.lastname.errors %}
-                      <div class="mt-2 text-danger">{{ form.lastname.errors }}</div>
+                      {% if form.sys_lastname.errors %}
+                      <div class="mt-2 text-danger">{{ form.sys_lastname.errors }}</div>
                       {% endif %}
 
                     </div>
