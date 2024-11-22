@@ -14,4 +14,7 @@ urlpatterns = [
     path("scan/book-details/", views.scanner_process_barcode, name="scanner_process_barcode"),
     path("input/", views.barcode_input, name="barcode_input"), #Manual input barcode URL
     path("input/book-details/", views.input_process_barcode, name="input_process_barcode"),
+
+    #Admin side
+    path("inventory-admin/", views.admin_dashboard, name="inventory_admin"),
 ]

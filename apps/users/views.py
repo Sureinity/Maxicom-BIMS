@@ -9,7 +9,7 @@ from .forms import ManualInputBarcodeForm, CustomUserCreationForm
 from .models import User
 
 from django.contrib.auth.decorators import login_required
-from .decorators import redirect_dashboard_if_loggedin, redirect_login_if_not_loggedin
+from .decorators import redirect_dashboard_if_loggedin, redirect_login_if_not_loggedin, not_authorized
 # Create your views here.
 
 
@@ -132,8 +132,14 @@ def input_process_barcode(request):
     
     return render(request, "book_details.html", {"barcode_result": barcode})
 
-        
+"""
+ADMIN SIDE | INVENTORY
 
-
+Description is yet to come...
+"""
+@not_authorized
+@redirect_dashboard_if_loggedin
+def admin_dashboard(request):
+    return render(request, "admin.html")
 
     
