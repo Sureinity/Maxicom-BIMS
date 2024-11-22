@@ -74,7 +74,7 @@ def signup(request):
 def user_logout(request):
     if request.method == "POST":
         logout(request)
-    return render(request, 'index.html')
+    return redirect('login')
 
 
 """
