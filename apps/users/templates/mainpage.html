@@ -51,7 +51,9 @@
                                 <label class="form-check-label" for="switch-check"></label>
                             </div>
                         </a>
-                        {% include 'components/logout_button.html'%}
+                        <a class="nav-link" href="{%url 'logout'%}">
+                            <button type="button" class="btn uni-btn px-4">Logout</button>
+                        </a>
                     </div>
                 </div>
             </div>
