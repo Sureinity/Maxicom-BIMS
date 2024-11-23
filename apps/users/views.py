@@ -5,10 +5,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.views.decorators.cache import never_cache
 
-from .forms import ManualInputBarcodeForm, CustomUserCreationForm
+from .forms import CustomUserCreationForm
 from .models import User
 
-from django.contrib.auth.decorators import login_required
 from .decorators import redirect_dashboard_if_loggedin, redirect_login_if_not_loggedin, not_authorized
 # Create your views here.
 

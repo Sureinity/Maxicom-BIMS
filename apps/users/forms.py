@@ -2,9 +2,6 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
-class ManualInputBarcodeForm(forms.Form):
-    barcode_manual = forms.IntegerField()
-
 class CustomUserCreationForm(UserCreationForm):
     sys_firstname = forms.CharField(max_length=150, required=False)
     sys_lastname = forms.CharField(max_length=150, required=False)

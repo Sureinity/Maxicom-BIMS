@@ -1,0 +1,51 @@
+* {
+  font-family: "Prompt", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.uni-btn {
+  background-color: #5ae4a7;
+  outline: 1px solid rgb(41, 41, 41);
+  color: black;
+}
+
+.uni-btn:hover {
+  background-color: #00b061;
+  outline: 1px solid rgb(188, 188, 188);
+  color: rgb(255, 255, 255);
+}
+
+.sec-btn {
+  background-color: #b7b7b7;
+  outline: 1px solid rgb(41, 41, 41);
+  color: black;
+}
+
+.sec-btn:hover {
+  background-color: #979797;
+  outline: 1px solid rgb(188, 188, 188);
+  color: rgb(255, 255, 255);
+}
+
+.nav-item {
+  text-decoration: none;
+  list-style: none;
+}
+.navbar-toggler {
+  border: none;
+}
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.theme-switch:checked {
+  background-color: #5ae4a7;
+  color: black;
+}
+
+.option-card:hover {
+  transform: scale(1.03);
+  transition: 0.3s ease-in-out 0s;
+}
