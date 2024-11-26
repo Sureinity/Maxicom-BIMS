@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'apps.users',
     'apps.scan_book',
+    'apps.admin',
 ]
 
 MIDDLEWARE = [
