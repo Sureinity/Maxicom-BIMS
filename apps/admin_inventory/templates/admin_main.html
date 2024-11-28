@@ -116,9 +116,10 @@
                                     <label class="form-check-label" for="switch-check"></label>
                                 </div>
                             </a>
-                            <a class="nav-link d-none d-lg-block" href="#">
-                                <button type="button" class="btn uni-btn px-4">Logout</button>
-                            </a>
+                            <form action="{% url 'logout' %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn uni-btn px-4">Logout</button>
+                            </form>
                         </div>
                     </div>
 
@@ -147,5 +148,4 @@
     <script src="{% static 'admin_inventory/function.js' %}"></script>
 
 </body>
-
 </html>

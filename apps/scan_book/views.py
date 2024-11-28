@@ -4,7 +4,7 @@ from django.http import JsonResponse
 
 from .forms import ManualInputBarcodeForm
 
-from .decorators import redirect_dashboard_if_loggedin, redirect_login_if_not_loggedin, not_authorized
+from .decorators import redirect_dashboard_if_loggedin, redirect_login_if_not_loggedin, admin_is_not_authorized
 
 """
 BARCODE SCANNING/INPUT
@@ -13,20 +13,23 @@ Two methods are implemented: Camera scanning and manual input.
 Scanning uses QuaggaJS library with AJAX for backend integration.
 """
 
+@admin_is_not_authorized
 @redirect_dashboard_if_loggedin
 def dashboard(request):
     return render(request, "mainpage.html")
 
+@admin_is_not_authorized
 @redirect_dashboard_if_loggedin
 def barcode_scan(request):
     return render(request, "barcode_scanner.html")
 
+@admin_is_not_authorized
 @redirect_dashboard_if_loggedin
 def barcode_input(request):
     form = ManualInputBarcodeForm()
     return render(request, "barcode_input.html")
 
-
+@admin_is_not_authorized
 @redirect_dashboard_if_loggedin
 def ajax_scanner_process_barcode(request):
     if request.method == "POST":
@@ -49,10 +52,12 @@ def ajax_scanner_process_barcode(request):
         'message': 'Invalid request method'
     })
 
+@admin_is_not_authorized
 @redirect_dashboard_if_loggedin
 def scanner_process_barcode(request):
     return render(request, "book_details.html", {"scanner_process_barcode": request.session.get('scanned_barcode')})
 
+@admin_is_not_authorized
 @redirect_dashboard_if_loggedin
 def input_process_barcode(request):
     print(request.path)

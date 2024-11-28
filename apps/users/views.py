@@ -8,7 +8,7 @@ from django.views.decorators.cache import never_cache
 from .forms import CustomUserCreationForm
 from .models import User
 
-from .decorators import redirect_dashboard_if_loggedin, redirect_login_if_not_loggedin, not_authorized
+from .decorators import redirect_dashboard_if_loggedin, redirect_login_if_not_loggedin
 # Create your views here.
 
 
@@ -22,6 +22,8 @@ are redirected to a specific URL, while expired sessions redirect to login/
 @never_cache
 def user_login(request):
     if request.user.is_authenticated:
+        if request.user.sys_acc_role == 0:
+            return redirect('admin_main')
         return redirect('dashboard')
 
     if request.method == "POST":
@@ -32,6 +34,8 @@ def user_login(request):
         print(password)
         if user is not None:
             login(request, user)
+            if user.sys_acc_role == 0:
+                return redirect('admin_main')
             return redirect('dashboard')
         else:
             request.session['form_data'] = {'username': username}
@@ -76,71 +80,3 @@ def user_logout(request):
     if request.method == "POST":
         logout(request)
     return redirect('login')
-
-
-"""
-BARCODE SCANNING/INPUT
-
-Two methods are implemented: Camera scanning and manual input.
-Scanning uses QuaggaJS library with AJAX for backend integration.
-"""
-
-@redirect_dashboard_if_loggedin
-def dashboard(request):
-    return render(request, "mainpage.html")
-
-@redirect_dashboard_if_loggedin
-def barcode_scan(request):
-    return render(request, "barcode_scanner.html")
-
-@redirect_dashboard_if_loggedin
-def barcode_input(request):
-    form = ManualInputBarcodeForm()
-    return render(request, "barcode_input.html")
-
-
-@redirect_dashboard_if_loggedin
-def ajax_scanner_process_barcode(request):
-    if request.method == "POST":
-        barcode = request.POST.get('barcode')
-        print(f"Received barcode: {barcode}")
-        
-        redirect_url = reverse('scanner_process_barcode')
-        print(f"Redirect URL: {redirect_url}")
-
-        #Uses session to retrieve barcode as input value on template
-        request.session["scanned_barcode"] = barcode
-        
-        return JsonResponse({
-            'success': True,
-            'message': f'Barcode processed: {barcode}',
-            'redirect_url': redirect_url
-        })
-    return JsonResponse({
-        'success': False,
-        'message': 'Invalid request method'
-    })
-
-@redirect_dashboard_if_loggedin
-def scanner_process_barcode(request):
-    return render(request, "book_details.html", {"scanner_process_barcode": request.session.get('scanned_barcode')})
-
-@redirect_dashboard_if_loggedin
-def input_process_barcode(request):
-    if request.method == "POST":
-        barcode = request.POST.get("barcode_manual")
-        print(barcode)
-    
-    return render(request, "book_details.html", {"barcode_result": barcode})
-
-"""
-ADMIN SIDE | INVENTORY
-
-Description is yet to come...
-"""
-@not_authorized
-@redirect_dashboard_if_loggedin
-def admin_dashboard(request):
-    return render(request, "admin.html")
-
-    
