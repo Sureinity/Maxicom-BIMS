@@ -4,7 +4,6 @@ const html = document.getElementById("htmlPage");
 const check = document.getElementById("switch-check");
 const label = document.querySelector('label[for="switch-check"]');
 
-// Load the saved theme preference
 function loadTheme() {
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
@@ -18,7 +17,6 @@ function loadTheme() {
   }
 }
 
-// Update theme preference and save it
 function updateLabel() {
   if (!check.checked) {
     html.setAttribute("data-bs-theme", "light");
@@ -31,9 +29,7 @@ function updateLabel() {
   }
 }
 
-// Initialize the theme on page load
 loadTheme();
 
-// Update theme on checkbox change
 check.addEventListener("change", updateLabel);
 

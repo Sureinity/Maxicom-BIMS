@@ -1,0 +1,247 @@
+* {
+  font-family: "Prompt", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body,
+nav,
+.card,
+.search-btn,
+.input-group-text {
+  transition: all 0.25s ease-in-out !important;
+}
+
+.uni-btn {
+  background-color: #5ae4a7;
+  outline: 1px solid rgb(41, 41, 41);
+  color: black;
+}
+
+.uni-btn:hover {
+  background-color: #00b061;
+  outline: 1px solid rgb(41, 41, 41);
+  color: rgb(255, 255, 255);
+}
+
+.sec-btn {
+  background-color: #b7b7b7;
+  outline: 1px solid rgb(41, 41, 41);
+  color: black;
+}
+
+.sec-btn:hover {
+  background-color: #979797;
+  outline: 1px solid rgb(188, 188, 188);
+  color: rgb(255, 255, 255);
+}
+
+.nav-item {
+  text-decoration: none;
+  list-style: none;
+}
+.navbar-toggler {
+  border: none;
+}
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.theme-switch:checked {
+  background-color: #5ae4a7;
+  color: black;
+}
+
+.option-card:hover {
+  transform: scale(1.03);
+  transition: 0.3s ease-in-out 0s;
+}
+
+/* ----- */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+::after,
+::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-admin {
+  outline: 0.5px solid #bababa;
+}
+
+.search-btn {
+  border-bottom: rgb(137, 137, 137) 1px solid !important;
+  border-radius: 0%;
+}
+
+.search-btn:focus,
+.search-btn:active {
+  outline: none !important;
+  box-shadow: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.main {
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  transition: 0.01s ease !important;
+}
+
+#sidebar {
+  width: 70px;
+  min-width: 70px;
+  z-index: 1000;
+  transition: all 0.25s ease-in-out;
+  display: flex;
+  outline: 0.5px solid #bababa;
+  flex-direction: column;
+}
+
+#sidebar.expand {
+  width: 260px;
+  min-width: 260px;
+}
+
+.toggle-btn {
+  background-color: transparent;
+  cursor: pointer;
+  border: 0;
+  padding: 1rem 1.5rem;
+}
+
+.toggle-btn i {
+  font-size: 1.5rem;
+  color: #49d898;
+}
+
+.sidebar-logo {
+  margin: auto 0;
+}
+
+.sidebar-logo a {
+  color: #49d898;
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span {
+  display: none;
+}
+
+.sidebar-nav {
+  padding: 2rem 0;
+  flex: 1 1 auto;
+}
+
+a.sidebar-link {
+  padding: 0.625rem 1.625rem;
+  color: #777777;
+  display: block;
+  font-size: 1rem;
+  white-space: nowrap;
+  border-left: 3px solid transparent;
+}
+
+.sidebar-link i {
+  font-size: 1.1rem;
+  margin-right: 0.75rem;
+}
+
+a.sidebar-link:hover {
+  background-color: #d0d0d03e;
+  border-left: 3px solid #5ae4a7;
+}
+
+.sidebar-item {
+  position: relative;
+}
+
+#sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
+  position: absolute;
+  top: 0;
+  left: 70px;
+  padding: 0;
+  min-width: 15rem;
+  display: none;
+  outline: 0.5px solid #bababa;
+}
+
+#sidebar:not(.expand) .sidebar-item:hover .has-dropdown + .sidebar-dropdown {
+  display: block;
+  max-height: 15em;
+  width: 100%;
+  opacity: 1;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+  border: solid;
+  border-width: 0 0.075rem 0.075rem 0;
+  content: "";
+  display: inline-block;
+  padding: 2px;
+  position: absolute;
+  right: 1.5rem;
+  top: 1.4rem;
+  transform: rotate(-135deg);
+  transition: all 0.25s ease-out;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+  transform: rotate(45deg);
+  transition: all 0.25s ease-out;
+}
+
+.card-table {
+  overflow-x: scroll;
+  cursor: pointer;
+}
+
+@media (min-width: 992px) {
+  .card-table {
+    overflow-x: hidden;
+  }
+}
+
+select.show-select {
+  background-color: #9bffd2;
+  border: none;
+  border-radius: 3px;
+}
+
+select.show-select > option {
+  background-color: #ffffff;
+}
+
+.pagination a {
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: #5ae4a657;
+  border-radius: 50%;
+}

@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', include("apps.admin_inventory.urls")),
     path("", include("apps.users.urls")),
     path("barcode-input/", include("apps.scan_book.urls")),
 ]
