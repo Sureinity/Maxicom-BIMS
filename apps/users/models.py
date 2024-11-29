@@ -38,9 +38,9 @@ class User(AbstractUser):
     password = models.CharField(max_length=128, db_column='sys_password')
     sys_firstname = models.CharField(max_length=150, blank=True)
     sys_lastname = models.CharField(max_length=150, blank=True)
-    sys_acc_created = models.DateTimeField(auto_now_add=True) # Automatically set when user is created
+  #  sys_acc_created = models.DateTimeField(auto_now_add=True) # Automatically set when user is created
     sys_acc_role = models.IntegerField(choices=ROLE_CHOICES, default=USER)
-    sys_status = models.IntegerField(choices=STATUS_CHOICE, default=ACTIVE)
+ #   sys_status = models.IntegerField(choices=STATUS_CHOICE, default=ACTIVE)
 
     REQUIRED_FIELDS = ['sys_acc_role']
     USERNAME_FIELD = 'username'

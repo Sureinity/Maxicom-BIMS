@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 
 from .decorators import admin_required
 
@@ -18,7 +19,14 @@ def dashboard_page(request):
 
 @admin_required
 def listbooks_page(request):
-    return render (request, "pages/listbooks_page.html")
+    data = range(1, 101)  # Example data: numbers from 1 to 100
+    paginator = Paginator(data, 10)  # 10 items per page
+
+    # Get the current page number from the request, default to the first page
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)  # Automatically handles invalid page numbers
+
+    return render(request, "pages/listbooks_page.html", {'page_obj': page_obj})
 
 @admin_required
 def inventory_page(request):
