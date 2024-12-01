@@ -53,7 +53,7 @@ class Inventory(models.Model):
     id = models.BigAutoField(primary_key=True, db_column="inv_id")
     b_id = models.ForeignKey(Booklist, on_delete=models.CASCADE)
     datetime_checked = models.DateTimeField(auto_now=True, db_column="inv_datetime_checked")
-    status =  models.IntegerField(choices=BOOK_STATUS_CHOICES, default=GOOD_CONDITION, db_column="inv_status")
+    status =  models.IntegerField(choices=BOOK_STATUS_CHOICES, null=True, blank=True, db_column="inv_status")
 
     class Meta:
         ordering = ['-datetime_checked']

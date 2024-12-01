@@ -42,5 +42,5 @@ document.querySelector(".sidebar-link[href='{% url 'admin_dashboard' %}']").addE
     e.preventDefault();
     const page = this.getAttribute("href");
     loadPage(page);
-    fetchBookCount();
+    fetchDashboardData();
 });

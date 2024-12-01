@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 
-from .models import Booklist
+from .models import Booklist, Inventory
+from apps.users.models import User
 from .decorators import admin_required
 
 """
@@ -16,12 +17,32 @@ def admin_page(request):    # This view is for rendering the main container of a
 
 @admin_required
 def dashboard_page(request):
+    # Overview
     bookCount = Booklist.objects.count()
+    bookScanned = Inventory.objects.count()
+    bookUnscanned = Booklist.objects.count() - Inventory.objects.count()
+    totalUsers = User.objects.exclude(sys_acc_role=0).count()
+
+    # Book states
+    goodCondition= Inventory.objects.filter(status=1).count()
+    noBacodeTag = Inventory.objects.filter(status=2).count()
+    forRepair = Inventory.objects.filter(status=3).count()
+    forDisposal = Inventory.objects.filter(status=4).count()
     if request.method == "GET" and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return JsonResponse({
-            "bookCount": bookCount
+            # Overview
+            "bookCount": bookCount,
+            "bookScanned": bookScanned,
+            "bookUnscanned": bookUnscanned,
+            "totalUsers": totalUsers,
+
+            # Book states
+            "goodCondition": goodCondition,
+            "noBacodeTag": noBacodeTag,
+            "forRepair": forRepair,
+            "forDisposal": forDisposal
         })
-    return render(request, "pages/dashboard_page.html", {'bookCount': bookCount})
+    return render(request, "pages/dashboard_page.html")
 
 @admin_required
 def listbooks_page(request):
