@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 
+from .models import Booklist
 from .decorators import admin_required
 
 """
@@ -14,7 +16,12 @@ def admin_page(request):    # This view is for rendering the main container of a
 
 @admin_required
 def dashboard_page(request):
-    return render (request, "pages/dashboard_page.html")
+    bookCount = Booklist.objects.count()
+    if request.method == "GET" and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            "bookCount": bookCount
+        })
+    return render(request, "pages/dashboard_page.html", {'bookCount': bookCount})
 
 @admin_required
 def listbooks_page(request):

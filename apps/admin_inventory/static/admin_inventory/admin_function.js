@@ -29,8 +29,8 @@ function loadPage(page) {
     });
 }
 
-const pagePath = "/admin/dashboard/";
-loadPage(pagePath);
+// First page to load
+loadPage("/admin/dashboard/");
 
 document.querySelectorAll("tr[data-href]").forEach((row) => {
   row.addEventListener("click", () => {
