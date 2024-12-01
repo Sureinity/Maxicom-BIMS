@@ -1,6 +1,5 @@
 function fetchBookCount() {
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch("/admin/dashboard/", {
+    fetch("/admin/dashboard/", {
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         }
@@ -18,7 +17,18 @@ function fetchBookCount() {
         console.error('Error fetching book count:', error);
         document.getElementById("bookCount").textContent = '0';
     });
-});
 }
 
-fetchBookCount();
+// Initial load
+document.addEventListener('DOMContentLoaded', () => {
+    fetchBookCount();
+    
+    // Add click event listener to dashboard link
+    const dashboardLink = document.querySelector('a[href="/admin/dashboard/"]');
+    if (dashboardLink) {
+        dashboardLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            fetchBookCount();
+        });
+    }
+});

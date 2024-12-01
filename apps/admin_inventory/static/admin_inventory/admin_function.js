@@ -37,3 +37,10 @@ document.querySelectorAll("tr[data-href]").forEach((row) => {
     window.location.href = row.dataset.href;
   });
 });
+
+document.querySelector(".sidebar-link[href='{% url 'admin_dashboard' %}']").addEventListener("click", function (e) {
+    e.preventDefault();
+    const page = this.getAttribute("href");
+    loadPage(page);
+    fetchBookCount();
+});
