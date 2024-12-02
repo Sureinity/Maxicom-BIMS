@@ -20,32 +20,52 @@ def dashboard_page(request):
     # Overview
     bookCount = Booklist.objects.count()
     bookScanned = Inventory.objects.count()
-    bookUnscanned = Booklist.objects.count() - Inventory.objects.count()
+    bookUnscanned = bookScanned - Inventory.objects.exclude(status__in=[1, 2, 3, 4]).count()
     totalUsers = User.objects.exclude(sys_acc_role=0).count()
 
     # Book states
     goodCondition= Inventory.objects.filter(status=1).count()
-    noBacodeTag = Inventory.objects.filter(status=2).count()
+    noBarcodeTag = Inventory.objects.filter(status=2).count()
     forRepair = Inventory.objects.filter(status=3).count()
     forDisposal = Inventory.objects.filter(status=4).count()
-    if request.method == "GET" and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return JsonResponse({
-            # Overview
-            "bookCount": bookCount,
-            "bookScanned": bookScanned,
-            "bookUnscanned": bookUnscanned,
-            "totalUsers": totalUsers,
 
-            # Book states
-            "goodCondition": goodCondition,
-            "noBacodeTag": noBacodeTag,
-            "forRepair": forRepair,
-            "forDisposal": forDisposal
-        })
-    return render(request, "pages/dashboard_page.html")
+    context = {
+        # Overview
+        "bookCount": bookCount,
+        "bookScanned": bookScanned,
+        "bookUnscanned": bookUnscanned,
+        "totalUsers": totalUsers,
+
+        # Book states
+        "goodCondition": goodCondition,
+        "noBarcodeTag": noBarcodeTag,
+        "forRepair": forRepair,
+        "forDisposal": forDisposal
+    }
+    # if request.method == "GET" and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+    #     return JsonResponse({
+    #         # Overview
+    #         "bookCount": bookCount,
+    #         "bookScanned": bookScanned,
+    #         "bookUnscanned": bookUnscanned,
+    #         "totalUsers": totalUsers,
+    #
+    #         # Book states
+    #         "goodCondition": goodCondition,
+    #         "noBacodeTag": noBacodeTag,
+    #         "forRepair": forRepair,
+    #         "forDisposal": forDisposal
+    #     })
+    return render(request, "pages/dashboard_page.html", context)
 
 @admin_required
 def listbooks_page(request):
+    book = Booklist.objects.all()
+    bookList = list(book.values())
+    if request.method == "GET" and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            "itype": bookList
+        })
     return render (request, "pages/listbooks_page.html")
 
 @admin_required

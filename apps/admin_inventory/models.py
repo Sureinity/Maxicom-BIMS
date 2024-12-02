@@ -1,6 +1,7 @@
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
+import datetime
 
 # Create your models here.
 
@@ -13,15 +14,23 @@ class Booklist(models.Model):
     itype = models.CharField(max_length=100, blank=False, db_column="b_itype")
     title = models.CharField(max_length=255, blank=False, db_column="b_title")
     author = models.CharField(max_length=255, blank=False, db_column="b_author")
-    publishercode = models.CharField(max_length=255, blank=False, db_column="b_publishercode")
+    publisher_code = models.CharField(max_length=255, blank=True, db_column="b_publisher_code")
     date_accessioned = models.DateField(auto_now=True, db_column="b_date_accessioned")
+    copyrightdate = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+         validators=[
+            MinValueValidator(1800),
+            MaxValueValidator(datetime.datetime.now().year)
+        ]
+    )
     isbn = models.CharField(max_length=20, blank=False, db_column="b_isbn")
     copy_num = models.IntegerField(db_column="b_copy_num", validators=[MinValueValidator(1)], help_text="Copy number starting from 1")
     volume = models.CharField(max_length=100, blank=True, null=True, db_column="b_volume")
     edition_stmt = models.CharField(max_length=255, blank=True, null=True, db_column="b_edition_stmt")
     subtitle = models.TextField(db_column="b_subtitle", blank=True, null=True)
     paidfor = models.CharField(max_length=55, blank=True, null=True, db_column="b_paidfor")
-    price = models.DecimalField(max_digits=10, decimal_places=2, db_column="b_price") # PHP Peso
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, db_column="b_price") # PHP Peso
     bookseller_id = models.CharField(max_length=55, blank=False, db_column="b_bookseller_id")
 
     class Meta:
