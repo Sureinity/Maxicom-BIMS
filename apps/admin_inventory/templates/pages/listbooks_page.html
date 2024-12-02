@@ -131,462 +131,345 @@
                         <tbody>
 
                             <!-- sample data -->
-
-                            <tr data-bs-toggle="modal" data-bs-target="#modal_bookdetails">
-
-                                <td class="text-truncate" style="max-width: 150px;">DC
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">DC
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">Emergency management for sport
-                                    and
-                                    physical activity
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">Casa, Douglas J.
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">Jones & Bartlett Learning
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">23571
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">978-1-284-02216-2 (pbk)
-                                </td>
-
-                                <td class="text-truncate" style="max-width: 150px;">1
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">Unknown
-                                </td>
-
+                          {% for data in bookData %}
+                            <tr data-bs-toggle="modal" data-bs-target="#modal_bookdetails_{{data.id}}">
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.itype}}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.col_code }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.title }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.author }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.publisher_code }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.barcode }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.isbn }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.copy_num }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.volume }}</td>
                             </tr>
 
+                            <!-- Show book details (Modal) -->
+                            <div class="modal fade" id="modal_bookdetails_{{data.id}}" tabindex="-1" data-bs-backdrop="static">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <i class="fa-solid fa-book-open"></i>
+                                            &nbsp;
+                                            &nbsp;
+                                            <h6 class="modal-title fs-5">List of Books / Details</h6>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="title">
+                                                <h5 style="font-weight: 400;">{{ data.title }}</h5>
+                                            </div>
+
+                                            <div class="author">
+                                                <span class="d-flex">
+                                                    <p>Author(s): </p>
+                                                    &nbsp;
+                                                    <div class="author-value">
+                                                        <p>{{ data.author }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="publisher">
+                                                <span class="d-flex">
+                                                    <p>Publisher: </p>
+                                                    &nbsp;
+                                                    <div class="publisher-value">
+                                                        <p>{{ data.publisher_code }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="publication-date">
+                                                <span class="d-flex">
+                                                    <p>Copyright: </p>
+                                                    &nbsp;
+                                                    <div class="copyright-value">
+                                                        <p>{{ data.copyright }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="isbn">
+                                                <span class="d-flex">
+                                                    <p>ISBN: </p>
+                                                    &nbsp;
+                                                    <div class="isbn-value">
+                                                        <p>{{ data.isbn }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="collection-code">
+                                                <span class="d-flex">
+                                                    <p>Collection Code: </p>
+                                                    &nbsp;
+                                                    <div class="cc-value">
+                                                        <p>{{ data.ccode }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="itype">
+                                                <span class="d-flex">
+                                                    <p>Itype: </p>
+                                                    &nbsp;
+                                                    <div class="itype-value">
+                                                        <p>{{ data.itype }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="item-call-num">
+                                                <span class="d-flex">
+                                                    <p>Item Call Number: </p>
+                                                    &nbsp;
+                                                    <div class="itemcallnum-value">
+                                                        <p>{{ data.itemcall }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="date-accessioned">
+                                                <span class="d-flex">
+                                                    <p>Date Accessioned: </p>
+                                                    &nbsp;
+                                                    <div class="date-accessioned-value">
+                                                        <p>{{ data.dateaccess }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="copy-num">
+                                                <span class="d-flex">
+                                                    <p>Copy Number: </p>
+                                                    &nbsp;
+                                                    <div class="copy-number">
+                                                        <p>{{ data.copy }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+
+                                            <div class="copy-num">
+                                                <span class="d-flex">
+                                                    <p>volume: </p>
+                                                    &nbsp;
+                                                    <div class="volume-number">
+                                                        <p>{{ data.volume }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="edition-stmt">
+                                                <span class="d-flex">
+                                                    <p>Edition Statement: </p>
+                                                    &nbsp;
+                                                    <div class="edition-number">
+                                                        <p>{{ data.stmt }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="paidfor-num">
+                                                <span class="d-flex">
+                                                    <p>Paid for: </p>
+                                                    &nbsp;
+                                                    <div class="paidfor-value">
+                                                        <p>{{ data.paidfor }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="price-num">
+                                                <span class="d-flex">
+                                                    <p>Price: </p>
+                                                    &nbsp;
+                                                    <div class="price-value">
+                                                        <p>{{ data.price }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="price-num">
+                                                <span class="d-flex">
+                                                    <p>Book Seller: </p>
+                                                    &nbsp;
+                                                    <div class="purchased-value">
+                                                        <p>{{ data.seller }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary">
+                                                <i class="fa-solid fa-print"></i>&nbsp; Print
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                                data-bs-target="#modal-delete-book-{{data.id}}">
+                                                <i class="fa-solid fa-trash"></i>&nbsp;Delete
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                                data-bs-target="#modal-edit-book-{{data.id}}">
+                                                <i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- modal delete book -->
+                            <div class="modal fade" id="modal-delete-book-{{data.id}}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Book</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure want to delete this book?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-danger">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- modal edit book -->
+                            <div class="modal fade" id="modal-edit-book-{{data.id}}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">List
+                                                of Books / Edit</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <form action="" method="POST">
+                                            <div class="modal-body">
+
+                                                <div class="mb-3">
+                                                    <label for="book-title" class="form-label">Title</label>
+                                                    <input type="text" id="book-title" class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-author" class="form-label">Author(s)</label>
+                                                    <input type="text" id="book-author" class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-publisher" class="form-label">Publisher</label>
+                                                    <input type="text" id="book-publisher" class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-copyright" class="form-label">Copyright</label>
+                                                    <input type="text" id="book-copyright" class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-isbn" class="form-label">ISBN</label>
+                                                    <input type="text" id="book-isbn" class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-ccode" class="form-label">Collection Code</label>
+                                                    <input type="text" id="book-ccode" class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-itype" class="form-label">Itype</label>
+                                                    <input type="text" id="book-itype" class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-itemcall" class="form-label">Item Call Number</label>
+                                                    <input type="text" id="book-itemcall" class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-dateaccess" class="form-label">Date Accessioned</label>
+                                                    <input type="text" id="book-dateaccess" class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-copy" class="form-label">Copy Number</label>
+                                                    <input type="text" id="book-copy" class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-volume" class="form-label">Volume</label>
+                                                    <input type="text" id="book-volume " class="form-control">
+                                                </div>
+
+
+                                                <div class="mb-3">
+                                                    <label for="book-stmt" class="form-label">Edition Statement</label>
+                                                    <input type="text" id="book-stmt " class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="paid-for" class="form-label">Paid For</label>
+                                                    <input type="text" id="paid-for " class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-price" class="form-label">Price</label>
+                                                    <input type="text" id="book-price " class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-seller" class="form-label">Book Seller</label>
+                                                    <input type="text" id="book-seller " class="form-control">
+                                                </div>
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#modal_bookdetails_{{data.id}}">Back</button>
+                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                          {% endfor %}
                         </tbody>
                     </table>
                 </div>
 
-
-                <!-- Show book details (Modal) -->
-                <div class="modal fade" id="modal_bookdetails" tabindex="-1" data-bs-backdrop="static">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <i class="fa-solid fa-book-open"></i>
-                                &nbsp;
-                                &nbsp;
-                                <h6 class="modal-title fs-5" id="modal_bookdetails">List of Books / Details</h6>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-
-                                <div class="title">
-                                    <h5 style="font-weight: 400;">
-                                        Emergency management for sports and physical activity
-                                    </h5>
-                                </div>
-
-                                <div class="author">
-                                    <span class="d-flex">
-                                        <p>Author(s): </p>
-                                        &nbsp;
-                                        <div class="author-value">
-                                            <p>Casa, Douglas J.</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="publisher">
-                                    <span class="d-flex">
-                                        <p>Publisher: </p>
-                                        &nbsp;
-                                        <div class="publisher-value">
-                                            <p>Jones & Bartlett Learning</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="publication-date">
-                                    <span class="d-flex">
-                                        <p>Copyright: </p>
-                                        &nbsp;
-                                        <div class="copyright-value">
-                                            <p>2019</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="isbn">
-                                    <span class="d-flex">
-                                        <p>ISBN: </p>
-                                        &nbsp;
-                                        <div class="isbn-value">
-                                            <p>978-1-284-02216-2 (pbk)</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="collection-code">
-                                    <span class="d-flex">
-                                        <p>Collection Code: </p>
-                                        &nbsp;
-                                        <div class="cc-value">
-                                            <p>DC</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="itype">
-                                    <span class="d-flex">
-                                        <p>Itype: </p>
-                                        &nbsp;
-                                        <div class="itype-value">
-                                            <p>DC</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="item-call-num">
-                                    <span class="d-flex">
-                                        <p>Item Call Number: </p>
-                                        &nbsp;
-                                        <div class="itemcallnum-value">
-                                            <p>DC 332.178 Sch312 2014</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="date-accessioned">
-                                    <span class="d-flex">
-                                        <p>Date Accessioned: </p>
-                                        &nbsp;
-                                        <div class="date-accessioned-value">
-                                            <p>2015-08-24</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="copy-num">
-                                    <span class="d-flex">
-                                        <p>Copy Number: </p>
-                                        &nbsp;
-                                        <div class="copy-number">
-                                            <p>1</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-
-                                <div class="copy-num">
-                                    <span class="d-flex">
-                                        <p>volume: </p>
-                                        &nbsp;
-                                        <div class="volume-number">
-                                            <p>Volume 1</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="edition-stmt">
-                                    <span class="d-flex">
-                                        <p>Edition Statement: </p>
-                                        &nbsp;
-                                        <div class="edition-number">
-                                            <p>Seventh Edition</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="paidfor-num">
-                                    <span class="d-flex">
-                                        <p>Paid for: </p>
-                                        &nbsp;
-                                        <div class="paidfor-value">
-                                            <p>None</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="price-num">
-                                    <span class="d-flex">
-                                        <p>Price: </p>
-                                        &nbsp;
-                                        <div class="price-value">
-                                            <p>None</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="price-num">
-                                    <span class="d-flex">
-                                        <p>Book Seller: </p>
-                                        &nbsp;
-                                        <div class="purchased-value">
-                                            <p>Purchased</p>
-                                        </div>
-                                    </span>
-                                </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-secondary"> <i
-                                        class="fa-solid fa-print"></i>&nbsp; Print</button>
-                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                    data-bs-target="#modal-delete-book"><i class="fa-solid fa-trash"></i>
-                                    &nbsp;Delete</button>
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
-                                    data-bs-target="#modal-edit-book"><i class="fa-solid fa-pen-to-square"></i>
-                                    &nbsp;Edit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- modal delete book -->
-                <div class="modal fade" id="modal-delete-book" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Book</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Are you sure want to delete this book?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-danger">Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- modal add book information -->
-                <div class="modal fade" id="modal-add-book" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">List
-                                    of Books / Add</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <form action="" method="POST">
-                                <div class="modal-body">
-
-                                    <div class="mb-3">
-                                        <label for="book-title" class="form-label">Title</label>
-                                        <input type="text" id="book-title" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-author" class="form-label">Author(s)</label>
-                                        <input type="text" id="book-author" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-publisher" class="form-label">Publisher</label>
-                                        <input type="text" id="book-publisher" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-copyright" class="form-label">Copyright</label>
-                                        <input type="text" id="book-copyright" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-isbn" class="form-label">ISBN</label>
-                                        <input type="text" id="book-isbn" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-ccode" class="form-label">Collection Code</label>
-                                        <input type="text" id="book-ccode" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-itype" class="form-label">Itype</label>
-                                        <input type="text" id="book-itype" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-itemcall" class="form-label">Item Call Number</label>
-                                        <input type="text" id="book-itemcall" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-dateaccess" class="form-label">Date Accessioned</label>
-                                        <input type="text" id="book-dateaccess" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-copy" class="form-label">Copy Number</label>
-                                        <input type="text" id="book-copy" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-volume" class="form-label">Volume</label>
-                                        <input type="text" id="book-volume " class="form-control">
-                                    </div>
-
-
-                                    <div class="mb-3">
-                                        <label for="book-stmt" class="form-label">Edition Statement</label>
-                                        <input type="text" id="book-stmt " class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="paid-for" class="form-label">Paid For</label>
-                                        <input type="text" id="paid-for " class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-price" class="form-label">Price</label>
-                                        <input type="text" id="book-price " class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-seller" class="form-label">Book Seller</label>
-                                        <input type="text" id="book-seller " class="form-control">
-                                    </div>
-
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-backdrop="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- modal edit book information -->
-                <div class="modal fade" id="modal-edit-book" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">List
-                                    of Books / Edit</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <form action="" method="POST">
-                                <div class="modal-body">
-
-                                    <div class="mb-3">
-                                        <label for="book-title" class="form-label">Title</label>
-                                        <input type="text" id="book-title" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-author" class="form-label">Author(s)</label>
-                                        <input type="text" id="book-author" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-publisher" class="form-label">Publisher</label>
-                                        <input type="text" id="book-publisher" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-copyright" class="form-label">Copyright</label>
-                                        <input type="text" id="book-copyright" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-isbn" class="form-label">ISBN</label>
-                                        <input type="text" id="book-isbn" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-ccode" class="form-label">Collection Code</label>
-                                        <input type="text" id="book-ccode" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-itype" class="form-label">Itype</label>
-                                        <input type="text" id="book-itype" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-itemcall" class="form-label">Item Call Number</label>
-                                        <input type="text" id="book-itemcall" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-dateaccess" class="form-label">Date Accessioned</label>
-                                        <input type="text" id="book-dateaccess" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-copy" class="form-label">Copy Number</label>
-                                        <input type="text" id="book-copy" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-volume" class="form-label">Volume</label>
-                                        <input type="text" id="book-volume " class="form-control">
-                                    </div>
-
-
-                                    <div class="mb-3">
-                                        <label for="book-stmt" class="form-label">Edition Statement</label>
-                                        <input type="text" id="book-stmt " class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="paid-for" class="form-label">Paid For</label>
-                                        <input type="text" id="paid-for " class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-price" class="form-label">Price</label>
-                                        <input type="text" id="book-price " class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-seller" class="form-label">Book Seller</label>
-                                        <input type="text" id="book-seller " class="form-control">
-                                    </div>
-
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                        data-bs-target="#modal_bookdetails">Back</button>
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
                 <!-- pagination -->
                 <nav>
                     <ul class="pagination justify-content-center mt-4 mb-4 grid gap-2">
-                        <li class="nav-item">
-                            <a href="#" class="text-body">&laquo;</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="active text-body">1</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="text-body">2</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="text-body">3</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="text-body">4</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="text-body">&raquo;</a>
-                        </li>
+                        {% if bookData.has_previous %}
+                            <li class="nav-item">
+                                <a href="?page={{ bookData.previous_page_number }}&show={{ request.GET.show|default:'10' }}" class="text-body">&laquo;</a>
+                            </li>
+                        {% endif %}
+                        
+                        {% for page_num in page_range %}
+                            {% if page_num == current_page %}
+                                <li class="nav-item">
+                                    <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}" class="active text-body">{{ page_num }}</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}" class="text-body">{{ page_num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if bookData.has_next %}
+                            <li class="nav-item">
+                                <a href="?page={{ bookData.next_page_number }}&show={{ request.GET.show|default:'10' }}" class="text-body">&raquo;</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </nav>
 

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 
 from .models import Booklist, Inventory
 from apps.users.models import User
@@ -60,13 +61,28 @@ def dashboard_page(request):
 
 @admin_required
 def listbooks_page(request):
-    book = Booklist.objects.all()
-    bookList = list(book.values())
-    if request.method == "GET" and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return JsonResponse({
-            "itype": bookList
-        })
-    return render (request, "pages/listbooks_page.html")
+    book_list = Booklist.objects.all()
+    
+    # Get the page number from the query parameters, default to 1
+    page_number = request.GET.get('page', 1)
+    
+    # Number of items per page (matches your dropdown options: 10, 20, 30, 40)
+    items_per_page = request.GET.get('show', 10)
+    
+    # Create a paginator object
+    paginator = Paginator(book_list, items_per_page)
+    
+    # Get the page object
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        "bookData": page_obj,
+        "page_range": paginator.page_range,
+        "current_page": int(page_number),
+        "total_pages": paginator.num_pages,
+    }
+    
+    return render(request, "pages/listbooks_page.html", context)
 
 @admin_required
 def inventory_page(request):
