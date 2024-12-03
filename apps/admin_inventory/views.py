@@ -61,24 +61,29 @@ def dashboard_page(request):
 
 @admin_required
 def listbooks_page(request):
-    book_list = Booklist.objects.all()
-    
-    # Get the page number from the query parameters, default to 1
-    page_number = request.GET.get('page', 1)
-    
-    # Number of items per page (matches your dropdown options: 10, 20, 30, 40)
+    bookData = Booklist.objects.all()
+
+    page_number = request.GET.get('page')
     items_per_page = request.GET.get('show', 10)
-    
-    # Create a paginator object
-    paginator = Paginator(book_list, items_per_page)
-    
-    # Get the page object
+    paginator = Paginator(bookData, items_per_page)
     page_obj = paginator.get_page(page_number)
     
+    if request.method == "GET" and request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        bookData = list(page_obj.object_list.values())
+        
+        return JsonResponse({
+            "books": bookData,
+            "has_next": page_obj.has_next(),
+            "has_previous": page_obj.has_previous(),
+            "next_page": page_obj.next_page_number() if page_obj.has_next() else None,
+            "previous_page": page_obj.previous_page_number() if page_obj.has_previous() else None,
+            "num_pages": paginator.num_pages
+        })
+
     context = {
         "bookData": page_obj,
         "page_range": paginator.page_range,
-        "current_page": int(page_number),
+        "current_page": int(page_number) if page_number else 1,
         "total_pages": paginator.num_pages,
     }
     

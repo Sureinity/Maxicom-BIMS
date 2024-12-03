@@ -44,3 +44,11 @@ document.querySelector(".sidebar-link[href='{% url 'admin_dashboard' %}']").addE
     loadPage(page);
     fetchDashboardData();
 });
+
+
+document.querySelector(".sidebar-link[href='{% url 'admin_listbooks' %}']").addEventListener("click", function (e) {
+  e.preventDefault();
+  const page = this.getAttribute("href");
+  loadPage(page);
+  loadBooks(1);
+});
