@@ -1,0 +1,72 @@
+<aside id="sidebar" class="bg-body">
+    <div class="d-flex">
+        <button class="toggle-btn" type="button">
+            <img src="{% static 'admin_inventory/assets/bims-icon.png' %}" alt="BIMS icon" style="width: 2rem;">
+        </button>
+        <div class="sidebar-logo">
+            <h5 class="m-0">
+                <a href="#">BIMS</a>
+            </h5>
+        </div>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="sidebar-logo">
+            <span class="d-flex align-items-center grid gap-3 p-4">
+                <img src="{% static 'admin_inventory/assets/profile.png' %}" alt="profile" style="width: 3.5rem;">
+                <div class="profile_details">
+                    <p class="m-0" name="name_info">Juan dela Cruz</p>
+                    <p class="m-0" name="role" style="font-weight: 200;">Admin</p>
+                </div>
+            </span>
+        </li>
+        <li class="sidebar-item">
+            <a href="{% url 'admin_dashboard' %}" class="sidebar-link text-body">
+                <i class="fa-solid fa-house"></i></i>
+                <span class="text-body">Dashboard</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="{% url 'admin_listbooks' %}" class="sidebar-link text-body">
+                <i class="fa-solid fa-book"></i>
+                <span class="text-body">List of Books</span>
+            </a>
+        </li>
+
+        <li class="sidebar-item">
+            <a href="{% url 'admin_inventory' %}" class="sidebar-link collapsed has-dropdown text-body"
+                data-bs-toggle="collapse" data-bs-target="#inventory-dropdown" aria-expanded="false"
+                aria-controls="inventory-dropdown">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <span class="text-body">Inventory</span>
+            </a>
+            <ul id="inventory-dropdown" class="sidebar-dropdown list-unstyled collapse bg-body"
+                data-bs-parent="#sidebar">
+                <li class="sidebar-item">
+                    <a href="{% url 'admin_inventory_goodcon' %}" class="sidebar-link">Good Condition</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url 'admin_inventory_nobarcode' %}" class="sidebar-link">No Barcode Tag</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url 'admin_inventory_forrepair' %}" class="sidebar-link">For Repair</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url 'admin_inventory_fordisposal' %}" class="sidebar-link">For Disposal</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="sidebar-item">
+            <a href="{% url 'admin_usersettings' %}" class="sidebar-link text-body">
+                <i class="fa-solid fa-user-gear"></i>
+                <span class="text-body">User Management</span>
+            </a>
+        </li>
+    </ul>
+    <div class="sidebar-footer ">
+        <a href="#" class="sidebar-link d-block d-lg-none">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+</aside>
