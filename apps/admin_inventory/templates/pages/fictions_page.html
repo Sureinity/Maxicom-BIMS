@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme=" " id="htmlPage">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+
+    <!--font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- boostrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <!-- sidemenu component-->
+
+        <div class="main">
+
+            <!-- navbar component -->
+
+            <div id="content-container" class="container mt-3 p-4">
+
+                <div class="d-flex justify-content-start mb-5">
+                    <img src="assets/inventory.png" alt="inventory icon" style="width: 2em; height: 2em;">
+                    <h4 class="m-0 ps-3">Book Collection / Fictions</h4>
+                </div>
+
+                <nav class="navbar navbar-expand-lg bg-body mb-3">
+                    <div class="container-fluid">
+                        <div class="input-group" style="width: 15rem;">
+                            <span class="input-group-text d-lg-block d-none bg-body" style="border: none;">
+                                <i class="fa-solid fa-magnifying-glass"></i></span>
+                            <input class="form-control search-btn" type="text" placeholder="Search..."
+                                style=" border: none;">
+                        </div>
+
+                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                            aria-labelledby="offcanvasNavbarLabel">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Options</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body d-flex justify-content-lg-end">
+                                <ul class="navbar-nav grid gap-3">
+                                    <li class="nav-item d-flex align-items-center">
+                                        <div class="d-flex">
+                                            <p class="m-0 me-2">Showing</p>
+                                            <select class="show-select text-dark" name="rownum">
+                                                <option selected value="10">10</option>
+                                                <option value="20">20</option>
+                                                <option value="30">30</option>
+                                                <option value="40">40</option>
+                                            </select>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <div class="dropdown">
+                                            <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa-regular fa-calendar-days"></i>
+                                                &nbsp;
+                                                Filter
+                                            </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <button type="button" class="btn btn-outline-secondary"><i
+                                                class="fa-solid fa-file-export"></i>&nbsp;&nbsp;Export</button>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- table -->
+                <div class="card p-3 card-table">
+                    <!-- tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active  text-body" href="#">All (8,902)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  text-body" href="#">Found (6,094)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  text-body" href="#">Not Found (2,435)</a>
+                        </li>
+                    </ul>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="font-weight: 500;">Item Call Number</th>
+                                <th scope="col" style="font-weight: 500;">C-Code</th>
+                                <th scope="col" style="font-weight: 500;">Barcode</th>
+                                <th scope="col" style="font-weight: 500;">Title</th>
+                                <th scope="col" style="font-weight: 500;">Author</th>
+                                <th scope="col" style="font-weight: 500;">Reviewed By</th>
+                                <th scope="col" style="font-weight: 500;">Previously Checked</th>
+                                <th scope="col" style="font-weight: 500;">Latest Checked</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- sample data -->
+                            <tr>
+                                <td class="text-truncate" style="max-width: 150px;">DFil 371.3 C822 2015
+                                </td>
+                                <th scope="row">DFIL</th>
+                                <th scope="row">23435</th>
+                                <td class="text-truncate" style="max-width: 150px;">Basic baking and cake decorating
+                                </td>
+                                <td class="text-truncate" style="max-width: 150px;">Tria-Natad, Ma. Felisa
+                                </td>
+                                <td class="text-truncate" style="max-width: 150px;">Mindshapers Co., Inc.,
+                                </td>
+                                <td class="text-truncate" style="max-width: 150px;">2024-09-24
+                                </td>
+                                <td class="text-truncate" style="max-width: 150px;">2024-09-25
+                                </td>
+                            </tr>
+                            <!-- sample data -->
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- pagination -->
+                <nav>
+                    <ul class="pagination justify-content-center mt-4 mb-4 grid gap-2">
+                        <li class="nav-item">
+                            <a href="#" class="text-body">&laquo;</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="active text-body">1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="text-body">2</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="text-body">3</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="text-body">4</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="text-body">&raquo;</a>
+                        </li>
+                    </ul>
+                </nav>
+
+
+
+
+            </div>
+
+            <!-- footer component -->
+
+        </div>
+    </div>
+    <!-- boostrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
