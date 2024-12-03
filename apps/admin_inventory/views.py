@@ -13,10 +13,6 @@ Description is yet to come...
 """
 # Create your views here.
 @admin_required
-def admin_page(request):    # This view is for rendering the main container of admin dasboard page
-    return render(request, "admin_main.html")
-
-@admin_required
 def dashboard_page(request):
     # Overview
     bookCount = Booklist.objects.count()
@@ -68,17 +64,17 @@ def listbooks_page(request):
     paginator = Paginator(bookData, items_per_page)
     page_obj = paginator.get_page(page_number)
     
-    if request.method == "GET" and request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        bookData = list(page_obj.object_list.values())
+    # if request.method == "GET" and request.headers.get("X-Requested-With") == "XMLHttpRequest":
+    #     bookData = list(page_obj.object_list.values())
         
-        return JsonResponse({
-            "books": bookData,
-            "has_next": page_obj.has_next(),
-            "has_previous": page_obj.has_previous(),
-            "next_page": page_obj.next_page_number() if page_obj.has_next() else None,
-            "previous_page": page_obj.previous_page_number() if page_obj.has_previous() else None,
-            "num_pages": paginator.num_pages
-        })
+    #     return JsonResponse({
+    #         "books": bookData,
+    #         "has_next": page_obj.has_next(),
+    #         "has_previous": page_obj.has_previous(),
+    #         "next_page": page_obj.next_page_number() if page_obj.has_next() else None,
+    #         "previous_page": page_obj.previous_page_number() if page_obj.has_previous() else None,
+    #         "num_pages": paginator.num_pages
+    #     })
 
     context = {
         "bookData": page_obj,

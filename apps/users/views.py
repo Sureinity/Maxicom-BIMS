@@ -23,7 +23,7 @@ are redirected to a specific URL, while expired sessions redirect to login/
 def user_login(request):
     if request.user.is_authenticated:
         if request.user.sys_acc_role == 0:
-            return redirect('admin_main')
+            return redirect('admin_dashboard')
         return redirect('dashboard')
 
     if request.method == "POST":
@@ -35,7 +35,7 @@ def user_login(request):
         if user is not None:
             login(request, user)
             if user.sys_acc_role == 0:
-                return redirect('admin_main')
+                return redirect('admin_dashboard')
             return redirect('dashboard')
         else:
             request.session['form_data'] = {'username': username}
