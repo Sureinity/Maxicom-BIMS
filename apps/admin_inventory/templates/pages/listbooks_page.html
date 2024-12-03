@@ -112,6 +112,113 @@
                     </div>
                 </nav>
 
+                <!-- modal add book information -->
+                <div class="modal fade" id="modal-add-book" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">List
+                                    of Books / Add</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form action="" method="POST">
+                                <div class="modal-body">
+
+                                    <div class="mb-3">
+                                        <label for="book-title" class="form-label">Title</label>
+                                        <input type="text" id="book-title" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-subtitle" class="form-label">Subtitle</label>
+                                        <input type="text" id="book-subtitle" class="form-control">
+                                    </div>
+
+
+                                    <div class="mb-3">
+                                        <label for="book-author" class="form-label">Author(s)</label>
+                                        <input type="text" id="book-author" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-publisher" class="form-label">Publisher</label>
+                                        <input type="text" id="book-publisher" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-copyright" class="form-label">Copyright</label>
+                                        <input type="text" id="book-copyright" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-isbn" class="form-label">ISBN</label>
+                                        <input type="text" id="book-isbn" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-ccode" class="form-label">Collection Code</label>
+                                        <input type="text" id="book-ccode" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-itype" class="form-label">Itype</label>
+                                        <input type="text" id="book-itype" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-itemcall" class="form-label">Item Call Number</label>
+                                        <input type="text" id="book-itemcall" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-dateaccess" class="form-label">Date Accessioned</label>
+                                        <input type="text" id="book-dateaccess" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-copy" class="form-label">Copy Number</label>
+                                        <input type="text" id="book-copy" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-volume" class="form-label">Volume</label>
+                                        <input type="text" id="book-volume " class="form-control">
+                                    </div>
+
+
+                                    <div class="mb-3">
+                                        <label for="book-stmt" class="form-label">Edition Statement</label>
+                                        <input type="text" id="book-stmt " class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="paid-for" class="form-label">Paid For</label>
+                                        <input type="text" id="paid-for " class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-price" class="form-label">Price</label>
+                                        <input type="text" id="book-price " class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-seller" class="form-label">Book Seller</label>
+                                        <input type="text" id="book-seller " class="form-control">
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-backdrop="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- table -->
                 <div class="card p-3 card-table">
                     <table class="table table-hover">
@@ -130,8 +237,8 @@
                         </thead>
                         <tbody>
 
-                            <!-- sample data -->
-                          {% for data in bookData %}
+                            <!-- Data format -->
+                            {% for data in bookData %}
                             <tr data-bs-toggle="modal" data-bs-target="#modal_bookdetails_{{data.id}}">
                                 <td class="text-truncate" style="max-width: 150px;">{{ data.itype}}</td>
                                 <td class="text-truncate" style="max-width: 150px;">{{ data.col_code }}</td>
@@ -145,7 +252,8 @@
                             </tr>
 
                             <!-- Show book details (Modal) -->
-                            <div class="modal fade" id="modal_bookdetails_{{data.id}}" tabindex="-1" data-bs-backdrop="static">
+                            <div class="modal fade" id="modal_bookdetails_{{data.id}}" tabindex="-1"
+                                data-bs-backdrop="static">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -153,11 +261,15 @@
                                             &nbsp;
                                             &nbsp;
                                             <h6 class="modal-title fs-5">List of Books / Details</h6>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="title">
+                                                <span class="d-flex grid gap-1"></span>
                                                 <h5 style="font-weight: 400;">{{ data.title }}</h5>
+                                                <h5 style="font-weight: 400;">(Subtitle here)</h6>
+                                                    </span>
                                             </div>
 
                                             <div class="author">
@@ -165,7 +277,7 @@
                                                     <p>Author(s): </p>
                                                     &nbsp;
                                                     <div class="author-value">
-                                                        <p>{{ data.author }}</p>
+                                                        <p style="font-weight: 410;">{{ data.author }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -175,7 +287,7 @@
                                                     <p>Publisher: </p>
                                                     &nbsp;
                                                     <div class="publisher-value">
-                                                        <p>{{ data.publisher_code }}</p>
+                                                        <p style="font-weight: 410;">{{ data.publisher_code }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -185,7 +297,7 @@
                                                     <p>Copyright: </p>
                                                     &nbsp;
                                                     <div class="copyright-value">
-                                                        <p>{{ data.copyright }}</p>
+                                                        <p style="font-weight: 410;">{{ data.copyright }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -195,7 +307,7 @@
                                                     <p>ISBN: </p>
                                                     &nbsp;
                                                     <div class="isbn-value">
-                                                        <p>{{ data.isbn }}</p>
+                                                        <p style="font-weight: 410;">{{ data.isbn }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -205,7 +317,7 @@
                                                     <p>Collection Code: </p>
                                                     &nbsp;
                                                     <div class="cc-value">
-                                                        <p>{{ data.ccode }}</p>
+                                                        <p style="font-weight: 410;">{{ data.ccode }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -215,7 +327,7 @@
                                                     <p>Itype: </p>
                                                     &nbsp;
                                                     <div class="itype-value">
-                                                        <p>{{ data.itype }}</p>
+                                                        <p style="font-weight: 410;">{{ data.itype }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -225,7 +337,7 @@
                                                     <p>Item Call Number: </p>
                                                     &nbsp;
                                                     <div class="itemcallnum-value">
-                                                        <p>{{ data.itemcall }}</p>
+                                                        <p style="font-weight: 410;">{{ data.itemcall }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -235,7 +347,7 @@
                                                     <p>Date Accessioned: </p>
                                                     &nbsp;
                                                     <div class="date-accessioned-value">
-                                                        <p>{{ data.dateaccess }}</p>
+                                                        <p style="font-weight: 410;">{{ data.dateaccess }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -245,7 +357,7 @@
                                                     <p>Copy Number: </p>
                                                     &nbsp;
                                                     <div class="copy-number">
-                                                        <p>{{ data.copy }}</p>
+                                                        <p style="font-weight: 410;">{{ data.copy }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -256,7 +368,7 @@
                                                     <p>volume: </p>
                                                     &nbsp;
                                                     <div class="volume-number">
-                                                        <p>{{ data.volume }}</p>
+                                                        <p style="font-weight: 410;">{{ data.volume }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -266,7 +378,7 @@
                                                     <p>Edition Statement: </p>
                                                     &nbsp;
                                                     <div class="edition-number">
-                                                        <p>{{ data.stmt }}</p>
+                                                        <p style="font-weight: 410;">{{ data.stmt }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -276,7 +388,7 @@
                                                     <p>Paid for: </p>
                                                     &nbsp;
                                                     <div class="paidfor-value">
-                                                        <p>{{ data.paidfor }}</p>
+                                                        <p style="font-weight: 410;">{{ data.paidfor }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -286,7 +398,7 @@
                                                     <p>Price: </p>
                                                     &nbsp;
                                                     <div class="price-value">
-                                                        <p>{{ data.price }}</p>
+                                                        <p style="font-weight: 410;">{{ data.price }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -296,7 +408,7 @@
                                                     <p>Book Seller: </p>
                                                     &nbsp;
                                                     <div class="purchased-value">
-                                                        <p>{{ data.seller }}</p>
+                                                        <p style="font-weight: 410;">{{ data.seller }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -332,7 +444,8 @@
                                             Are you sure want to delete this book?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cancel</button>
                                             <button type="button" class="btn btn-danger">Delete</button>
                                         </div>
                                     </div>
@@ -355,6 +468,11 @@
                                                 <div class="mb-3">
                                                     <label for="book-title" class="form-label">Title</label>
                                                     <input type="text" id="book-title" class="form-control">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="book-subtitle" class="form-label">Subtitle</label>
+                                                    <input type="text" id="book-subtitle" class="form-control">
                                                 </div>
 
                                                 <div class="mb-3">
@@ -388,12 +506,14 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="book-itemcall" class="form-label">Item Call Number</label>
+                                                    <label for="book-itemcall" class="form-label">Item Call
+                                                        Number</label>
                                                     <input type="text" id="book-itemcall" class="form-control">
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="book-dateaccess" class="form-label">Date Accessioned</label>
+                                                    <label for="book-dateaccess" class="form-label">Date
+                                                        Accessioned</label>
                                                     <input type="text" id="book-dateaccess" class="form-control">
                                                 </div>
 
@@ -439,7 +559,7 @@
                                     </div>
                                 </div>
                             </div>
-                          {% endfor %}
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -448,27 +568,31 @@
                 <nav>
                     <ul class="pagination justify-content-center mt-4 mb-4 grid gap-2">
                         {% if bookData.has_previous %}
-                            <li class="nav-item">
-                                <a href="?page={{ bookData.previous_page_number }}&show={{ request.GET.show|default:'10' }}" class="text-body">&laquo;</a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="?page={{ bookData.previous_page_number }}&show={{ request.GET.show|default:'10' }}"
+                                class="text-body">&laquo;</a>
+                        </li>
                         {% endif %}
-                        
+
                         {% for page_num in page_range %}
-                            {% if page_num == current_page %}
-                                <li class="nav-item">
-                                    <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}" class="active text-body">{{ page_num }}</a>
-                                </li>
-                            {% else %}
-                                <li class="nav-item">
-                                    <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}" class="text-body">{{ page_num }}</a>
-                                </li>
-                            {% endif %}
+                        {% if page_num == current_page %}
+                        <li class="nav-item">
+                            <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}"
+                                class="active text-body">{{ page_num }}</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}" class="text-body">{{
+                                page_num }}</a>
+                        </li>
+                        {% endif %}
                         {% endfor %}
-                        
+
                         {% if bookData.has_next %}
-                            <li class="nav-item">
-                                <a href="?page={{ bookData.next_page_number }}&show={{ request.GET.show|default:'10' }}" class="text-body">&raquo;</a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="?page={{ bookData.next_page_number }}&show={{ request.GET.show|default:'10' }}"
+                                class="text-body">&raquo;</a>
+                        </li>
                         {% endif %}
                     </ul>
                 </nav>

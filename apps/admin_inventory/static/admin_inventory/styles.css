@@ -245,3 +245,7 @@ select.show-select > option {
   background-color: #5ae4a657;
   border-radius: 50%;
 }
+
+.nav-tabs .nav-link.active {
+  background-color: #9bffd2;
+}
