@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 from .models import Booklist, Inventory
 from .forms import CreateBook
@@ -47,7 +48,29 @@ def dashboard_page(request):
 
 @admin_required
 def listbooks_page(request):
-    bookData = Booklist.objects.all()
+    search_query = request.GET.get('search', '')
+    
+    if search_query:
+        # Create a Q object for each field we want to search
+        bookData = Booklist.objects.filter(
+            Q(item_call_num__icontains=search_query) |
+            Q(col_code__icontains=search_query) |
+            Q(barcode__icontains=search_query) |
+            Q(itype__icontains=search_query) |
+            Q(title__icontains=search_query) |
+            Q(author__icontains=search_query) |
+            Q(publisher_code__icontains=search_query) |
+            Q(date_accessioned__icontains=search_query) |
+            Q(copyrightdate__icontains=search_query) |
+            Q(isbn__icontains=search_query) |
+            Q(copy_num__icontains=search_query) |
+            Q(volume__icontains=search_query) |
+            Q(edition_stmt__icontains=search_query) |
+            Q(subtitle__icontains=search_query) |
+            Q(bookseller_id__icontains=search_query)
+        )
+    else:
+        bookData = Booklist.objects.all()
 
     page_number = request.GET.get('page')
     items_per_page = request.GET.get('show', 10)
@@ -59,6 +82,7 @@ def listbooks_page(request):
         "page_range": paginator.page_range,
         "current_page": int(page_number) if page_number else 1,
         "total_pages": paginator.num_pages,
+        "search_query": search_query,
     }
     
     return render(request, "pages/listbooks_page.html", context)
@@ -141,8 +165,6 @@ def update_listbooks_page(request, id):
         paidfor = request.POST.get('paidfor')
         price = request.POST.get('price')
         bookseller_id = request.POST.get('bookseller_id')
-
-        print(barcode)
 
         book.barcode = barcode
         book.title = title

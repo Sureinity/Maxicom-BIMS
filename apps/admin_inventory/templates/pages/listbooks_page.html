@@ -51,12 +51,22 @@
 
                 <nav class="navbar navbar-expand-lg bg-body mb-3">
                     <div class="container-fluid">
-                        <div class="input-group" style="width: 15rem;">
-                            <span class="input-group-text d-lg-block d-none bg-body" style="border: none;">
-                                <i class="fa-solid fa-magnifying-glass"></i></span>
-                            <input class="form-control search-btn" type="text" placeholder="Search..."
-                                style=" border: none;">
-                        </div>
+                        <form method="GET" class="d-flex" action="{% url 'admin_listbooks' %}">
+                            <div class="input-group" style="width: 15rem;">
+                                <span class="input-group-text d-lg-block d-none bg-body" style="border: none;">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </span>
+                                <input 
+                                    class="form-control search-btn" 
+                                    type="text" 
+                                    name="search"
+                                    placeholder="Search..." 
+                                    value="{{ search_query }}"
+                                    style="border: none;"
+                                >
+                                <button type="submit" class="btn btn-primary d-none">Search</button>
+                            </div>
+                        </form>
 
                         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
@@ -595,7 +605,7 @@
                     <ul class="pagination justify-content-center mt-4 mb-4 grid gap-2">
                         {% if bookData.has_previous %}
                         <li class="nav-item">
-                            <a href="?page={{ bookData.previous_page_number }}&show={{ request.GET.show|default:'10' }}"
+                            <a href="?page={{ bookData.previous_page_number }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}"
                                 class="text-body">&laquo;</a>
                         </li>
                         {% endif %}
@@ -603,19 +613,20 @@
                         {% for page_num in page_range %}
                         {% if page_num == current_page %}
                         <li class="nav-item">
-                            <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}"
+                            <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}"
                                 class="active text-body">{{ page_num }}</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}" class="text-body">{{page_num }}</a>
+                            <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}" 
+                                class="text-body">{{page_num }}</a>
                         </li>
                         {% endif %}
                         {% endfor %}
 
                         {% if bookData.has_next %}
                         <li class="nav-item">
-                            <a href="?page={{ bookData.next_page_number }}&show={{ request.GET.show|default:'10' }}"
+                            <a href="?page={{ bookData.next_page_number }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}"
                                 class="text-body">&raquo;</a>
                         </li>
                         {% endif %}
@@ -634,8 +645,11 @@
 <script>
 document.querySelector('.show-select').addEventListener('change', function () {
     const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('show', this.value); // Set the selected value in the URL
-    window.location.search = urlParams.toString(); // Update the URL with the new query string
+    urlParams.set('show', this.value);
+    if ('{{ search_query }}') {
+        urlParams.set('search', '{{ search_query }}');
+    }
+    window.location.search = urlParams.toString();
 });
 
 
