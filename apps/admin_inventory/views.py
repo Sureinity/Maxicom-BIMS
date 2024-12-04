@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
+from django.contrib import messages
 from django.core.paginator import Paginator
 
 from .models import Booklist, Inventory
@@ -84,6 +85,29 @@ def listbooks_page(request):
     }
     
     return render(request, "pages/listbooks_page.html", context)
+
+@admin_required
+def create_listbooks_page(request):
+#    if request.method == "POST":
+    return redirect("admin_listbooks")
+
+
+@admin_required
+def update_listbooks_page(request, id):
+    return redirect("admin_listbooks")
+
+@admin_required
+def delete_listbooks_page(request, id):
+    book = get_object_or_404(Booklist, id=id)
+
+    if request.method == "POST":
+        book.delete()
+        messages.success(request, "Fruit succesfully deleted!")
+    else:
+         messages.error(request, "Deletion error!")
+
+
+    return redirect("admin_listbooks")
 
 @admin_required
 def inventory_page(request):

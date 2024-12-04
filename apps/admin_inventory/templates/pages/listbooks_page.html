@@ -74,6 +74,7 @@
                             <div class="offcanvas-body d-flex justify-content-lg-end">
                                 <ul class="navbar-nav grid gap-3">
                                     <li class="nav-item d-flex align-items-center">
+                                      <form method="get">
                                         <div class="d-flex">
                                             <p class="m-0 me-2">Showing</p>
                                             <select class="show-select text-dark" name="rownum" onchange="this.form.submit()">
@@ -83,6 +84,7 @@
                                                 <option value="40" {% if request.GET.show == '40' %}selected{% endif %}>40</option>
                                             </select>
                                         </div>
+                                      </form>
                                     </li>
                                     <li class="nav-item">
                                         <div class="dropdown">
@@ -129,7 +131,8 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form action="" method="POST">
+                            <form action="{% url 'create_listbooks' %}" method="POST">
+                              {% csrf_token %}
                                 <div class="modal-body">
 
                                     <div class="mb-3">
@@ -439,26 +442,28 @@
                             </div>
 
                             <!-- modal delete book -->
-                            <div class="modal fade" id="modal-delete-book-{{data.id}}" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Book</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Are you sure want to delete this book?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Cancel</button>
-                                            <button type="button" class="btn btn-danger">Delete</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                           <div class="modal fade" id="modal-delete-book-{{ data.id }}" tabindex="-1" aria-hidden="true">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Book</h1>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <form action="{% url 'delete_listbooks' data.id %}" method="POST">
+                                          {% csrf_token %}
+                                          <div class="modal-body">
+                                              Are you sure want to delete this book?
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                              <!-- Changed type="button" to type="submit" -->
+                                              <button type="submit" class="btn btn-danger">Delete</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                          
                             <!-- modal edit book -->
                             <div class="modal fade" id="modal-edit-book-{{data.id}}" tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -469,9 +474,9 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
-                                        <form action="" method="POST">
+                                        <form action="{% url 'update_listbooks' data.id%}" method="POST">
+                                          {% csrf_token %}
                                             <div class="modal-body">
-
                                                 <div class="mb-3">
                                                     <label for="book-title" class="form-label">Title</label>
                                                     <input type="text" id="book-title" class="form-control">
@@ -613,6 +618,13 @@
 </body>
 <script src="{% static 'admin_inventory/function.js' %}"></script>
 <script>
+document.querySelector('.show-select').addEventListener('change', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('show', this.value); // Set the selected value in the URL
+    window.location.search = urlParams.toString(); // Update the URL with the new query string
+});
+
+
     const hamBurger = document.querySelector(".toggle-btn");
 
 hamBurger.addEventListener("click", function () {
