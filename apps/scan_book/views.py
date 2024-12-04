@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 
 from .forms import ManualInputBarcodeForm
+from apps.admin_inventory.models import Booklist
 
 from .decorators import redirect_dashboard_if_loggedin, redirect_login_if_not_loggedin, admin_is_not_authorized
 
@@ -55,7 +56,14 @@ def ajax_scanner_process_barcode(request):
 @admin_is_not_authorized
 @redirect_dashboard_if_loggedin
 def scanner_process_barcode(request):
-    return render(request, "book_details.html", {"scanner_process_barcode": request.session.get('scanned_barcode')})
+    barcode = request.session.get('scanned_barcode')
+    book_details = Booklist.objects.get(barcode=barcode)
+
+    return render(request, "book_details_scanner.html", {
+        "scanner_process_barcode": request.session.get('scanned_barcode'),
+        "book_details": book_details
+    })
+
 
 @admin_is_not_authorized
 @redirect_dashboard_if_loggedin
@@ -63,7 +71,8 @@ def input_process_barcode(request):
     print(request.path)
     if request.method == "POST":
         barcode = request.POST.get("barcode_manual")
+        book_details = Booklist.objects.get(barcode=barcode)
         print(barcode)
     
-    return render(request, "book_details.html", {"barcode_result": barcode})
+    return render(request, "book_details.html", {"barcode_result": barcode, "book_details": book_details})
 

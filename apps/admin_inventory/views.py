@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.core.exceptions import ValidationError
 
 from .models import Booklist, Inventory
+from .forms import CreateBook
 from apps.users.models import User
 from .decorators import admin_required
 
@@ -88,7 +90,58 @@ def listbooks_page(request):
 
 @admin_required
 def create_listbooks_page(request):
-#    if request.method == "POST":
+    if request.method == "POST":
+        try:
+            # Extract data from POST request
+            barcode = request.POST.get('barcode')
+            title = request.POST.get('title')
+            subtitle = request.POST.get('subtitle')
+            col_code = request.POST.get('col_code')
+            author = request.POST.get('author')
+            copyrightdate = request.POST.get('copyrightdate')
+            date_accessioned = request.POST.get('date_accessioned')
+            isbn = request.POST.get('isbn')
+            publisher_code = request.POST.get('publisher_code')
+            itype = request.POST.get('itype')
+            item_call_num = request.POST.get('item_call_num')
+            copy_num = request.POST.get('copy_num')
+            volume = request.POST.get('volume')
+            edition_stmt = request.POST.get('edition_stmt')
+            paidfor = request.POST.get('paidfor')
+            price = request.POST.get('price')
+            bookseller_id = request.POST.get('bookseller_id')
+
+            # Create and save the Booklist object
+            book = Booklist(
+                barcode=barcode,
+                title=title,
+                col_code=col_code,
+                subtitle=subtitle,
+                author=author,
+                copyrightdate=copyrightdate,
+                date_accessioned=date_accessioned,
+                isbn=isbn,
+                publisher_code=publisher_code,
+                itype=itype,
+                item_call_num=item_call_num,
+                copy_num=copy_num,
+                volume=volume,
+                edition_stmt=edition_stmt,
+                paidfor=paidfor,
+                price=price,
+                bookseller_id=bookseller_id
+            )
+
+            # Perform clean method validation (optional)
+            book.clean()
+
+            # Save the book instance to the database
+            book.save()
+
+  # Redirect to a success page or return a success response
+        except ValidationError as e:
+            # Handle validation error
+            return HttpResponse(f"Error: {e.message}", status=400)
     return redirect("admin_listbooks")
 
 
@@ -99,13 +152,8 @@ def update_listbooks_page(request, id):
 @admin_required
 def delete_listbooks_page(request, id):
     book = get_object_or_404(Booklist, id=id)
-
     if request.method == "POST":
         book.delete()
-        messages.success(request, "Fruit succesfully deleted!")
-    else:
-         messages.error(request, "Deletion error!")
-
 
     return redirect("admin_listbooks")
 

@@ -136,88 +136,90 @@
                                 <div class="modal-body">
 
                                     <div class="mb-3">
+                                        <label for="book-itemcall" class="form-label">Barcode / Acquisition No.</label>
+                                        <input type="text" id="book-itemcall" class="form-control" name="barcode">
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label for="book-title" class="form-label">Title</label>
-                                        <input type="text" id="book-title" class="form-control">
+                                        <input type="text" id="book-title" class="form-control" name="title">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-subtitle" class="form-label">Subtitle</label>
-                                        <input type="text" id="book-subtitle" class="form-control">
+                                        <input type="text" id="book-subtitle" class="form-control" name="subtitle">
                                     </div>
-
 
                                     <div class="mb-3">
                                         <label for="book-author" class="form-label">Author(s)</label>
-                                        <input type="text" id="book-author" class="form-control">
+                                        <input type="text" id="book-author" class="form-control" name="author">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-publisher" class="form-label">Publisher</label>
-                                        <input type="text" id="book-publisher" class="form-control">
+                                        <input type="text" id="book-publisher" class="form-control" name="publisher_code">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-copyright" class="form-label">Copyright</label>
-                                        <input type="text" id="book-copyright" class="form-control">
+                                        <input type="text" id="book-copyright" class="form-control" name="copyrightdate">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-author" class="form-label">Date Accessioned</label>
+                                        <input type="text" id="book-author" class="form-control" name="date_accessioned">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-isbn" class="form-label">ISBN</label>
-                                        <input type="text" id="book-isbn" class="form-control">
+                                        <input type="text" id="book-isbn" class="form-control" name="isbn">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-ccode" class="form-label">Collection Code</label>
-                                        <input type="text" id="book-ccode" class="form-control">
+                                        <input type="text" id="book-ccode" class="form-control" name="col_code">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-itype" class="form-label">Itype</label>
-                                        <input type="text" id="book-itype" class="form-control">
+                                        <input type="text" id="book-itype" class="form-control" name="itype">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-itemcall" class="form-label">Item Call Number</label>
-                                        <input type="text" id="book-itemcall" class="form-control">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="book-dateaccess" class="form-label">Date Accessioned</label>
-                                        <input type="text" id="book-dateaccess" class="form-control">
+                                        <input type="text" id="book-itemcall" class="form-control" name="item_call_num">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-copy" class="form-label">Copy Number</label>
-                                        <input type="text" id="book-copy" class="form-control">
+                                        <input type="text" id="book-copy" class="form-control" name="copy_num">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-volume" class="form-label">Volume</label>
-                                        <input type="text" id="book-volume " class="form-control">
+                                        <input type="text" id="book-volume " class="form-control" name="volume">
                                     </div>
 
 
                                     <div class="mb-3">
                                         <label for="book-stmt" class="form-label">Edition Statement</label>
-                                        <input type="text" id="book-stmt " class="form-control">
+                                        <input type="text" id="book-stmt " class="form-control" name="edition_stmt">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="paid-for" class="form-label">Paid For</label>
-                                        <input type="text" id="paid-for " class="form-control">
+                                        <input type="text" id="paid-for " class="form-control" name="paidfor">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-price" class="form-label">Price</label>
-                                        <input type="text" id="book-price " class="form-control">
+                                        <input type="text" id="book-price " class="form-control" name="price">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-seller" class="form-label">Book Seller</label>
-                                        <input type="text" id="book-seller " class="form-control">
+                                        <input type="text" id="book-seller " class="form-control" name="bookseller_id">
                                     </div>
-
-
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
@@ -302,12 +304,22 @@
                                                 </span>
                                             </div>
 
+                                            <div class="barcode">
+                                                <span class="d-flex">
+                                                    <p>Barcode: </p>
+                                                    &nbsp;
+                                                    <div class="barcode-value">
+                                                        <p style="font-weight: 410;">{{ data.barcode }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
                                             <div class="publication-date">
                                                 <span class="d-flex">
                                                     <p>Copyright: </p>
                                                     &nbsp;
                                                     <div class="copyright-value">
-                                                        <p style="font-weight: 410;">{{ data.copyright }}</p>
+                                                        <p style="font-weight: 410;">{{ data.copyrightdate }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -327,7 +339,7 @@
                                                     <p>Collection Code: </p>
                                                     &nbsp;
                                                     <div class="cc-value">
-                                                        <p style="font-weight: 410;">{{ data.ccode }}</p>
+                                                        <p style="font-weight: 410;">{{ data.col_code }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -347,7 +359,7 @@
                                                     <p>Item Call No.: </p>
                                                     &nbsp;
                                                     <div class="itemcallnum-value">
-                                                        <p style="font-weight: 410;">{{ data.itemcall }}</p>
+                                                        <p style="font-weight: 410;">{{ data.item_call_num }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -357,7 +369,7 @@
                                                     <p>Date Accessioned: </p>
                                                     &nbsp;
                                                     <div class="date-accessioned-value">
-                                                        <p style="font-weight: 410;">{{ data.dateaccess }}</p>
+                                                        <p style="font-weight: 410;">{{ data.date_accessioned }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -367,7 +379,7 @@
                                                     <p>Copy Number: </p>
                                                     &nbsp;
                                                     <div class="copy-number">
-                                                        <p style="font-weight: 410;">{{ data.copy }}</p>
+                                                        <p style="font-weight: 410;">{{ data.copy_num }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -375,7 +387,7 @@
 
                                             <div class="copy-num">
                                                 <span class="d-flex">
-                                                    <p>volume: </p>
+                                                    <p>Volume: </p>
                                                     &nbsp;
                                                     <div class="volume-number">
                                                         <p style="font-weight: 410;">{{ data.volume }}</p>
@@ -388,7 +400,7 @@
                                                     <p>Edition Statement: </p>
                                                     &nbsp;
                                                     <div class="edition-number">
-                                                        <p style="font-weight: 410;">{{ data.stmt }}</p>
+                                                        <p style="font-weight: 410;">{{ data.edition_stmt }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -408,7 +420,7 @@
                                                     <p>Price: </p>
                                                     &nbsp;
                                                     <div class="price-value">
-                                                        <p style="font-weight: 410;">{{ data.price }}</p>
+                                                        <p style="font-weight: 410;">₱{{ data.price }}</p>
                                                     </div>
                                                 </span>
                                             </div>
@@ -418,7 +430,7 @@
                                                     <p>Book Seller: </p>
                                                     &nbsp;
                                                     <div class="purchased-value">
-                                                        <p style="font-weight: 410;">{{ data.seller }}</p>
+                                                        <p style="font-weight: 410;">{{ data.bookseller_id }}</p>
                                                     </div>
                                                 </span>
                                             </div>
