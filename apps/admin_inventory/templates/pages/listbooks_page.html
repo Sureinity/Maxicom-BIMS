@@ -56,14 +56,8 @@
                                 <span class="input-group-text d-lg-block d-none bg-body" style="border: none;">
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </span>
-                                <input 
-                                    class="form-control search-btn" 
-                                    type="text" 
-                                    name="search"
-                                    placeholder="Search..." 
-                                    value="{{ search_query }}"
-                                    style="border: none;"
-                                >
+                                <input class="form-control search-btn" type="text" name="search" placeholder="Search..."
+                                    value="{{ search_query }}" style="border: none;">
                                 <button type="submit" class="btn btn-primary d-none">Search</button>
                             </div>
                         </form>
@@ -84,17 +78,22 @@
                             <div class="offcanvas-body d-flex justify-content-lg-end">
                                 <ul class="navbar-nav grid gap-3">
                                     <li class="nav-item d-flex align-items-center">
-                                      <form method="get">
-                                        <div class="d-flex">
-                                            <p class="m-0 me-2">Showing</p>
-                                            <select class="show-select text-dark" name="rownum" onchange="this.form.submit()">
-                                                <option value="10" {% if request.GET.show == '10' or not request.GET.show %}selected{% endif %}>10</option>
-                                                <option value="20" {% if request.GET.show == '20' %}selected{% endif %}>20</option>
-                                                <option value="30" {% if request.GET.show == '30' %}selected{% endif %}>30</option>
-                                                <option value="40" {% if request.GET.show == '40' %}selected{% endif %}>40</option>
-                                            </select>
-                                        </div>
-                                      </form>
+                                        <form method="get">
+                                            <div class="d-flex">
+                                                <p class="m-0 me-2">Showing</p>
+                                                <select class="show-select text-dark" name="rownum"
+                                                    onchange="this.form.submit()">
+                                                    <option value="10" {% if request.GET.show=='10' or not
+                                                        request.GET.show %}selected{% endif %}>10</option>
+                                                    <option value="20" {% if request.GET.show=='20' %}selected{% endif
+                                                        %}>20</option>
+                                                    <option value="30" {% if request.GET.show=='30' %}selected{% endif
+                                                        %}>30</option>
+                                                    <option value="40" {% if request.GET.show=='40' %}selected{% endif
+                                                        %}>40</option>
+                                                </select>
+                                            </div>
+                                        </form>
                                     </li>
                                     <li class="nav-item">
                                         <div class="dropdown">
@@ -104,11 +103,15 @@
                                                 &nbsp;
                                                 Filter
                                             </a>
-
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                <li data-bs-toggle="modal" data-bs-target="#filter-bookcollections"><a
+                                                        href="#" class="dropdown-item">By Book Collections</a></li>
+                                                <li data-bs-toggle="modal" data-bs-target="#filter-itemcallno"><a
+                                                        class="dropdown-item" href="#">By Item Call No.</a></li>
+                                                <li data-bs-toggle="modal" data-bs-target="#filter-copyright"><a
+                                                        class="dropdown-item" href="#">By Copyright</a></li>
+                                                <li data-bs-toggle="modal" data-bs-target="#filter-customize"><a
+                                                        class="dropdown-item" href="#">Customize</a></li>
                                             </ul>
                                         </div>
                                     </li>
@@ -131,6 +134,185 @@
                     </div>
                 </nav>
 
+
+
+                <!-- filter modal - book collection  -->
+                <div class="modal fade" id="filter-bookcollections" tabindex="-1"
+                    aria-labelledby="filter-bookcollections" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="filter-bookcollections">Filter / By Book Collections
+                                </h1>
+                                <button type=" button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+                            <form action="" method="POST">
+                                <div class="modal-body">
+                                    <div>
+                                        <label for="book-collections" class="form-label mb-2">
+                                            Select
+                                        </label>
+                                        <select class="form-select" name="book-collections">
+                                            <option selected value="0">Circulations</option>
+                                            <option value="1">Filipiniana</option>
+                                            <option value="2">General References</option>
+                                            <option value="3">Fictions</option>
+                                            <option value="4">Bound Periodicals</option>
+                                            <option value="5">Undergraduate Thesis</option>
+                                            <option value="6">AV CDs</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn uni-btn">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- filter modal-item call number -->
+                <div class="modal fade" id="filter-itemcallno" tabindex="-1" aria-labelledby="filter-itemcallno"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="filter-itemcallno">Filter / By Item Call No.</h1>
+                                <button type=" button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+                            <form action="" method="POST">
+                                <div class="modal-body">
+                                    <div class="my-2">
+                                        <label for="yearpub" class="form-label mb-2">
+                                            Enter Decimal Range
+                                        </label>
+                                        <div class="d-flex align-items-center grid gap-3">
+                                            <input type="text" class="form-control" id="item-decimal-start"
+                                                name="item-decimal-start" placeholder="From">
+                                            <i class="fa-solid fa-minus"></i>
+                                            <input type="text" class="form-control" id="item-decimal-end"
+                                                name="item-decimal-end" placeholder="To">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn uni-btn">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- filter modal- copyright-->
+                <div class="modal fade" id="filter-copyright" tabindex="-1" aria-labelledby="filter-copyright"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="filter-copyright">Filter / By Copyright</h1>
+                                <button type=" button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+                            <form action="" method="POST">
+                                <div class="modal-body">
+                                    <div class="my-2">
+                                        <label for="yearpub" class="form-label mb-2">
+                                            Copyright Range
+                                        </label>
+                                        <div class="d-flex align-items-center grid gap-3">
+                                            <input type="text" class="form-control" id="year-start" name="year-start"
+                                                placeholder="From">
+                                            <i class="fa-solid fa-minus"></i>
+                                            <input type="text" class="form-control" id="year-end" name="year-end"
+                                                placeholder="To">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn uni-btn">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- filter modal - customize-->
+                <div class="modal fade" id="filter-customize" tabindex="-1" aria-labelledby="filter-customize"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="filter-customize ">Filter / Customize
+                                </h1>
+                                <button type=" button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+                            <form action="" method="POST">
+                                <div class="modal-body">
+                                    <div class="mb-4">
+                                        <label for="book-collections" class="form-label mb-2">
+                                            Select
+                                        </label>
+                                        <select class="form-select" name="book-collections">
+                                            <option selected value="0">Circulations</option>
+                                            <option value="1">Filipiniana</option>
+                                            <option value="2">General References</option>
+                                            <option value="3">Fictions</option>
+                                            <option value="4">Bound Periodicals</option>
+                                            <option value="5">Undergraduate Thesis</option>
+                                            <option value="6">AV CDs</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="yearpub" class="form-label mb-2">
+                                            Enter Decimal Range
+                                        </label>
+                                        <div class="d-flex align-items-center grid gap-3">
+                                            <input type="text" class="form-control" id="item-decimal-start"
+                                                name="item-decimal-start" placeholder="From">
+                                            <i class="fa-solid fa-minus"></i>
+                                            <input type="text" class="form-control" id="item-decimal-end"
+                                                name="item-decimal-end" placeholder="To">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="yearpub" class="form-label mb-2">
+                                            Copyright Range
+                                        </label>
+                                        <div class="d-flex align-items-center grid gap-3">
+                                            <input type="text" class="form-control" id="year-start" name="year-start"
+                                                placeholder="From">
+                                            <i class="fa-solid fa-minus"></i>
+                                            <input type="text" class="form-control" id="year-end" name="year-end"
+                                                placeholder="To">
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn uni-btn">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
                 <!-- modal add book information -->
                 <div class="modal fade" id="modal-add-book" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
@@ -142,7 +324,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <form action="{% url 'create_listbooks' %}" method="POST">
-                              {% csrf_token %}
+                                {% csrf_token %}
                                 <div class="modal-body">
 
                                     <div class="mb-3">
@@ -167,17 +349,20 @@
 
                                     <div class="mb-3">
                                         <label for="book-publisher" class="form-label">Publisher</label>
-                                        <input type="text" id="book-publisher" class="form-control" name="publisher_code">
+                                        <input type="text" id="book-publisher" class="form-control"
+                                            name="publisher_code">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-copyright" class="form-label">Copyright</label>
-                                        <input type="text" id="book-copyright" class="form-control" name="copyrightdate">
+                                        <input type="text" id="book-copyright" class="form-control"
+                                            name="copyrightdate">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="book-author" class="form-label">Date Accessioned</label>
-                                        <input type="text" id="book-author" class="form-control" name="date_accessioned">
+                                        <input type="text" id="book-author" class="form-control"
+                                            name="date_accessioned">
                                     </div>
 
                                     <div class="mb-3">
@@ -272,7 +457,7 @@
                                 <td class="text-truncate" style="max-width: 150px;">{{ data.copy_num }}</td>
                                 <td class="text-truncate" style="max-width: 150px;">{{ data.volume }}</td>
                             </tr>
-                            
+
 
                             <!-- Show book details (Modal) -->
                             <div class="modal fade" id="modal_bookdetails_{{data.id}}" tabindex="-1"
@@ -291,7 +476,7 @@
                                             <div class="title">
                                                 <span class="d-flex grid gap-1"></span>
                                                 <h5 style="font-weight: 400;">{{ data.title }} {{ data.subtitle }}</h5>
-                                                    </span>
+                                                </span>
                                             </div>
 
                                             <div class="author">
@@ -464,28 +649,31 @@
                             </div>
 
                             <!-- modal delete book -->
-                           <div class="modal fade" id="modal-delete-book-{{ data.id }}" tabindex="-1" aria-hidden="true">
-                              <div class="modal-dialog">
-                                  <div class="modal-content">
-                                      <div class="modal-header">
-                                          <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Book</h1>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <form action="{% url 'delete_listbooks' data.id %}" method="POST">
-                                          {% csrf_token %}
-                                          <div class="modal-body">
-                                              Are you sure want to delete this book?
-                                          </div>
-                                          <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                              <!-- Changed type="button" to type="submit" -->
-                                              <button type="submit" class="btn btn-danger">Delete</button>
-                                          </div>
-                                      </form>
-                                  </div>
-                              </div>
-                          </div>
-                          
+                            <div class="modal fade" id="modal-delete-book-{{ data.id }}" tabindex="-1"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Book</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <form action="{% url 'delete_listbooks' data.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="modal-body">
+                                                Are you sure want to delete this book?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancel</button>
+                                                <!-- Changed type="button" to type="submit" -->
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- modal edit book -->
                             <div class="modal fade" id="modal-edit-book-{{data.id}}" tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -497,94 +685,113 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <form action="{% url 'update_listbooks' data.id %}" method="POST">
-                                          {% csrf_token %}
+                                            {% csrf_token %}
                                             <div class="modal-body">
                                                 <div class="mb-3">
-                                                    <label for="book-itemcall" class="form-label">Barcode / Acquisition No.</label>
-                                                    <input type="text" id="book-itemcall" class="form-control" name="barcode" value="{{ data.barcode }}">
+                                                    <label for="book-itemcall" class="form-label">Barcode / Acquisition
+                                                        No.</label>
+                                                    <input type="text" id="book-itemcall" class="form-control"
+                                                        name="barcode" value="{{ data.barcode }}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-title" class="form-label">Title</label>
-                                                    <input type="text" id="book-title" class="form-control" name="title" value="{{ data.title }}">
+                                                    <input type="text" id="book-title" class="form-control" name="title"
+                                                        value="{{ data.title }}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-subtitle" class="form-label">Subtitle</label>
-                                                    <input type="text" id="book-subtitle" class="form-control" name="subtitle" value="{{ data.subtitle }}">
+                                                    <input type="text" id="book-subtitle" class="form-control"
+                                                        name="subtitle" value="{{ data.subtitle }}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-author" class="form-label">Author(s)</label>
-                                                    <input type="text" id="book-author" class="form-control" name="author" value="{{ data.author}}">
+                                                    <input type="text" id="book-author" class="form-control"
+                                                        name="author" value="{{ data.author}}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-publisher" class="form-label">Publisher</label>
-                                                    <input type="text" id="book-publisher" class="form-control" name="publisher_code" value="{{ data.publisher_code }}">
+                                                    <input type="text" id="book-publisher" class="form-control"
+                                                        name="publisher_code" value="{{ data.publisher_code }}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-copyright" class="form-label">Copyright</label>
-                                                    <input type="text" id="book-copyright" class="form-control" name="copyrightdate" value="{{ data.copyrightdate}}">
+                                                    <input type="text" id="book-copyright" class="form-control"
+                                                        name="copyrightdate" value="{{ data.copyrightdate}}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-author" class="form-label">Date Accessioned</label>
-                                                    <input type="text" id="book-author" class="form-control" name="date_accessioned" value="{{ data.date_accessioned }}">
+                                                    <input type="text" id="book-author" class="form-control"
+                                                        name="date_accessioned" value="{{ data.date_accessioned }}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-isbn" class="form-label">ISBN</label>
-                                                    <input type="text" id="book-isbn" class="form-control" name="isbn" value="{{ data.isbn }}">
+                                                    <input type="text" id="book-isbn" class="form-control" name="isbn"
+                                                        value="{{ data.isbn }}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-ccode" class="form-label">Collection Code</label>
-                                                    <input type="text" id="book-ccode" class="form-control" name="col_code" value="{{ data.col_code }}">
+                                                    <input type="text" id="book-ccode" class="form-control"
+                                                        name="col_code" value="{{ data.col_code }}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-itype" class="form-label">Itype</label>
-                                                    <input type="text" id="book-itype" class="form-control" name="itype" value="{{ data.itype }}">
+                                                    <input type="text" id="book-itype" class="form-control" name="itype"
+                                                        value="{{ data.itype }}">
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="book-itemcall" class="form-label">Item Call Number</label>
-                                                    <input type="text" id="book-itemcall" class="form-control" name="item_call_num" value="{{ data.item_call_num }}">
+                                                    <label for="book-itemcall" class="form-label">Item Call
+                                                        Number</label>
+                                                    <input type="text" id="book-itemcall" class="form-control"
+                                                        name="item_call_num" value="{{ data.item_call_num }}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-copy" class="form-label">Copy Number</label>
-                                                    <input type="text" id="book-copy" class="form-control" name="copy_num" value="{{ data.copy_num }}">
+                                                    <input type="text" id="book-copy" class="form-control"
+                                                        name="copy_num" value="{{ data.copy_num }}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-volume" class="form-label">Volume</label>
-                                                    <input type="text" id="book-volume " class="form-control" name="volume" value="{{ data.volume }}">
+                                                    <input type="text" id="book-volume " class="form-control"
+                                                        name="volume" value="{{ data.volume }}">
                                                 </div>
 
 
                                                 <div class="mb-3">
                                                     <label for="book-stmt" class="form-label">Edition Statement</label>
-                                                    <input type="text" id="book-stmt " class="form-control" name="edition_stmt"  value="{{ data.edition_stmt}}">
+                                                    <input type="text" id="book-stmt " class="form-control"
+                                                        name="edition_stmt" value="{{ data.edition_stmt}}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="paid-for" class="form-label">Paid For</label>
-                                                    <input type="text" id="paid-for " class="form-control" name="paidfor" value="{{ data.paidfor}}">
+                                                    <input type="text" id="paid-for " class="form-control"
+                                                        name="paidfor" value="{{ data.paidfor}}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-price" class="form-label">Price</label>
-                                                    <input type="text" id="book-price " class="form-control" name="price" value="{{ data.price }}">
+                                                    <input type="text" id="book-price " class="form-control"
+                                                        name="price" value="{{ data.price }}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="book-seller" class="form-label">Book Seller</label>
-                                                    <input type="text" id="book-seller " class="form-control" name="bookseller_id" value="{{ data.bookseller_id}}">
+                                                    <input type="text" id="book-seller " class="form-control"
+                                                        name="bookseller_id" value="{{ data.bookseller_id}}">
                                                 </div>
- 
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
@@ -618,7 +825,7 @@
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}" 
+                            <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}"
                                 class="text-body">{{page_num }}</a>
                         </li>
                         {% endif %}
@@ -643,21 +850,22 @@
 </body>
 <script src="{% static 'admin_inventory/function.js' %}"></script>
 <script>
-document.querySelector('.show-select').addEventListener('change', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('show', this.value);
-    if ('{{ search_query }}') {
-        urlParams.set('search', '{{ search_query }}');
-    }
-    window.location.search = urlParams.toString();
-});
+    document.querySelector('.show-select').addEventListener('change', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('show', this.value);
+        if ('{{ search_query }}') {
+            urlParams.set('search', '{{ search_query }}');
+        }
+        window.location.search = urlParams.toString();
+    });
 
 
     const hamBurger = document.querySelector(".toggle-btn");
 
-hamBurger.addEventListener("click", function () {
-  document.querySelector("#sidebar").classList.toggle("expand");
-});
+    hamBurger.addEventListener("click", function () {
+        document.querySelector("#sidebar").classList.toggle("expand");
+    });
 
 </script>
+
 </html>
