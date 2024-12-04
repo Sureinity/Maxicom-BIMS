@@ -42,20 +42,7 @@ def dashboard_page(request):
         "forRepair": forRepair,
         "forDisposal": forDisposal
     }
-    # if request.method == "GET" and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-    #     return JsonResponse({
-    #         # Overview
-    #         "bookCount": bookCount,
-    #         "bookScanned": bookScanned,
-    #         "bookUnscanned": bookUnscanned,
-    #         "totalUsers": totalUsers,
-    #
-    #         # Book states
-    #         "goodCondition": goodCondition,
-    #         "noBacodeTag": noBacodeTag,
-    #         "forRepair": forRepair,
-    #         "forDisposal": forDisposal
-    #     })
+
     return render(request, "pages/dashboard_page.html", context)
 
 @admin_required
@@ -66,18 +53,6 @@ def listbooks_page(request):
     items_per_page = request.GET.get('show', 10)
     paginator = Paginator(bookData, items_per_page)
     page_obj = paginator.get_page(page_number)
-    
-    # if request.method == "GET" and request.headers.get("X-Requested-With") == "XMLHttpRequest":
-    #     bookData = list(page_obj.object_list.values())
-        
-    #     return JsonResponse({
-    #         "books": bookData,
-    #         "has_next": page_obj.has_next(),
-    #         "has_previous": page_obj.has_previous(),
-    #         "next_page": page_obj.next_page_number() if page_obj.has_next() else None,
-    #         "previous_page": page_obj.previous_page_number() if page_obj.has_previous() else None,
-    #         "num_pages": paginator.num_pages
-    #     })
 
     context = {
         "bookData": page_obj,
@@ -147,6 +122,48 @@ def create_listbooks_page(request):
 
 @admin_required
 def update_listbooks_page(request, id):
+    book = Booklist.objects.get(id=id)
+    if request.method == "POST":
+        barcode = request.POST.get('barcode')
+        title = request.POST.get('title')
+        subtitle = request.POST.get('subtitle')
+        col_code = request.POST.get('col_code')
+        author = request.POST.get('author')
+        copyrightdate = request.POST.get('copyrightdate')
+        date_accessioned = request.POST.get('date_accessioned')
+        isbn = request.POST.get('isbn')
+        publisher_code = request.POST.get('publisher_code')
+        itype = request.POST.get('itype')
+        item_call_num = request.POST.get('item_call_num')
+        copy_num = request.POST.get('copy_num')
+        volume = request.POST.get('volume')
+        edition_stmt = request.POST.get('edition_stmt')
+        paidfor = request.POST.get('paidfor')
+        price = request.POST.get('price')
+        bookseller_id = request.POST.get('bookseller_id')
+
+        print(barcode)
+
+        book.barcode = barcode
+        book.title = title
+        book.col_code = col_code
+        book.subtitle = subtitle
+        book.author = author
+        book.copyrightdate = copyrightdate
+        book.date_accessioned = date_accessioned
+        book.isbn = isbn
+        book.publisher_code = publisher_code
+        book.itype = itype
+        book.item_call_num = item_call_num
+        book.copy_num = copy_num
+        book.volume = volume
+        book.edition_stmt = edition_stmt
+        book.paidfor = paidfor
+        book.price = price
+        book.bookseller_id = bookseller_id
+
+        book.save()
+
     return redirect("admin_listbooks")
 
 @admin_required

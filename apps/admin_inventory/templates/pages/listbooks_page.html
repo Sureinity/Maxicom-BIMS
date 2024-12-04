@@ -489,90 +489,92 @@
                                         <form action="{% url 'update_listbooks' data.id%}" method="POST">
                                           {% csrf_token %}
                                             <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="book-title" class="form-label">Title</label>
-                                                    <input type="text" id="book-title" class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-itemcall" class="form-label">Barcode / Acquisition No.</label>
+                                        <input type="text" id="book-itemcall" class="form-control" name="barcode" value="{{ data.barcode }}">
+                                    </div>
 
-                                                <div class="mb-3">
-                                                    <label for="book-subtitle" class="form-label">Subtitle</label>
-                                                    <input type="text" id="book-subtitle" class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-title" class="form-label">Title</label>
+                                        <input type="text" id="book-title" class="form-control" name="title" value="{{ data.title }}">
+                                    </div>
 
-                                                <div class="mb-3">
-                                                    <label for="book-author" class="form-label">Author(s)</label>
-                                                    <input type="text" id="book-author" class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-subtitle" class="form-label">Subtitle</label>
+                                        <input type="text" id="book-subtitle" class="form-control" name="subtitle" value="{{ data.subtitle }}">
+                                    </div>
 
-                                                <div class="mb-3">
-                                                    <label for="book-publisher" class="form-label">Publisher</label>
-                                                    <input type="text" id="book-publisher" class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-author" class="form-label">Author(s)</label>
+                                        <input type="text" id="book-author" class="form-control" name="author" value="{{ data.author}}">
+                                    </div>
 
-                                                <div class="mb-3">
-                                                    <label for="book-copyright" class="form-label">Copyright</label>
-                                                    <input type="text" id="book-copyright" class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-publisher" class="form-label">Publisher</label>
+                                        <input type="text" id="book-publisher" class="form-control" name="publisher_code" value="{{ data.publisher_code }}">
+                                    </div>
 
-                                                <div class="mb-3">
-                                                    <label for="book-isbn" class="form-label">ISBN</label>
-                                                    <input type="text" id="book-isbn" class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-copyright" class="form-label">Copyright</label>
+                                        <input type="text" id="book-copyright" class="form-control" name="copyrightdate" value="{{ data.copyrightdate}}">
+                                    </div>
 
-                                                <div class="mb-3">
-                                                    <label for="book-ccode" class="form-label">Collection Code</label>
-                                                    <input type="text" id="book-ccode" class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-author" class="form-label">Date Accessioned</label>
+                                        <input type="text" id="book-author" class="form-control" name="date_accessioned" value="{{ data.date_accessioned }}">
+                                    </div>
 
-                                                <div class="mb-3">
-                                                    <label for="book-itype" class="form-label">Itype</label>
-                                                    <input type="text" id="book-itype" class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-isbn" class="form-label">ISBN</label>
+                                        <input type="text" id="book-isbn" class="form-control" name="isbn" value="{{ data.date_accessioned }}">
+                                    </div>
 
-                                                <div class="mb-3">
-                                                    <label for="book-itemcall" class="form-label">Item Call
-                                                        Number</label>
-                                                    <input type="text" id="book-itemcall" class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-ccode" class="form-label">Collection Code</label>
+                                        <input type="text" id="book-ccode" class="form-control" name="col_code" value="{{ data.col_code }}">
+                                    </div>
 
-                                                <div class="mb-3">
-                                                    <label for="book-dateaccess" class="form-label">Date
-                                                        Accessioned</label>
-                                                    <input type="text" id="book-dateaccess" class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-itype" class="form-label">Itype</label>
+                                        <input type="text" id="book-itype" class="form-control" name="itype" value="{{ data.itype }}">
+                                    </div>
 
-                                                <div class="mb-3">
-                                                    <label for="book-copy" class="form-label">Copy Number</label>
-                                                    <input type="text" id="book-copy" class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-itemcall" class="form-label">Item Call Number</label>
+                                        <input type="text" id="book-itemcall" class="form-control" name="item_call_num" value="{{ data.item_call_num }}">
+                                    </div>
 
-                                                <div class="mb-3">
-                                                    <label for="book-volume" class="form-label">Volume</label>
-                                                    <input type="text" id="book-volume " class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-copy" class="form-label">Copy Number</label>
+                                        <input type="text" id="book-copy" class="form-control" name="copy_num" value="{{ data.copy_num }}">
+                                    </div>
 
-
-                                                <div class="mb-3">
-                                                    <label for="book-stmt" class="form-label">Edition Statement</label>
-                                                    <input type="text" id="book-stmt " class="form-control">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="paid-for" class="form-label">Paid For</label>
-                                                    <input type="text" id="paid-for " class="form-control">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="book-price" class="form-label">Price</label>
-                                                    <input type="text" id="book-price " class="form-control">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="book-seller" class="form-label">Book Seller</label>
-                                                    <input type="text" id="book-seller " class="form-control">
-                                                </div>
+                                    <div class="mb-3">
+                                        <label for="book-volume" class="form-label">Volume</label>
+                                        <input type="text" id="book-volume " class="form-control" name="volume" value="{{ data.volume }}">
+                                    </div>
 
 
+                                    <div class="mb-3">
+                                        <label for="book-stmt" class="form-label">Edition Statement</label>
+                                        <input type="text" id="book-stmt " class="form-control" name="edition_stmt">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="paid-for" class="form-label">Paid For</label>
+                                        <input type="text" id="paid-for " class="form-control" name="paidfor">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-price" class="form-label">Price</label>
+                                        <input type="text" id="book-price " class="form-control" name="price">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="book-seller" class="form-label">Book Seller</label>
+                                        <input type="text" id="book-seller " class="form-control" name="bookseller_id">
+                                    </div>
+ 
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
