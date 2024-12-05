@@ -270,24 +270,3 @@ def inventory_page(request):
 @admin_required
 def usersettings_page(request):
     return render (request, "pages/usersettings_page.html")
-
-
-# Hamburger pages
-@admin_required
-def goodcon_page(request):
-    return render (request, "pages/goodcon_page.html")
-
-@admin_required
-def nobarcode_page(request):
-    return render (request, "pages/nobarcode_page.html")
-
-@admin_required
-def forrepair_page(request):
-    return render (request, "pages/forrepair_page.html")
-
-@admin_required
-def fordisposal_page(request):
-    return render (request, "pages/fordisposal_page.html")
-
-
-
