@@ -9,6 +9,7 @@ from .models import Booklist, Inventory
 from .forms import CreateBook
 from apps.users.models import User
 from .decorators import admin_required
+from .filters import apply_book_filters
 
 """
 ADMIN SIDE | INVENTORY
@@ -55,83 +56,16 @@ def listbooks_page(request):
     year_start = request.GET.get('year-start', '')
     year_end = request.GET.get('year-end', '')
     
-    # Start with all books
-    bookData = Booklist.objects.all()
-    
-    # Helper function to extract decimal number
-    def extract_decimal(call_num):
-        try:
-            parts = call_num.split()
-            if len(parts) >= 2:
-                return float(parts[1])
-            return None
-        except (ValueError, IndexError):
-            return None
-    
-    # Track if we're using filtered lists
-    using_filtered_list = False
-    
-    # Apply collection filter if present
-    if collection_filter:
-        bookData = bookData.filter(col_code=collection_filter)
-    
-    # Apply Dewey Decimal filter
-    if decimal_start and decimal_end:
-        try:
-            start_val = float(decimal_start)
-            end_val = float(decimal_end)
-            bookData = [
-                book for book in bookData
-                if extract_decimal(book.item_call_num) is not None
-                and start_val <= extract_decimal(book.item_call_num) <= end_val
-            ]
-            using_filtered_list = True
-        except ValueError:
-            pass
-
-    # Apply Copyright Year filter
-    if year_start and year_end:
-        try:
-            start_year = int(year_start)
-            end_year = int(year_end)
-            if using_filtered_list:  # If already using a filtered list
-                bookData = [
-                    book for book in bookData
-                    if book.copyrightdate and start_year <= int(book.copyrightdate) <= end_year
-                ]
-            else:  # If still using queryset
-                bookData = bookData.filter(
-                    copyrightdate__gte=str(start_year),
-                    copyrightdate__lte=str(end_year)
-                )
-                using_filtered_list = True
-        except ValueError:
-            pass
-    
-    # Apply search filter if present
-    if search_query:
-        if using_filtered_list:  # If using any filtered list
-            bookData = [
-                book for book in bookData
-                if any(search_query.lower() in str(getattr(book, field)).lower() 
-                    for field in ['item_call_num', 'barcode', 'title', 'author', 
-                                'publisher_code', 'isbn', 'subtitle'])
-            ]
-        else:  # If still using queryset
-            bookData = bookData.filter(
-                Q(item_call_num__icontains=search_query) |
-                Q(barcode__icontains=search_query) |
-                Q(itype__icontains=search_query) |
-                Q(title__icontains=search_query) |
-                Q(author__icontains=search_query) |
-                Q(publisher_code__icontains=search_query) |
-                Q(isbn__icontains=search_query) |
-                Q(subtitle__icontains=search_query)
-            )
-
-    # Convert to list if still a queryset
-    if not isinstance(bookData, list):
-        bookData = list(bookData)
+    # Apply filters using the reusable function
+    bookData = apply_book_filters(
+        Booklist.objects.all(),
+        search_query=search_query,
+        collection_filter=collection_filter,
+        decimal_start=decimal_start,
+        decimal_end=decimal_end,
+        year_start=year_start,
+        year_end=year_end
+    )
 
     # Pagination
     page_number = request.GET.get('page', 1)
