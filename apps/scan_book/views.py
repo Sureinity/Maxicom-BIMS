@@ -82,11 +82,12 @@ def input_process_barcode(request):
 
 def input_submit_status(request):
     if request.method == "POST":
-        inventory = Inventory.objects.create(barcode=request.POST.get('barcode'))
-        barcode = request.POST.get("barcode")
         bookState = int(request.POST.get("bookstate"))
+        barcode = request.POST.get("barcode")
+        book = Booklist.objects.get(barcode=barcode)
+        inventory = Inventory.objects.create(book=book, status=bookState)
         
-        book_details = Booklist.objects.get(barcode=barcode)
+        inventory.save()
         return redirect("barcode_input")
     return render(request, "book_details.html", {"barcode_result": barcode, "book_details": book_details})
 
