@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import JsonResponse
+from django.contrib import messages
 
 from .forms import ManualInputBarcodeForm
-from apps.admin_inventory.models import Booklist
+from apps.admin_inventory.models import Booklist, Inventory
 
 from .decorators import redirect_dashboard_if_loggedin, redirect_login_if_not_loggedin, admin_is_not_authorized
 
@@ -68,11 +69,26 @@ def scanner_process_barcode(request):
 @admin_is_not_authorized
 @redirect_dashboard_if_loggedin
 def input_process_barcode(request):
-    print(request.path)
     if request.method == "POST":
-        barcode = request.POST.get("barcode_manual")
-        book_details = Booklist.objects.get(barcode=barcode)
-        print(barcode)
+        try:
+            barcode = request.POST.get("barcode_manual")
+            book_details = Booklist.objects.get(barcode=barcode)
+        except Booklist.DoesNotExist:
+            messages.error(request, "Book not found.")
+            print(f"Book with barcode {barcode} does not exist")
+            return redirect("barcode_input")
     
     return render(request, "book_details.html", {"barcode_result": barcode, "book_details": book_details})
 
+def input_submit_status(request):
+    if request.method == "POST":
+        inventory = Inventory.objects.create(barcode=request.POST.get('barcode'))
+        barcode = request.POST.get("barcode")
+        bookState = int(request.POST.get("bookstate"))
+        
+        book_details = Booklist.objects.get(barcode=barcode)
+        return redirect("barcode_input")
+    return render(request, "book_details.html", {"barcode_result": barcode, "book_details": book_details})
+
+def scanner_submit_status(request):
+    return redirect("barcode_input")
