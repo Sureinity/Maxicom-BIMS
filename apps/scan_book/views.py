@@ -85,10 +85,16 @@ def input_submit_status(request):
         bookState = int(request.POST.get("bookstate"))
         barcode = request.POST.get("barcode")
         book = Booklist.objects.get(barcode=barcode)
-        inventory = Inventory.objects.create(book=book, status=bookState)
-        
-        inventory.save()
+
+        try:
+            inventory = Inventory.objects.get(book=book)
+            inventory.status = bookState
+            inventory.save()
+        except Inventory.DoesNotExist:
+            Inventory.objects.create(book=book, status=bookState)
+
         return redirect("barcode_input")
+
     return render(request, "book_details.html", {"barcode_result": barcode, "book_details": book_details})
 
 def scanner_submit_status(request):
