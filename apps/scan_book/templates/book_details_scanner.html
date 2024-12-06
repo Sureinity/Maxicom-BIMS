@@ -65,7 +65,7 @@
             <div class="card" style="width: 40rem;">
                 <div class="card-body">
                     <h5 class="p-3 m-1 mb-3 text-center">Book Details</h5>
-                    <form action="" method="">
+                    <form action="{% url 'input_submit_status' %}" method="POST">
                         <div class="p-3 m-1">
                             <label for="barcode" class="form-label mb-2">
                                 Barcode
@@ -112,10 +112,10 @@
                                     Book State
                                 </label>
                                 <select class="form-select" name="bookstate">
-                                    <option selected value="0">Good Condition</option>
-                                    <option value="1">No Barcode Tag</option>
-                                    <option value="2">For Repair</option>
-                                    <option value="3">For Disposal</option>
+                                    <option selected value="1">Good Condition</option>
+                                    <option value="2">No Barcode Tag</option>
+                                    <option value="3">For Repair</option>
+                                    <option value="4">For Disposal</option>
                                 </select>
                             </div>
 

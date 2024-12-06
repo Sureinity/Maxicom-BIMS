@@ -12,6 +12,5 @@ urlpatterns = [
     path("input/book-details/", views.input_process_barcode, name="input_process_barcode"),
 
     # Submit status
-    path("input/book-details/submit/", views.input_submit_status, name="input_submit_status"),
-    path("scan/book-details/submit/", views.scanner_submit_status, name="scanner_submit_status"),
+    path("input/book-details/submit/", views.submit_status, name="input_submit_status"),
 ]
