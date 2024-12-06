@@ -3,9 +3,10 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
 import datetime
 
+from apps.users.models import User
+
 # Create your models here.
 
-#Partial model layout for Booklist
 class Booklist(models.Model):
     id = models.BigAutoField(primary_key=True, db_column="b_id")
     item_call_num = models.CharField(max_length=200, blank=False, db_column="b_item_call_num")
@@ -17,14 +18,6 @@ class Booklist(models.Model):
     publisher_code = models.CharField(max_length=255, blank=True, db_column="b_publisher_code")
     date_accessioned = models.CharField(max_length=55, blank=True, db_column="b_date_accessioned")
     copyrightdate = models.CharField(max_length=55, blank=True, db_column="b_copyrightdate")
-    # copyrightdate = models.PositiveIntegerField(
-    #     blank=True,
-    #     null=True,
-    #      validators=[
-    #         MinValueValidator(1800),
-    #         MaxValueValidator(datetime.datetime.now().year)
-    #     ]
-    # )
     isbn = models.CharField(max_length=20, blank=False, db_column="b_isbn")
     copy_num = models.CharField(max_length=55, db_column="b_copy_num", blank=True,  help_text="Copy number starting from 1")
     volume = models.CharField(max_length=100, blank=True, null=True, db_column="b_volume")
@@ -37,10 +30,6 @@ class Booklist(models.Model):
     class Meta:
         ordering = ['title']
         
-
-
-
-#Partial model layout for Inventory
 class Inventory(models.Model):
     # Book status
     GOOD_CONDITION = 1
@@ -62,3 +51,21 @@ class Inventory(models.Model):
 
     class Meta:
         ordering = ['-datetime_checked']
+
+# Partial model layout for InventoryHistory
+class InventoryHistory(models.Model):
+    id = models.BigAutoField(primary_key=True, db_column="h_id")
+    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE, related_name="history")
+    reviewed_by = models.ForeignKey(User, on_delete=models.CASCADE, db_column="h_reviewed_by")
+    datetime_checked = models.DateTimeField(auto_now=True, db_column="h_datetime_checked")
+    status = models.IntegerField(
+        choices=Inventory.BOOK_STATUS_CHOICES,
+        db_column="h_status"
+    )
+
+    class Meta:
+        ordering = ['-datetime_checked']
+        indexes = [
+            models.Index(fields=['inventory']),
+            models.Index(fields=['reviewed_by']),
+        ]

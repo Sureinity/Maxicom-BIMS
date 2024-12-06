@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 
 from .forms import ManualInputBarcodeForm
-from apps.admin_inventory.models import Booklist, Inventory
+from apps.admin_inventory.models import Booklist, Inventory, InventoryHistory
 
 from .decorators import redirect_dashboard_if_loggedin, redirect_login_if_not_loggedin, admin_is_not_authorized
 
@@ -87,6 +87,7 @@ def input_process_barcode(request):
 
 def submit_status(request):
     if request.method == "POST":
+        user = request.user
         bookState = int(request.POST.get("bookstate"))
         barcode = request.POST.get("barcode")
         book = Booklist.objects.get(barcode=barcode)
@@ -97,6 +98,11 @@ def submit_status(request):
             inventory.save()
         except Inventory.DoesNotExist:
             Inventory.objects.create(book=book, status=bookState)
+
+        try:
+            InventoryHistory.objects.create(inventory=inventory, reviewed_by=user, status=bookState)
+        except:
+            print("Error creating inventory history")
 
         if request.path == '/barcode-input/input/book-details/submit/':
             return redirect("barcode_input")

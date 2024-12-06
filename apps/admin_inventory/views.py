@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 
-from .models import Booklist, Inventory
+from .models import Booklist, Inventory, InventoryHistory
 from .forms import CreateBook
 from apps.users.models import User
 from .decorators import admin_required
@@ -205,6 +205,7 @@ def inventory_page(request):
     
     # Start with all inventory items
     inventoryData = Inventory.objects.select_related('book').all()
+    inventoryHistoryData = InventoryHistory.objects.all()
     
     # Apply status filter if present
     if status_filter:
@@ -236,7 +237,8 @@ def inventory_page(request):
         "current_page": int(page_number) if page_number else 1,
         "total_pages": paginator.num_pages,
         "search_query": search_query,
-        "status_filter": status_filter
+        "status_filter": status_filter,
+        "inventoryHistoryData": inventoryHistoryData
     }
     
     return render(request, "pages/inventory_page.html", context)
