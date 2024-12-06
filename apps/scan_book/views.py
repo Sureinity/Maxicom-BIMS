@@ -97,12 +97,9 @@ def submit_status(request):
             inventory.status = bookState
             inventory.save()
         except Inventory.DoesNotExist:
-            Inventory.objects.create(book=book, status=bookState)
+            inventory = Inventory.objects.create(book=book, status=bookState)
 
-        try:
-            InventoryHistory.objects.create(inventory=inventory, reviewed_by=user, status=bookState)
-        except:
-            print("Error creating inventory history")
+        InventoryHistory.objects.create(inventory=inventory, reviewed_by=user, status=bookState)
 
         if request.path == '/barcode-input/input/book-details/submit/':
             return redirect("barcode_input")
