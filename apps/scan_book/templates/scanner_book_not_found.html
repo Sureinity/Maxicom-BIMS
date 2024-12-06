@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Not Found</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff6b6b, #f8d7da);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 60px;
+            margin: 0;
+            color: #ff4b4b;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #747474;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #ff6b6b;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #d43f3f;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Book Not Found :(</h1>
+        <h2>We're sorry, but the book you're looking for is unavailable.</h2>
+        <p>It might have been removed, or it simply doesn't exist.</p>
+      <a href="{% url 'barcode_scan' %}" class="button">Back</a>
+    </div>
+</body>
+
+</html>
+

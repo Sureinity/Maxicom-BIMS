@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" data-bs-theme=" " id="htmlPage">
 
@@ -26,14 +27,18 @@
         rel="stylesheet">
 
     <!-- custom css -->
-    <link rel="stylesheet" href="styles.css">
-
+    <link rel="stylesheet" href="{% static 'admin_inventory/styles.css' %}">
 </head>
 
 <body>
     <div class="wrapper">
+      <!-- sidemenu component-->
+        {% include 'components/sidemenu.html' %}
 
         <div class="main">
+            <!-- navbar component -->
+            {% include 'components/navbar.html' %}
+
 
             <div id="content-container" class="container mt-3 p-4">
 
@@ -70,10 +75,10 @@
                                         <div class="d-flex">
                                             <p class="m-0 me-2">Showing</p>
                                             <select class="show-select text-dark" name="rownum">
-                                                <option selected value="10">10</option>
-                                                <option value="20">20</option>
-                                                <option value="30">30</option>
-                                                <option value="40">40</option>
+                                                <option selected value="1">By Good Condition</option>
+                                                <option value="2">By No Barcode Tag</option>
+                                                <option value="3">By For Repair</option>
+                                                <option value="4">By For Disposal</option>
                                             </select>
                                         </div>
                                     </li>
@@ -442,5 +447,6 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
 </body>
+<script src="{% static 'admin_inventory/function.js' %}"></script>
 
 </html>

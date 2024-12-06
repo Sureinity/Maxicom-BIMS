@@ -58,7 +58,12 @@ def ajax_scanner_process_barcode(request):
 @redirect_dashboard_if_loggedin
 def scanner_process_barcode(request):
     barcode = request.session.get('scanned_barcode')
-    book_details = Booklist.objects.get(barcode=barcode)
+
+    try:
+        book_details = Booklist.objects.get(barcode=barcode)
+    except Booklist.DoesNotExist:
+        return render(request, "scanner_book_not_found.html")            
+
 
     return render(request, "book_details_scanner.html", {
         "scanner_process_barcode": request.session.get('scanned_barcode'),

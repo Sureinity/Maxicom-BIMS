@@ -22,7 +22,7 @@ def dashboard_page(request):
     # Overview
     bookCount = Booklist.objects.count()
     bookScanned = Inventory.objects.count()
-    bookUnscanned = bookScanned - Inventory.objects.exclude(status__in=[1, 2, 3, 4]).count()
+    bookUnscanned = bookCount - Inventory.objects.filter(status__in=[1, 2, 3, 4]).count()
     totalUsers = User.objects.exclude(sys_acc_role=0).count()
 
     # Book states
