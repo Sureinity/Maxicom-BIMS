@@ -53,8 +53,9 @@
                         <div class="input-group" style="width: 15rem;">
                             <span class="input-group-text d-lg-block d-none bg-body" style="border: none;">
                                 <i class="fa-solid fa-magnifying-glass"></i></span>
-                            <input class="form-control search-btn" type="text" placeholder="Search..."
-                                style=" border: none;">
+                            <input class="form-control search-btn" type="text" name="search" 
+                                   value="{{ search_query }}" placeholder="Search..."
+                                   style="border: none;">
                         </div>
 
                         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
@@ -75,11 +76,11 @@
                                     <li class="nav-item d-flex align-items-center">
                                         <div class="d-flex">
                                             <p class="m-0 me-2">Showing</p>
-                                            <select class="show-select text-dark" name="rownum">
-                                                <option selected value="1">By Good Condition</option>
-                                                <option value="2">By No Barcode Tag</option>
-                                                <option value="3">By For Repair</option>
-                                                <option value="4">By For Disposal</option>
+                                            <select class="show-select text-dark" name="show">
+                                                <option value="10" {% if request.GET.show == '10' %}selected{% endif %}>10</option>
+                                                <option value="25" {% if request.GET.show == '25' %}selected{% endif %}>25</option>
+                                                <option value="50" {% if request.GET.show == '50' %}selected{% endif %}>50</option>
+                                                <option value="100" {% if request.GET.show == '100' %}selected{% endif %}>100</option>
                                             </select>
                                         </div>
                                     </li>
@@ -93,10 +94,10 @@
                                             </a>
 
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="?status=1">By Good Condition</a></li>
-                                                <li><a class="dropdown-item" href="?status=2">By No Barcode Tag</a></li>
-                                                <li><a class="dropdown-item" href="?status=3">By For Repair</a></li>
-                                                <li><a class="dropdown-item" href="?status=4">By For Disposal</a></li>
+                                                <li><a class="dropdown-item" href="?status=1{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}">By Good Condition</a></li>
+                                                <li><a class="dropdown-item" href="?status=2{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}">By No Barcode Tag</a></li>
+                                                <li><a class="dropdown-item" href="?status=3{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}">By For Repair</a></li>
+                                                <li><a class="dropdown-item" href="?status=4{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}">By For Disposal</a></li>
                                             </ul>
                                         </div>
                                     </li>
@@ -122,8 +123,7 @@
                                 <th scope="col" style="font-weight: 500;">Title</th>
                                 <th scope="col" style="font-weight: 500;">Author</th>
                                 <th scope="col" style="font-weight: 500;">Reviewed By</th>
-                                <th scope="col" style="font-weight: 500;">Previously Checked</th>
-                                <th scope="col" style="font-weight: 500;">Latest Checked</th>
+                                <th scope="col" style="font-weight: 500;">Checked at</th>
                                 <th scope="col" style="font-weight: 500;">Status</th>
                             </tr>
                         </thead>
@@ -135,7 +135,6 @@
                                 <td class="text-truncate" style="max-width: 150px;">{{ item.book.title }}</td>
                                 <td class="text-truncate" style="max-width: 150px;">{{ item.book.author }}</td>
                                 <td class="text-truncate" style="max-width: 150px;">{{ item.reviewed_by }}</td>
-                                <td class="text-truncate" style="max-width: 150px;">{{ item.previously_checked|date:"Y-m-d" }}</td>
                                 <td class="text-truncate" style="max-width: 150px;">{{ item.datetime_checked|date:"Y-m-d" }}</td>
                                 <td class="text-truncate" style="max-width: 150px;">
                                     {% if item.status == 1 %}
@@ -375,8 +374,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col" style="font-weight: 500;">Reviewed By</th>
-                                            <th scope="col" style="font-weight: 500;">Previously Checked</th>
-                                            <th scope="col" style="font-weight: 500;">Latest Checked</th>
+                                            <th scope="col" style="font-weight: 500;">Checked at</th>
                                             <th scope="col" style="font-weight: 500;">Status</th>
                                         </tr>
                                     </thead>
@@ -388,8 +386,6 @@
                                             </td>
                                             <td class="text-truncate" style="max-width: 150px;">2024-09-24
                                             </td>
-                                            <td class="text-truncate" style="max-width: 150px;">2024-09-25
-                                            </td>
                                             <td class="text-truncate" style="max-width: 150px;">
                                                 <p class="badge text-bg-success">Good Condition </p>
                                             </td>
@@ -399,8 +395,6 @@
                                             <td class="text-truncate" style="max-width: 150px;">Cristian Pesongco
                                             </td>
                                             <td class="text-truncate" style="max-width: 150px;">2024-09-24
-                                            </td>
-                                            <td class="text-truncate" style="max-width: 150px;">2024-09-25
                                             </td>
                                             <td class="text-truncate" style="max-width: 150px;">
                                                 <p class="badge text-bg-warning">For Repair</p>
@@ -434,37 +428,39 @@
 </body>
   <script src="{% static 'admin_inventory/function.js' %}"></script>
   <script>
-    document.querySelector('.show-select').addEventListener('change', function () {
+    // Search functionality
+    const searchInput = document.querySelector('.search-btn');
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('search', this.value);
+            if ('{{ status_filter }}') {
+                urlParams.set('status', '{{ status_filter }}');
+            }
+            if ('{{ request.GET.show }}') {
+                urlParams.set('show', '{{ request.GET.show }}');
+            }
+            window.location.search = urlParams.toString();
+        }
+    });
+
+    // Show items per page functionality
+    document.querySelector('.show-select').addEventListener('change', function() {
         const urlParams = new URLSearchParams(window.location.search);
         urlParams.set('show', this.value);
         if ('{{ search_query }}') {
             urlParams.set('search', '{{ search_query }}');
         }
-        if ('{{ collection_filter }}') {
-            urlParams.set('book-collections', '{{ collection_filter }}');
-        }
-        if ('{{ decimal_start }}') {
-            urlParams.set('item-decimal-start', '{{ decimal_start }}');
-        }
-        if ('{{ decimal_end }}') {
-            urlParams.set('item-decimal-end', '{{ decimal_end }}');
-        }
-        if ('{{ year_start }}') {
-            urlParams.set('year-start', '{{ year_start }}');
-        }
-        if ('{{ year_end }}') {
-            urlParams.set('year-end', '{{ year_end }}');
+        if ('{{ status_filter }}') {
+            urlParams.set('status', '{{ status_filter }}');
         }
         window.location.search = urlParams.toString();
     });
 
-
     const hamBurger = document.querySelector(".toggle-btn");
-
-    hamBurger.addEventListener("click", function () {
+    hamBurger.addEventListener("click", function() {
         document.querySelector("#sidebar").classList.toggle("expand");
     });
-
 </script>
 
 

@@ -198,7 +198,7 @@ def delete_listbooks_page(request, id):
     return redirect("admin_listbooks")
 
 @admin_required
-def inventory_page(request)
+def inventory_page(request):
     # Get filter parameters
     search_query = request.GET.get('search', '')
     status_filter = request.GET.get('status', '')
