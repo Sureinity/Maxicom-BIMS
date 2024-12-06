@@ -198,8 +198,48 @@ def delete_listbooks_page(request, id):
     return redirect("admin_listbooks")
 
 @admin_required
-def inventory_page(request):
-    return render (request, "pages/inventory_page.html")
+def inventory_page(request)
+    # Get filter parameters
+    search_query = request.GET.get('search', '')
+    status_filter = request.GET.get('status', '')
+    
+    # Start with all inventory items
+    inventoryData = Inventory.objects.select_related('book').all()
+    
+    # Apply status filter if present
+    if status_filter:
+        try:
+            status_int = int(status_filter)
+            if status_int in [1, 2, 3, 4]:
+                inventoryData = inventoryData.filter(status=status_int)
+        except ValueError:
+            pass
+    
+    # Apply search filter if present
+    if search_query:
+        inventoryData = inventoryData.filter(
+            Q(book__barcode__icontains=search_query) |
+            Q(book__col_code__icontains=search_query) |
+            Q(book__title__icontains=search_query) |
+            Q(book__author__icontains=search_query)
+        )
+
+    # Pagination
+    page_number = request.GET.get('page', 1)
+    items_per_page = request.GET.get('show', 10)
+    paginator = Paginator(inventoryData, items_per_page)
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "inventoryData": page_obj,
+        "page_range": paginator.page_range,
+        "current_page": int(page_number) if page_number else 1,
+        "total_pages": paginator.num_pages,
+        "search_query": search_query,
+        "status_filter": status_filter
+    }
+    
+    return render(request, "pages/inventory_page.html", context)
 
 @admin_required
 def usersettings_page(request):

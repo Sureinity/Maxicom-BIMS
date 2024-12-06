@@ -98,7 +98,10 @@ def submit_status(request):
         except Inventory.DoesNotExist:
             Inventory.objects.create(book=book, status=bookState)
 
-        return redirect("barcode_scan")
+        if request.path == '/barcode-input/input/book-details/submit/':
+            return redirect("barcode_input")
+        else:
+            return redirect("barcode_scan")
 
     return render(request, "book_details.html", {"barcode_result": barcode, "book_details": book_details})
 

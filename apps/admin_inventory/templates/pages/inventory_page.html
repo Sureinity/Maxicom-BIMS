@@ -28,17 +28,18 @@
 
     <!-- custom css -->
     <link rel="stylesheet" href="{% static 'admin_inventory/styles.css' %}">
+
+
 </head>
 
 <body>
     <div class="wrapper">
-      <!-- sidemenu component-->
+        <!-- sidemenu component-->
         {% include 'components/sidemenu.html' %}
 
         <div class="main">
             <!-- navbar component -->
             {% include 'components/navbar.html' %}
-
 
             <div id="content-container" class="container mt-3 p-4">
 
@@ -92,9 +93,10 @@
                                             </a>
 
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                <li><a class="dropdown-item" href="?status=1">By Good Condition</a></li>
+                                                <li><a class="dropdown-item" href="?status=2">By No Barcode Tag</a></li>
+                                                <li><a class="dropdown-item" href="?status=3">By For Repair</a></li>
+                                                <li><a class="dropdown-item" href="?status=4">By For Disposal</a></li>
                                             </ul>
                                         </div>
                                     </li>
@@ -126,48 +128,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- sample data -->
-
+                            {% for item in inventoryData %}
                             <tr data-bs-toggle="modal" data-bs-target="#modal_inventory">
-                                <td class="text-truncate" style="max-width: 150px;">23581
-                                </td>
-                                <th scope="row">DFIL</th>
-                                <td class="text-truncate" style="max-width: 150px;">Basic baking and cake decorating
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">Tria-Natad, Ma. Felisa
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">Mindshapers Co., Inc.,
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">2024-09-24
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">2024-09-25
-                                </td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ item.book.barcode }}</td>
+                                <th scope="row">{{ item.book.col_code }}</th>
+                                <td class="text-truncate" style="max-width: 150px;">{{ item.book.title }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ item.book.author }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ item.reviewed_by }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ item.previously_checked|date:"Y-m-d" }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ item.datetime_checked|date:"Y-m-d" }}</td>
                                 <td class="text-truncate" style="max-width: 150px;">
-                                    <p class="badge text-bg-success">Good Condition </p>
+                                    {% if item.status == 1 %}
+                                        <p class="badge text-bg-success">Good Condition</p>
+                                    {% elif item.status == 2 %}
+                                        <p class="badge text-bg-warning">No Barcode Tag</p>
+                                    {% elif item.status == 3 %}
+                                        <p class="badge text-bg-warning">For Repair</p>
+                                    {% elif item.status == 4 %}
+                                        <p class="badge text-bg-danger">For Disposal</p>
+                                    {% endif %}
                                 </td>
                             </tr>
-
-                            <tr data-bs-toggle="modal" data-bs-target="#modal_inventory">
-                                <td class="text-truncate" style="max-width: 150px;">23581
-                                </td>
-                                <th scope="row">DFIL</th>
-                                <td class="text-truncate" style="max-width: 150px;">Basic baking and cake decorating
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">Tria-Natad, Ma. Felisa
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">Mindshapers Co., Inc.,
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">2024-09-24
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">2024-09-25
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">
-                                    <p class="badge text-bg-warning">For Repair</p>
-                                </td>
-                            </tr>
-                            <!-- sample data -->
-
-
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -175,24 +157,26 @@
                 <!-- pagination -->
                 <nav>
                     <ul class="pagination justify-content-center mt-4 mb-4 grid gap-2">
+                        {% if inventoryData.has_previous %}
                         <li class="nav-item">
-                            <a href="#" class="text-body">&laquo;</a>
+                            <a href="?page={{ inventoryData.previous_page_number }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}&status={{ status_filter }}" class="text-body">&laquo;</a>
                         </li>
+                        {% endif %}
+
+                        {% for page_num in page_range %}
+                            <li class="nav-item">
+                                <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}&status={{ status_filter }}" 
+                                   class="{% if page_num == current_page %}active{% endif %} text-body">
+                                    {{ page_num }}
+                                </a>
+                            </li>
+                        {% endfor %}
+
+                        {% if inventoryData.has_next %}
                         <li class="nav-item">
-                            <a href="#" class="active text-body">1</a>
+                            <a href="?page={{ inventoryData.next_page_number }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}&status={{ status_filter }}" class="text-body">&raquo;</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="text-body">2</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="text-body">3</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="text-body">4</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="text-body">&raquo;</a>
-                        </li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>
@@ -446,7 +430,42 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
+
 </body>
-<script src="{% static 'admin_inventory/function.js' %}"></script>
+  <script src="{% static 'admin_inventory/function.js' %}"></script>
+  <script>
+    document.querySelector('.show-select').addEventListener('change', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('show', this.value);
+        if ('{{ search_query }}') {
+            urlParams.set('search', '{{ search_query }}');
+        }
+        if ('{{ collection_filter }}') {
+            urlParams.set('book-collections', '{{ collection_filter }}');
+        }
+        if ('{{ decimal_start }}') {
+            urlParams.set('item-decimal-start', '{{ decimal_start }}');
+        }
+        if ('{{ decimal_end }}') {
+            urlParams.set('item-decimal-end', '{{ decimal_end }}');
+        }
+        if ('{{ year_start }}') {
+            urlParams.set('year-start', '{{ year_start }}');
+        }
+        if ('{{ year_end }}') {
+            urlParams.set('year-end', '{{ year_end }}');
+        }
+        window.location.search = urlParams.toString();
+    });
+
+
+    const hamBurger = document.querySelector(".toggle-btn");
+
+    hamBurger.addEventListener("click", function () {
+        document.querySelector("#sidebar").classList.toggle("expand");
+    });
+
+</script>
+
 
 </html>
