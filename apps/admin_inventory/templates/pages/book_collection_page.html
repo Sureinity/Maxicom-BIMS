@@ -45,7 +45,8 @@
             <div id="content-container" class="container mt-3 p-4">
 
                 <div class="d-flex justify-content-start mb-5">
-                    <img src="{% static 'admin_inventory/assets/inventory.png' %}" alt="inventory icon" style="width: 2em; height: 2em;">
+                    <img src="{% static 'admin_inventory/assets/inventory.png' %}" alt="inventory icon"
+                        style="width: 2em; height: 2em;">
                     <h4 class="m-0 ps-3">Book Collection</h4>
                 </div>
 
@@ -94,9 +95,14 @@
                                             </a>
 
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                <li data-bs-toggle="modal" data-bs-target="#filter-bookcollections"><a
+                                                        href="#" class="dropdown-item">By Book Collections</a></li>
+                                                <li data-bs-toggle="modal" data-bs-target="#filter-itemcallno"><a
+                                                        class="dropdown-item" href="#">By Dewey Decimal No.</a></li>
+                                                <li data-bs-toggle="modal" data-bs-target="#filter-copyright"><a
+                                                        class="dropdown-item" href="#">By Copyright</a></li>
+                                                <li data-bs-toggle="modal" data-bs-target="#filter-customize"><a
+                                                        class="dropdown-item" href="#">Customize</a></li>
                                             </ul>
                                         </div>
                                     </li>
@@ -203,4 +209,5 @@
         crossorigin="anonymous"></script>
 </body>
 <script src="{% static 'admin_inventory/function.js' %}"></script>
+
 </html>
