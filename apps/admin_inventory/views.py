@@ -245,7 +245,64 @@ def inventory_page(request):
 
 @admin_required
 def bookcollections_page(request):
-    return render(request, "pages/book_collection_page.html")
+    # Get filter parameters
+    search_query = request.GET.get('search', '')
+    collection_filter = request.GET.get('book-collections', '')
+    decimal_start = request.GET.get('item-decimal-start', '')
+    decimal_end = request.GET.get('item-decimal-end', '')
+    year_start = request.GET.get('year-start', '')
+    year_end = request.GET.get('year-end', '')
+    status_filter = request.GET.get('status', '')
+    
+    # Start with all books and prefetch related inventory data
+    bookData = Booklist.objects.prefetch_related('inventory_set').all()
+    
+    # Apply filters using the reusable function
+    filtered_books = apply_book_filters(
+        bookData,
+        search_query=search_query,
+        collection_filter=collection_filter,
+        decimal_start=decimal_start,
+        decimal_end=decimal_end,
+        year_start=year_start,
+        year_end=year_end
+    )
+
+    # Get total counts for tabs
+    total_books = len(filtered_books)
+    found_books = sum(1 for book in filtered_books if hasattr(book, 'inventory') and book.inventory.exists())
+    not_found_books = total_books - found_books
+
+    # Apply status filter if present
+    if status_filter == 'found':
+        filtered_books = [book for book in filtered_books if hasattr(book, 'inventory') and book.inventory.exists()]
+    elif status_filter == 'not_found':
+        filtered_books = [book for book in filtered_books if not hasattr(book, 'inventory') or not book.inventory.exists()]
+
+    # Pagination
+    page_number = request.GET.get('page', 1)
+    items_per_page = request.GET.get('show', 10)
+    paginator = Paginator(filtered_books, items_per_page)
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "bookData": page_obj,
+        "page_range": paginator.page_range,
+        "current_page": int(page_number) if page_number else 1,
+        "total_pages": paginator.num_pages,
+        "search_query": search_query,
+        "collection_filter": collection_filter,
+        "decimal_start": decimal_start,
+        "decimal_end": decimal_end,
+        "year_start": year_start,
+        "year_end": year_end,
+        "status_filter": status_filter,
+        "total_books": total_books,
+        "found_books": found_books,
+        "not_found_books": not_found_books,
+    }
+    
+    return render(request, "pages/book_collection_page.html", context)
 
 @admin_required
 def usersettings_page(request):

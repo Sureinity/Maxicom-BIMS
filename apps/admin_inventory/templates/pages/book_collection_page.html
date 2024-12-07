@@ -52,12 +52,27 @@
 
                 <nav class="navbar navbar-expand-lg bg-body mb-3">
                     <div class="container-fluid">
-                        <div class="input-group" style="width: 15rem;">
-                            <span class="input-group-text d-lg-block d-none bg-body" style="border: none;">
-                                <i class="fa-solid fa-magnifying-glass"></i></span>
-                            <input class="form-control search-btn" type="text" placeholder="Search..."
-                                style=" border: none;">
-                        </div>
+                        <form class="d-flex" action="{% url 'admin_collections' %}" method="GET">
+                            {% if collection_filter %}
+                            <input type="hidden" name="book-collections" value="{{ collection_filter }}">
+                            {% endif %}
+                            {% if decimal_start %}
+                            <input type="hidden" name="item-decimal-start" value="{{ decimal_start }}">
+                            {% endif %}
+                            {% if decimal_end %}
+                            <input type="hidden" name="item-decimal-end" value="{{ decimal_end }}">
+                            {% endif %}
+                            {% if year_start %}
+                            <input type="hidden" name="year-start" value="{{ year_start }}">
+                            {% endif %}
+                            {% if year_end %}
+                            <input type="hidden" name="year-end" value="{{ year_end }}">
+                            {% endif %}
+                            <input type="hidden" name="show" value="{{ request.GET.show|default:'10' }}">
+                            <input class="form-control me-2" type="search" placeholder="Search" 
+                                   aria-label="Search" name="search" value="{{ search_query }}">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
 
                         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
@@ -78,31 +93,31 @@
                                         <div class="d-flex">
                                             <p class="m-0 me-2">Showing</p>
                                             <select class="show-select text-dark" name="rownum">
-                                                <option selected value="10">10</option>
-                                                <option value="20">20</option>
-                                                <option value="30">30</option>
-                                                <option value="40">40</option>
+                                                <option value="10" {% if request.GET.show == '10' %}selected{% endif %}>10</option>
+                                                <option value="20" {% if request.GET.show == '20' %}selected{% endif %}>20</option>
+                                                <option value="30" {% if request.GET.show == '30' %}selected{% endif %}>30</option>
+                                                <option value="40" {% if request.GET.show == '40' %}selected{% endif %}>40</option>
                                             </select>
                                         </div>
                                     </li>
                                     <li class="nav-item">
                                         <div class="dropdown">
-                                            <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-regular fa-calendar-days"></i>
-                                                &nbsp;
-                                                Filter
+                                            <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa-regular fa-calendar-days"></i>&nbsp;Filter
                                             </a>
-
                                             <ul class="dropdown-menu">
-                                                <li data-bs-toggle="modal" data-bs-target="#filter-bookcollections"><a
-                                                        href="#" class="dropdown-item">By Book Collections</a></li>
-                                                <li data-bs-toggle="modal" data-bs-target="#filter-itemcallno"><a
-                                                        class="dropdown-item" href="#">By Dewey Decimal No.</a></li>
-                                                <li data-bs-toggle="modal" data-bs-target="#filter-copyright"><a
-                                                        class="dropdown-item" href="#">By Copyright</a></li>
-                                                <li data-bs-toggle="modal" data-bs-target="#filter-customize"><a
-                                                        class="dropdown-item" href="#">Customize</a></li>
+                                                <li data-bs-toggle="modal" data-bs-target="#filter-bookcollections">
+                                                    <a href="#" class="dropdown-item">By Book Collections</a>
+                                                </li>
+                                                <li data-bs-toggle="modal" data-bs-target="#filter-itemcallno">
+                                                    <a class="dropdown-item" href="#">By Dewey Decimal No.</a>
+                                                </li>
+                                                <li data-bs-toggle="modal" data-bs-target="#filter-copyright">
+                                                    <a class="dropdown-item" href="#">By Copyright</a>
+                                                </li>
+                                                <li data-bs-toggle="modal" data-bs-target="#filter-customize">
+                                                    <a class="dropdown-item" href="#">Customize</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </li>
@@ -123,13 +138,22 @@
                     <!-- tabs -->
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active  text-body" href="#">All (8,902)</a>
+                            <a class="nav-link {% if not status_filter %}active{% endif %} text-body" 
+                               href="?{% if search_query %}search={{ search_query }}&{% endif %}show={{ request.GET.show|default:'10' }}">
+                               All ({{ total_books }})
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  text-body" href="#">Found (6,094)</a>
+                            <a class="nav-link {% if status_filter == 'found' %}active{% endif %} text-body" 
+                               href="?status=found{% if search_query %}&search={{ search_query }}{% endif %}&show={{ request.GET.show|default:'10' }}">
+                               Found ({{ found_books }})
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  text-body" href="#">Not Found (2,435)</a>
+                            <a class="nav-link {% if status_filter == 'not_found' %}active{% endif %} text-body" 
+                               href="?status=not_found{% if search_query %}&search={{ search_query }}{% endif %}&show={{ request.GET.show|default:'10' }}">
+                               Not Found ({{ not_found_books }})
+                            </a>
                         </li>
                     </ul>
                     <table class="table table-hover">
@@ -140,32 +164,96 @@
                                 <th scope="col" style="font-weight: 500;">Barcode</th>
                                 <th scope="col" style="font-weight: 500;">Title</th>
                                 <th scope="col" style="font-weight: 500;">Author</th>
-                                <th scope="col" style="font-weight: 500;">Reviewed By</th>
-                                <th scope="col" style="font-weight: 500;">Previously Checked</th>
-                                <th scope="col" style="font-weight: 500;">Latest Checked</th>
+                                <th scope="col" style="font-weight: 500;">Checked at</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- sample data -->
-                            <tr>
-                                <td class="text-truncate" style="max-width: 150px;">DFil 371.3 C822 2015
-                                </td>
-                                <th scope="row">DFIL</th>
-                                <th scope="row">23435</th>
-                                <td class="text-truncate" style="max-width: 150px;">Basic baking and cake decorating
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">Tria-Natad, Ma. Felisa
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">Mindshapers Co., Inc.,
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">2024-09-24
-                                </td>
-                                <td class="text-truncate" style="max-width: 150px;">2024-09-25
+                            {% for data in bookData %}
+                            <tr data-bs-toggle="modal" data-bs-target="#modal_bookdetails_{{data.id}}">
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.item_call_num }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.col_code }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.barcode }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.title }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">{{ data.author }}</td>
+                                <td class="text-truncate" style="max-width: 150px;">
+                                    {% if data.inventory_set.all.first %}
+                                        {{ data.inventory_set.all.first.datetime_checked|date:"Y-m-d" }}
+                                    {% else %}
+                                        Not checked
+                                    {% endif %}
                                 </td>
                             </tr>
-                            <!-- sample data -->
 
+                            <!-- Show book details (Modal) -->
+                            <div class="modal fade" id="modal_bookdetails_{{data.id}}" tabindex="-1" data-bs-backdrop="static">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <i class="fa-solid fa-book-open"></i>
+                                            &nbsp;
+                                            &nbsp;
+                                            <h6 class="modal-title fs-5">List of Books / Details</h6>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="title">
+                                                <span class="d-flex grid gap-1"></span>
+                                                <h5 style="font-weight: 400;">{{ data.title }} {{ data.subtitle }}</h5>
+                                                </span>
+                                            </div>
 
+                                            <div class="author">
+                                                <span class="d-flex">
+                                                    <p>Author(s): </p>
+                                                    &nbsp;
+                                                    <div class="author-value">
+                                                        <p style="font-weight: 410;">{{ data.author }}</p>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="details mt-4">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <p>Item Call Number</p>
+                                                        <p>Collection Code</p>
+                                                        <p>Barcode</p>
+                                                        <p>ISBN</p>
+                                                        <p>Publisher</p>
+                                                        <p>Copyright</p>
+                                                        <p>Date Accessioned</p>
+                                                        <p>Copy Number</p>
+                                                        <p>Volume</p>
+                                                        <p>Edition Statement</p>
+                                                        <p>Paid For</p>
+                                                        <p>Price</p>
+                                                        <p>Book Seller</p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p>: {{ data.item_call_num }}</p>
+                                                        <p>: {{ data.col_code }}</p>
+                                                        <p>: {{ data.barcode }}</p>
+                                                        <p>: {{ data.isbn }}</p>
+                                                        <p>: {{ data.publisher_code }}</p>
+                                                        <p>: {{ data.copyrightdate }}</p>
+                                                        <p>: {{ data.date_accessioned }}</p>
+                                                        <p>: {{ data.copy_num }}</p>
+                                                        <p>: {{ data.volume }}</p>
+                                                        <p>: {{ data.edition_stmt }}</p>
+                                                        <p>: {{ data.paidfor }}</p>
+                                                        <p>: {{ data.price }}</p>
+                                                        <p>: {{ data.bookseller_id }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -173,29 +261,254 @@
                 <!-- pagination -->
                 <nav>
                     <ul class="pagination justify-content-center mt-4 mb-4 grid gap-2">
+                        {% if bookData.has_previous %}
                         <li class="nav-item">
-                            <a href="#" class="text-body">&laquo;</a>
+                            <a href="?page={{ bookData.previous_page_number }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
+                                class="text-body">&laquo;</a>
                         </li>
+                        {% endif %}
+
+                        {% for page_num in page_range %}
                         <li class="nav-item">
-                            <a href="#" class="active text-body">1</a>
+                            <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
+                                class="{% if page_num == current_page %}active{% endif %} text-body">{{ page_num }}</a>
                         </li>
+                        {% endfor %}
+
+                        {% if bookData.has_next %}
                         <li class="nav-item">
-                            <a href="#" class="text-body">2</a>
+                            <a href="?page={{ bookData.next_page_number }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
+                                class="text-body">&raquo;</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="text-body">3</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="text-body">4</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="text-body">&raquo;</a>
-                        </li>
+                        {% endif %}
                     </ul>
                 </nav>
 
+                <!-- filter modal - book collection  -->
+                <div class="modal fade" id="filter-bookcollections" tabindex="-1" aria-labelledby="filter-bookcollections" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="filter-bookcollections">Filter / By Book Collections</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="{% url 'admin_collections' %}" method="GET">
+                                {% if search_query %}
+                                <input type="hidden" name="search" value="{{ search_query }}">
+                                {% endif %}
+                                <input type="hidden" name="show" value="{{ request.GET.show|default:'10' }}">
+                                {% if status_filter %}
+                                <input type="hidden" name="status" value="{{ status_filter }}">
+                                {% endif %}
+                                
+                                <div class="modal-body">
+                                    <div>
+                                        <label for="book-collections" class="form-label mb-2">Select</label>
+                                        <select class="form-select" name="book-collections">
+                                            <option value="">All Collections</option>
+                                            <option value="DC" {% if collection_filter == 'DC' %}selected{% endif %}>Circulations</option>
+                                            <option value="DFIL" {% if collection_filter == 'DFIL' %}selected{% endif %}>Filipiniana</option>
+                                            <option value="DREF" {% if collection_filter == 'DREF' %}selected{% endif %}>General References</option>
+                                            <option value="DFIC" {% if collection_filter == 'DFIC' %}selected{% endif %}>Fictions</option>
+                                            <option value="PER" {% if collection_filter == 'PER' %}selected{% endif %}>Bound Periodicals</option>
+                                            <option value="UR" {% if collection_filter == 'UR' %}selected{% endif %}>Undergraduate Thesis</option>
+                                            <option value="AV-CD" {% if collection_filter == 'AV-CD' %}selected{% endif %}>AV CDs</option>
+                                            <option value="AV-DVD" {% if collection_filter == 'AV-DVD' %}selected{% endif %}>AV DVDs</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn uni-btn">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- filter modal-item call number -->
+                <div class="modal fade" id="filter-itemcallno" tabindex="-1" aria-labelledby="filter-itemcallno" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="filter-itemcallno">Filter / By Dewey Decimal No.</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="{% url 'admin_collections' %}" method="GET">
+                                {% if collection_filter %}
+                                <input type="hidden" name="book-collections" value="{{ collection_filter }}">
+                                {% endif %}
+                                {% if search_query %}
+                                <input type="hidden" name="search" value="{{ search_query }}">
+                                {% endif %}
+                                {% if status_filter %}
+                                <input type="hidden" name="status" value="{{ status_filter }}">
+                                {% endif %}
+                                <input type="hidden" name="show" value="{{ request.GET.show|default:'10' }}">
+                                
+                                <div class="modal-body">
+                                    <div class="my-2">
+                                        <label for="yearpub" class="form-label mb-2">Enter Decimal Range</label>
+                                        <div class="d-flex align-items-center grid gap-3">
+                                            <input type="number" step="0.01" class="form-control" id="item-decimal-start" 
+                                                   name="item-decimal-start" placeholder="From" value="{{ decimal_start }}">
+                                            <i class="fa-solid fa-minus"></i>
+                                            <input type="number" step="0.01" class="form-control" id="item-decimal-end" 
+                                                   name="item-decimal-end" placeholder="To" value="{{ decimal_end }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn uni-btn">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- filter modal- copyright-->
+                <div class="modal fade" id="filter-copyright" tabindex="-1" aria-labelledby="filter-copyright" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="filter-copyright">Filter / By Copyright</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="{% url 'admin_collections' %}" method="GET">
+                                {% if collection_filter %}
+                                <input type="hidden" name="book-collections" value="{{ collection_filter }}">
+                                {% endif %}
+                                {% if decimal_start %}
+                                <input type="hidden" name="item-decimal-start" value="{{ decimal_start }}">
+                                {% endif %}
+                                {% if decimal_end %}
+                                <input type="hidden" name="item-decimal-end" value="{{ decimal_end }}">
+                                {% endif %}
+                                {% if search_query %}
+                                <input type="hidden" name="search" value="{{ search_query }}">
+                                {% endif %}
+                                {% if status_filter %}
+                                <input type="hidden" name="status" value="{{ status_filter }}">
+                                {% endif %}
+                                <input type="hidden" name="show" value="{{ request.GET.show|default:'10' }}">
+                                
+                                <div class="modal-body">
+                                    <div class="my-2">
+                                        <label for="yearpub" class="form-label mb-2">Copyright Range</label>
+                                        <div class="d-flex align-items-center grid gap-3">
+                                            <input type="number" class="form-control" id="year-start" name="year-start" 
+                                                   placeholder="From" value="{{ year_start }}">
+                                            <i class="fa-solid fa-minus"></i>
+                                            <input type="number" class="form-control" id="year-end" name="year-end" 
+                                                   placeholder="To" value="{{ year_end }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn uni-btn">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- filter modal - customize-->
+                <div class="modal fade" id="filter-customize" tabindex="-1" aria-labelledby="filter-customize" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="filter-customize">Filter / Customize</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="{% url 'admin_collections' %}" method="GET">
+                                {% if search_query %}
+                                <input type="hidden" name="search" value="{{ search_query }}">
+                                {% endif %}
+                                <input type="hidden" name="show" value="{{ request.GET.show|default:'10' }}">
+                                {% if status_filter %}
+                                <input type="hidden" name="status" value="{{ status_filter }}">
+                                {% endif %}
+                                
+                                <div class="modal-body">
+                                    <div class="mb-4">
+                                        <label for="book-collections" class="form-label mb-2">Book Collections</label>
+                                        <select class="form-select" name="book-collections">
+                                            <option value="">All Collections</option>
+                                            <option value="DC" {% if collection_filter == 'DC' %}selected{% endif %}>Circulations</option>
+                                            <option value="DFIL" {% if collection_filter == 'DFIL' %}selected{% endif %}>Filipiniana</option>
+                                            <option value="DREF" {% if collection_filter == 'DREF' %}selected{% endif %}>General References</option>
+                                            <option value="DFIC" {% if collection_filter == 'DFIC' %}selected{% endif %}>Fictions</option>
+                                            <option value="PER" {% if collection_filter == 'PER' %}selected{% endif %}>Bound Periodicals</option>
+                                            <option value="UR" {% if collection_filter == 'UR' %}selected{% endif %}>Undergraduate Thesis</option>
+                                            <option value="AV-CD" {% if collection_filter == 'AV-CD' %}selected{% endif %}>AV CDs</option>
+                                            <option value="AV-DVD" {% if collection_filter == 'AV-DVD' %}selected{% endif %}>AV DVDs</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="item-decimal-start" class="form-label mb-2">Dewey Decimal Range</label>
+                                        <div class="d-flex align-items-center grid gap-3">
+                                            <input type="number" step="0.01" class="form-control" 
+                                                   id="item-decimal-start" name="item-decimal-start" 
+                                                   placeholder="From" value="{{ decimal_start }}">
+                                            <i class="fa-solid fa-minus"></i>
+                                            <input type="number" step="0.01" class="form-control" 
+                                                   id="item-decimal-end" name="item-decimal-end" 
+                                                   placeholder="To" value="{{ decimal_end }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="year-start" class="form-label mb-2">Copyright Range</label>
+                                        <div class="d-flex align-items-center grid gap-3">
+                                            <input type="number" class="form-control" id="year-start" 
+                                                   name="year-start" placeholder="From" value="{{ year_start }}">
+                                            <i class="fa-solid fa-minus"></i>
+                                            <input type="number" class="form-control" id="year-end" 
+                                                   name="year-end" placeholder="To" value="{{ year_end }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn uni-btn">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add the JavaScript for the show entries dropdown -->
+                <script>
+                    document.querySelector('.show-select').addEventListener('change', function () {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        urlParams.set('show', this.value);
+                        if ('{{ search_query }}') {
+                            urlParams.set('search', '{{ search_query }}');
+                        }
+                        if ('{{ collection_filter }}') {
+                            urlParams.set('book-collections', '{{ collection_filter }}');
+                        }
+                        if ('{{ decimal_start }}') {
+                            urlParams.set('item-decimal-start', '{{ decimal_start }}');
+                        }
+                        if ('{{ decimal_end }}') {
+                            urlParams.set('item-decimal-end', '{{ decimal_end }}');
+                        }
+                        if ('{{ year_start }}') {
+                            urlParams.set('year-start', '{{ year_start }}');
+                        }
+                        if ('{{ year_end }}') {
+                            urlParams.set('year-end', '{{ year_end }}');
+                        }
+                        if ('{{ status_filter }}') {
+                            urlParams.set('status', '{{ status_filter }}');
+                        }
+                        window.location.search = urlParams.toString();
+                    });
+                </script>
 
             </div>
 
