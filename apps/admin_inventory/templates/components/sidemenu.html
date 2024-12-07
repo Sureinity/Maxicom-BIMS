@@ -40,34 +40,14 @@
                 <span class="text-body">Inventory</span>
             </a>
         </li>
-
+        
         <li class="sidebar-item">
-            <a href="#" class="sidebar-link collapsed has-dropdown text-body" data-bs-toggle="collapse"
-                data-bs-target="#collection" aria-expanded="false" aria-controls="collection">
+            <a href="{% url '' %}" class="sidebar-link text-body">
                 <i class="fa-solid fa-bookmark"></i>
                 <span class="text-body">Book Collections</span>
             </a>
-            <ul id="collection" class="sidebar-dropdown list-unstyled collapse bg-body" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                    <a href="admin-pages/circulation_page.html" class="sidebar-link">Circulations</a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="admin-pages/filipiniana_page.html" class="sidebar-link">Filipiniana</a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="admin-pages/genref_page.html" class="sidebar-link">General References</a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="admin-pages/fictions_page.html" class="sidebar-link">Fictions</a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="admin-pages/bper_page.html" class="sidebar-link">Bound Periodicals</a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="admin-pages/undergrad_page.html" class="sidebar-link">Undergraduate Thesis</a>
-                </li>
-            </ul>
         </li>
+
 
         <li class="sidebar-item">
             <a href="{% url 'admin_usersettings' %}" class="sidebar-link text-body">
