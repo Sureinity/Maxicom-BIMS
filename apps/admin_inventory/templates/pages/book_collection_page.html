@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" data-bs-theme=" " id="htmlPage">
 
@@ -26,7 +27,7 @@
         rel="stylesheet">
 
     <!-- custom css -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static 'admin_inventory/styles.css' %}">
 
 </head>
 
@@ -34,15 +35,17 @@
     <div class="wrapper">
 
         <!-- sidemenu component-->
+        {% include 'components/sidemenu.html' %}
 
         <div class="main">
 
             <!-- navbar component -->
+            {% include 'components/navbar.html' %}
 
             <div id="content-container" class="container mt-3 p-4">
 
                 <div class="d-flex justify-content-start mb-5">
-                    <img src="assets/inventory.png" alt="inventory icon" style="width: 2em; height: 2em;">
+                    <img src="{% static 'admin_inventory/assets/inventory.png' %}" alt="inventory icon" style="width: 2em; height: 2em;">
                     <h4 class="m-0 ps-3">Book Collection</h4>
                 </div>
 
@@ -199,5 +202,5 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
 </body>
-
+<script src="{% static 'admin_inventory/function.js' %}"></script>
 </html>

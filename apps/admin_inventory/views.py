@@ -244,5 +244,9 @@ def inventory_page(request):
     return render(request, "pages/inventory_page.html", context)
 
 @admin_required
+def bookcollections_page(request):
+    return render(request, "pages/book_collection_page.html")
+
+@admin_required
 def usersettings_page(request):
     return render (request, "pages/usersettings_page.html")
