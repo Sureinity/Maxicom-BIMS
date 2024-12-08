@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 
 from .models import Booklist, Inventory, InventoryHistory
+from .export import export_books_to_excel
 from .forms import CreateBook
 from apps.users.models import User
 from .decorators import admin_required

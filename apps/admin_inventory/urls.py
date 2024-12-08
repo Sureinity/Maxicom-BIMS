@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import views, export
 
 urlpatterns = [
     # Admin menus
@@ -14,5 +14,6 @@ urlpatterns = [
     path("list-books/<int:id>/update", views.update_listbooks_page, name="update_listbooks"),
     path("list-books/<int:id>/delete", views.delete_listbooks_page, name="delete_listbooks"),
 
-
+    # Exportation (TEST)
+    path("export/", export.export_books_to_excel, name="admin_exportbooks"),
 ]
