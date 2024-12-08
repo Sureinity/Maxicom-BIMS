@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.db.models import Q
+from django.views.decorators.cache import never_cache
 
 from .models import Booklist, Inventory, InventoryHistory
 from .export import export_books_to_excel
@@ -18,6 +19,7 @@ ADMIN SIDE | INVENTORY
 Description is yet to come...
 """
 # Create your views here.
+@never_cache
 @admin_required
 def dashboard_page(request):
     # Overview
@@ -48,6 +50,7 @@ def dashboard_page(request):
 
     return render(request, "pages/dashboard_page.html", context)
 
+@never_cache
 @admin_required
 def listbooks_page(request):
     search_query = request.GET.get('search', '')
@@ -89,6 +92,7 @@ def listbooks_page(request):
     
     return render(request, "pages/listbooks_page.html", context)
 
+@never_cache
 @admin_required
 def create_listbooks_page(request):
     if request.method == "POST":
@@ -145,7 +149,7 @@ def create_listbooks_page(request):
             return HttpResponse(f"Error: {e.message}", status=400)
     return redirect("admin_listbooks")
 
-
+@never_cache
 @admin_required
 def update_listbooks_page(request, id):
     book = Booklist.objects.get(id=id)
@@ -190,6 +194,7 @@ def update_listbooks_page(request, id):
 
     return redirect("admin_listbooks")
 
+@never_cache
 @admin_required
 def delete_listbooks_page(request, id):
     book = get_object_or_404(Booklist, id=id)
@@ -198,6 +203,7 @@ def delete_listbooks_page(request, id):
 
     return redirect("admin_listbooks")
 
+@never_cache
 @admin_required
 def inventory_page(request):
     # Get filter parameters
@@ -244,6 +250,7 @@ def inventory_page(request):
     
     return render(request, "pages/inventory_page.html", context)
 
+@never_cache
 @admin_required
 def bookcollections_page(request):
     # Get filter parameters
@@ -305,6 +312,7 @@ def bookcollections_page(request):
     
     return render(request, "pages/book_collection_page.html", context)
 
+@never_cache
 @admin_required
 def user_management_page(request):
     search_query = request.GET.get('search', '')
@@ -328,6 +336,7 @@ def user_management_page(request):
     }
     return render(request, 'pages/user_management_page.html', context)
 
+@never_cache
 @admin_required
 def delete_usersettings_page(request, id):
     user = get_object_or_404(User, id=id)
