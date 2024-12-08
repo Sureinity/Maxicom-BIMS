@@ -147,28 +147,23 @@
                     <ul class="pagination justify-content-center mt-4 mb-4 grid gap-2">
                         {% if users.has_previous %}
                         <li class="nav-item">
-                            <a href="?page={{ users.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}"
+                            <a href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}"
                                 class="text-body">&laquo;</a>
                         </li>
                         {% endif %}
 
                         {% for num in users.paginator.page_range %}
-                        {% if users.number == num %}
-                        <li class="nav-item">
-                            <a href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}"
-                                class="active text-body">{{ num }}</a>
-                        </li>
-                        {% elif num > users.number|add:'-3' and num < users.number|add:'3' %}
-                        <li class="nav-item">
-                            <a href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}"
-                                class="text-body">{{ num }}</a>
-                        </li>
-                        {% endif %}
+                            {% if num >= users.number|add:'-2' and num <= users.number|add:'2' %}
+                                <li class="nav-item">
+                                    <a href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}"
+                                        class="{% if users.number == num %}active{% endif %} text-body">{{ num }}</a>
+                                </li>
+                            {% endif %}
                         {% endfor %}
 
                         {% if users.has_next %}
                         <li class="nav-item">
-                            <a href="?page={{ users.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}"
+                            <a href="?page={{ users.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}"
                                 class="text-body">&raquo;</a>
                         </li>
                         {% endif %}

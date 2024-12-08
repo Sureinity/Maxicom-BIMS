@@ -263,21 +263,23 @@
                     <ul class="pagination justify-content-center mt-4 mb-4 grid gap-2">
                         {% if bookData.has_previous %}
                         <li class="nav-item">
-                            <a href="?page={{ bookData.previous_page_number }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
+                            <a href="?page=1&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
                                 class="text-body">&laquo;</a>
                         </li>
                         {% endif %}
 
-                        {% for page_num in page_range %}
-                        <li class="nav-item">
-                            <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
-                                class="{% if page_num == current_page %}active{% endif %} text-body">{{ page_num }}</a>
-                        </li>
+                        {% for page_num in bookData.paginator.page_range %}
+                            {% if page_num >= current_page|add:'-2' and page_num <= current_page|add:'2' %}
+                                <li class="nav-item">
+                                    <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
+                                        class="{% if page_num == current_page %}active{% endif %} text-body">{{ page_num }}</a>
+                                </li>
+                            {% endif %}
                         {% endfor %}
 
                         {% if bookData.has_next %}
                         <li class="nav-item">
-                            <a href="?page={{ bookData.next_page_number }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
+                            <a href="?page={{ bookData.paginator.num_pages }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
                                 class="text-body">&raquo;</a>
                         </li>
                         {% endif %}

@@ -370,20 +370,26 @@
                 <ul class="pagination justify-content-center mt-4 mb-4 grid gap-2">
                     {% if inventoryData.has_previous %}
                     <li class="nav-item">
-                        <a href="?page={{ inventoryData.previous_page_number }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}&status={{ status_filter }}" class="text-body">&laquo;</a>
+                        <a href="?page=1&show={{ request.GET.show|default:'10' }}&search={{ search_query }}&status={{ status_filter }}" 
+                           class="text-body">&laquo;</a>
                     </li>
                     {% endif %}
-                    {% for page_num in page_range %}
-                        <li class="nav-item">
-                            <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}&status={{ status_filter }}" 
-                               class="{% if page_num == current_page %}active{% endif %} text-body">
-                                {{ page_num }}
-                            </a>
-                        </li>
+                    
+                    {% for page_num in inventoryData.paginator.page_range %}
+                        {% if page_num >= current_page|add:'-2' and page_num <= current_page|add:'2' %}
+                            <li class="nav-item">
+                                <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}&status={{ status_filter }}" 
+                                   class="{% if page_num == current_page %}active{% endif %} text-body">
+                                    {{ page_num }}
+                                </a>
+                            </li>
+                        {% endif %}
                     {% endfor %}
+                    
                     {% if inventoryData.has_next %}
                     <li class="nav-item">
-                        <a href="?page={{ inventoryData.next_page_number }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}&status={{ status_filter }}" class="text-body">&raquo;</a>
+                        <a href="?page={{ inventoryData.paginator.num_pages }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}&status={{ status_filter }}" 
+                           class="text-body">&raquo;</a>
                     </li>
                     {% endif %}
                 </ul>
