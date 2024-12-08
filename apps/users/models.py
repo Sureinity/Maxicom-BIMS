@@ -12,13 +12,11 @@ class User(AbstractUser):
 
     # User account status
     ACTIVE = 0
-    SUSPENDED = 1
-    DELETED = 2 # Soft delete
+    DELETED = 1     # For former users (soft delete)
+    
     STATUS_CHOICES = [
         (ACTIVE, 'Active'),
-        (SUSPENDED, 'Suspended'),
         (DELETED, 'Deleted'),
-
     ]
 
     first_name = None

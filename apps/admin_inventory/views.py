@@ -306,5 +306,33 @@ def bookcollections_page(request):
     return render(request, "pages/book_collection_page.html", context)
 
 @admin_required
-def usersettings_page(request):
-    return render (request, "pages/usersettings_page.html")
+def user_management_page(request):
+    search_query = request.GET.get('search', '')
+    show = request.GET.get('show', '10')
+    
+    # Filter users based on search query
+    users = User.objects.exclude(sys_acc_role=0).exclude(sys_status=1)
+    if search_query:
+        users = users.filter(
+            Q(sys_firstname__icontains=search_query) |
+            Q(sys_lastname__icontains=search_query)
+        )
+    
+    # Paginate results
+    paginator = Paginator(users, int(show))
+    page = request.GET.get('page', 1)
+    users = paginator.get_page(page)
+    
+    context = {
+        'users': users,
+    }
+    return render(request, 'pages/user_management_page.html', context)
+
+@admin_required
+def delete_usersettings_page(request, id):
+    user = get_object_or_404(User, id=id)
+    if request.method == "POST":
+        user.sys_status = 1
+        user.save()
+
+    return redirect("admin_usersettings")

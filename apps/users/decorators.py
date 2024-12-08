@@ -13,3 +13,12 @@ def redirect_login_if_not_loggedin(func):
             return redirect("dashboard")
         return func(request)
     return wrapper
+
+def is_admin(func):
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_authenticated:
+            if request.user.sys_acc_role == 0:
+                return redirect('admin_dashboard')
+            return redirect('dashboard')
+        return func(request, *args, **kwargs)
+    return wrapper
