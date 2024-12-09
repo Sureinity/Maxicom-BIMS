@@ -4,6 +4,9 @@ def redirect_dashboard_if_loggedin(func):
     def wrapper(request):
         if not request.user.is_authenticated:
             return redirect("login")
+        if request.user.is_authenticated and request.user.sys_status == 1:
+            request.session.flush()
+            return redirect("login")
         return func(request)
     return wrapper
 
