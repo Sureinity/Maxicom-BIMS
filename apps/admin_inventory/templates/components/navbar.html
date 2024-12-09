@@ -1,18 +1,30 @@
 <nav class="navbar navbar-admin navbar-expand-lg bg-body">
-    <div class="container-fluid d-flex justify-content-end">
+    <div class="container-fluid d-flex ">
+        <div class=" umdc-lic d-flex grid gap-4">
+            <div class="image">
+                <img src="assets/um-logo.png" alt="UM Logo" style="width: 3rem; height: 3rem;">
+            </div>
+            <div class="label d-lg-block d-none">
+                <div class="row head-1">LEARNING AND INFORMATION CENTER</div>
+                <div class="row head-2">UM DIGOS COLLEGE</div>
+            </div>
+        </div>
+        <div class="navigation d-flex">
+            <div class="navbar-nav d-flex">
+                <div class="button-switch d-flex gap-4 d-flex align-items-center">
+                    <a class="nav-link" href="#">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input theme-switch" type="checkbox" role="switch"
+                                id="switch-check">
+                            <label class="form-check-label" for="switch-check"></label>
+                        </div>
+                    </a>
+                    <form action="{% url 'logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn uni-btn px-4">Logout</button>
+                    </form>
+                </div>
 
-        <div class="navigation">
-            <div class="navbar-nav gap-4 d-flex align-items-center">
-                <a class="nav-link" href="#">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input theme-switch" type="checkbox" role="switch" id="switch-check">
-                        <label class="form-check-label" for="switch-check"></label>
-                    </div>
-                </a>
-                <form action="{% url 'logout' %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn uni-btn px-4">Logout</button>
-                </form>
             </div>
         </div>
 
