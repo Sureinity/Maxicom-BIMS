@@ -39,7 +39,7 @@
             <div id="content-container" class="container mt-3 p-4">
                 <!-- Page header -->
                 <div class="d-flex justify-content-start mb-5">
-                    <img src="assets/inventory.png" alt="inventory icon" style="width: 2em; height: 2em;">
+                    <img src="{% static 'admin_inventory/assets/inventory.png' %}" alt="inventory icon" style="width: 2em; height: 2em;">
                     <h4 class="m-0 ps-3">User Management</h4>
                 </div>
 
@@ -181,5 +181,12 @@
     <!-- Custom JS -->
     <script src="{% static 'admin_inventory/function.js' %}"></script>
 </body>
+<script>
+    const hamBurger = document.querySelector(".toggle-btn");
+
+hamBurger.addEventListener("click", function () {
+  document.querySelector("#sidebar").classList.toggle("expand");
+});
+</script>
 
 </html>
