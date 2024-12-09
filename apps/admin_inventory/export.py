@@ -17,8 +17,11 @@ def export_books_to_excel(request):
     sheet.append(headers)
 
     books = Booklist.objects.all()
-    book_status = Inventory.objects.select_related("book").all()
+
     for book in books:
+        book_statuses = Inventory.objects.filter(book=book)
+        book_status = book_statuses.first().status if book_statuses.exists() else 'Unknown'
+        
         sheet.append([
             book.item_call_num,   # itemcallnumber
             book.col_code,        # ccode
@@ -36,8 +39,8 @@ def export_books_to_excel(request):
             book.edition_stmt,    # editionstatement
             book.paidfor,         # paidfor
             book.price,           # price
-            book.bookseller_id,    # booksellerid
-          #  status.status,        # book status
+            book.bookseller_id,   # booksellerid
+            book_status,          # book status
         ])
 
     # Response headers for downloading the file
