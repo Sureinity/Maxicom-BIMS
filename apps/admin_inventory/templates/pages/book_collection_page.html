@@ -140,19 +140,22 @@
                         <li class="nav-item">
                             <a class="nav-link {% if not status_filter %}active{% endif %} text-body" 
                                href="?{% if search_query %}search={{ search_query }}&{% endif %}{% if collection_filter %}book-collections={{ collection_filter }}&{% endif %}{% if decimal_start %}item-decimal-start={{ decimal_start }}&{% endif %}{% if decimal_end %}item-decimal-end={{ decimal_end }}&{% endif %}{% if year_start %}year-start={{ year_start }}&{% endif %}{% if year_end %}year-end={{ year_end }}&{% endif %}show={{ request.GET.show|default:'10' }}">
-                               All ({{ total_books }})
+                               All 
+                               <!--({{ total_books }})-->
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% if status_filter == 'found' %}active{% endif %} text-body" 
                                href="?status=found{% if search_query %}&search={{ search_query }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}&show={{ request.GET.show|default:'10' }}">
-                               Found ({{ found_books }})
+                               Found 
+                               <!--({{ found_books }})-->
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% if status_filter == 'not_found' %}active{% endif %} text-body" 
                                href="?status=not_found{% if search_query %}&search={{ search_query }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}&show={{ request.GET.show|default:'10' }}">
-                               Not Found ({{ not_found_books }})
+                               Not Found 
+                               <!--({{ not_found_books }})-->
                             </a>
                         </li>
                     </ul>
@@ -215,12 +218,13 @@
                                             <div class="details mt-4">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <p>Item Call Number</p>
-                                                        <p>Collection Code</p>
-                                                        <p>Barcode</p>
-                                                        <p>ISBN</p>
                                                         <p>Publisher</p>
+                                                        <p>Barcode</p>
                                                         <p>Copyright</p>
+                                                        <p>ISBN</p>
+                                                        <p>Collection Code</p>
+                                                        <p>Itype</p>
+                                                        <p>Item Call Number</p>
                                                         <p>Date Accessioned</p>
                                                         <p>Copy Number</p>
                                                         <p>Volume</p>
@@ -230,18 +234,19 @@
                                                         <p>Book Seller</p>
                                                     </div>
                                                     <div class="col">
-                                                        <p>: {{ data.item_call_num }}</p>
-                                                        <p>: {{ data.col_code }}</p>
-                                                        <p>: {{ data.barcode }}</p>
-                                                        <p>: {{ data.isbn }}</p>
                                                         <p>: {{ data.publisher_code }}</p>
+                                                        <p>: {{ data.barcode}}</p>
                                                         <p>: {{ data.copyrightdate }}</p>
+                                                        <p>: {{ data.isbn }}</p>
+                                                        <p>: {{ data.col_code }}</p>
+                                                        <p>: {{ data.itype }}</p>
+                                                        <p>: {{ data.item_call_num }}</p>
                                                         <p>: {{ data.date_accessioned }}</p>
                                                         <p>: {{ data.copy_num }}</p>
                                                         <p>: {{ data.volume }}</p>
                                                         <p>: {{ data.edition_stmt }}</p>
                                                         <p>: {{ data.paidfor }}</p>
-                                                        <p>: {{ data.price }}</p>
+                                                        <p>: {{ data.price}}</p>
                                                         <p>: {{ data.bookseller_id }}</p>
                                                     </div>
                                                 </div>

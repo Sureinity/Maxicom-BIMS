@@ -335,7 +335,7 @@
                                         {% for history in item.history.all %}
                                         <tr>
                                             <td class="text-truncate" style="max-width: 150px;">
-                                                {{ history.reviewed_by.first_name }} {{ history.reviewed_by.last_name }}
+                                                {{ history.reviewed_by.sys_firstname }} {{ history.reviewed_by.sys_lastname }}
                                             </td>
                                             <td class="text-truncate" style="max-width: 150px;">
                                                 {{ history.datetime_checked|date:"Y-m-d" }}

@@ -202,8 +202,8 @@ def inventory_page(request):
     search_query = request.GET.get('search', '')
     status_filter = request.GET.get('status', '')
     
-    # Start with all inventory items
-    inventoryData = Inventory.objects.select_related('book').all()
+    # Start with all inventory items, excluding books with NOT_FOUND status
+    inventoryData = Inventory.objects.select_related('book').exclude(status=5)
     inventoryHistoryData = InventoryHistory.objects.all()
     
     # Apply status filter if present
