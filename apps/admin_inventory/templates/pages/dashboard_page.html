@@ -48,8 +48,11 @@
                     <h4 class="m-0 ps-3">Dashboard</h4>
                 </div>
 
-                <div class="d-flex justify-content-start mt-5 mb-3">
+                <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
                     <h6 class="m-0">Overview</h6>
+                    <button type="button" class="btn btn-outline-secondary" onclick="printPage('{% url 'print_listbooks' %}')">
+                        <i class="fa-solid fa-print"></i>&nbsp; Print
+                    </button>
                 </div>
 
                 <div class="row g-4">
@@ -214,6 +217,30 @@
 hamBurger.addEventListener("click", function () {
   document.querySelector("#sidebar").classList.toggle("expand");
 });
+
+function printPage(url) {
+        // This uses the Djangourl from the print button
+        var printUrl = url;
+        
+        fetch(printUrl)
+            .then(response => response.text())
+            .then(content => {
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+                
+                iframe.contentWindow.document.write(content);
+                iframe.contentWindow.document.close();
+                
+                iframe.contentWindow.onload = function() {
+                    iframe.contentWindow.print();
+                    document.body.removeChild(iframe);
+                };
+            })
+            .catch(error => {
+                console.error('Error fetching print content:', error);
+            });
+    }
 
 </script>
 </html>

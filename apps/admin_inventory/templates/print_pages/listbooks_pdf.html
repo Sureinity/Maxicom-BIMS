@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" data-bs-theme=" " id="htmlPage">
 
@@ -18,8 +19,8 @@
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="shortcut icon" href="assets/bims-icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="{% static 'admin_inventory/assets/bims-icon.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'admin_inventory/styles.css' %}">
 </head>
 
 <body class="mt-4 mb-4">
@@ -29,8 +30,8 @@
             <div class="row">
                 <div class="col">
                     <div class="d-flex grid gap-4">
-                        <img src="assets/um-logo.png" alt="UM Logo" style="height: 4rem; width: 4rem;">
-                        <img src="assets/logo-bims.png" alt="BIMS Logo" style="height: 4rem; width: 10rem;">
+                        <img src="{% static 'admin_inventory/assets/um-logo.png' %}" alt="UM Logo" style="height: 4rem; width: 4rem;">
+                        <img src="{% static 'admin_inventory/assets/logo-bims.png' %}" alt="BIMS Logo" style="height: 4rem; width: 10rem;">
                     </div>
                 </div>
                 <div class="col text-end">
