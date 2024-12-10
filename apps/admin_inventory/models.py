@@ -36,18 +36,20 @@ class Inventory(models.Model):
     NO_BARCODE_TAG = 2
     FOR_REPAIR = 3
     FOR_DISPOSAL = 4
+    NOT_FOUND = 5
 
     BOOK_STATUS_CHOICES = [
         (GOOD_CONDITION, 'Good Condition'),
         (NO_BARCODE_TAG, 'No Barcode Tag'),
         (FOR_REPAIR, 'For Repair'),
         (FOR_DISPOSAL, 'For Disposal'),
+        (NOT_FOUND, 'Not Found'),
     ]
 
     id = models.BigAutoField(primary_key=True, db_column="inv_id")
-    book = models.ForeignKey(Booklist, on_delete=models.CASCADE)
-    datetime_checked = models.DateTimeField(auto_now=True, db_column="inv_datetime_checked")
-    status =  models.IntegerField(choices=BOOK_STATUS_CHOICES, null=True, blank=True, db_column="inv_status")
+    book = models.ForeignKey(Booklist, on_delete=models.CASCADE, db_index=True)
+    datetime_checked = models.DateTimeField(auto_now=True, db_column="inv_datetime_checked", db_index=True)
+    status =  models.IntegerField(choices=BOOK_STATUS_CHOICES, default=NOT_FOUND, db_column="inv_status", db_index=True)
 
     class Meta:
         ordering = ['-datetime_checked']

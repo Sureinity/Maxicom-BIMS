@@ -60,7 +60,6 @@ def listbooks_page(request):
     year_start = request.GET.get('year-start', '')
     year_end = request.GET.get('year-end', '')
     
-    # Apply filters using the reusable function
     bookData = apply_book_filters(
         Booklist.objects.all(),
         search_query=search_query,
@@ -97,7 +96,6 @@ def listbooks_page(request):
 def create_listbooks_page(request):
     if request.method == "POST":
         try:
-            # Extract data from POST request
             barcode = request.POST.get('barcode')
             title = request.POST.get('title')
             subtitle = request.POST.get('subtitle')
@@ -116,7 +114,6 @@ def create_listbooks_page(request):
             price = request.POST.get('price')
             bookseller_id = request.POST.get('bookseller_id')
 
-            # Create and save the Booklist object
             book = Booklist(
                 barcode=barcode,
                 title=title,
@@ -136,16 +133,11 @@ def create_listbooks_page(request):
                 price=price,
                 bookseller_id=bookseller_id
             )
-
-            # Perform clean method validation (optional)
+            
             book.clean()
-
-            # Save the book instance to the database
             book.save()
 
-  # Redirect to a success page or return a success response
         except ValidationError as e:
-            # Handle validation error
             return HttpResponse(f"Error: {e.message}", status=400)
     return redirect("admin_listbooks")
 
@@ -276,16 +268,45 @@ def bookcollections_page(request):
         year_end=year_end
     )
 
-    # Get total counts for tabs
-    total_books = len(filtered_books)
-    found_books = sum(1 for book in filtered_books if hasattr(book, 'inventory') and book.inventory.exists())
+    # Still on testing: This cause performance issues
+
+    # total_books = len(filtered_books)
+    # found_books = len([
+    #     book for book in filtered_books 
+    #     if book.inventory_set.filter(status__in=[
+    #         Inventory.GOOD_CONDITION, 
+    #         Inventory.NO_BARCODE_TAG, 
+    #         Inventory.FOR_REPAIR, 
+    #         Inventory.FOR_DISPOSAL
+    #     ]).exists()
+    # ])
+
+    # Partial data for testing
+    total_books = 0
+    found_books = 0
     not_found_books = total_books - found_books
 
-    # Apply status filter if present
+    # Apply status filter if "Found or Not Found" is present
     if status_filter == 'found':
-        filtered_books = [book for book in filtered_books if hasattr(book, 'inventory') and book.inventory.exists()]
+        filtered_books = [
+            book for book in filtered_books 
+            if book.inventory_set.filter(status__in=[
+                Inventory.GOOD_CONDITION, 
+                Inventory.NO_BARCODE_TAG, 
+                Inventory.FOR_REPAIR, 
+                Inventory.FOR_DISPOSAL
+            ]).exists()
+        ]
     elif status_filter == 'not_found':
-        filtered_books = [book for book in filtered_books if not hasattr(book, 'inventory') or not book.inventory.exists()]
+        filtered_books = [
+            book for book in filtered_books 
+            if not book.inventory_set.filter(status__in=[
+                Inventory.GOOD_CONDITION, 
+                Inventory.NO_BARCODE_TAG, 
+                Inventory.FOR_REPAIR, 
+                Inventory.FOR_DISPOSAL
+            ]).exists()
+        ]
 
     # Pagination
     page_number = request.GET.get('page', 1)
@@ -318,7 +339,6 @@ def user_management_page(request):
     search_query = request.GET.get('search', '')
     show = request.GET.get('show', '10')
     
-    # Filter users based on search query
     users = User.objects.exclude(sys_acc_role=0).exclude(sys_status=1)
     if search_query:
         users = users.filter(
