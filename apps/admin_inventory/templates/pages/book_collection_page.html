@@ -142,21 +142,21 @@
                             <a class="nav-link {% if not status_filter %}active{% endif %} text-body" 
                                href="?{% if search_query %}search={{ search_query }}&{% endif %}{% if collection_filter %}book-collections={{ collection_filter }}&{% endif %}{% if decimal_start %}item-decimal-start={{ decimal_start }}&{% endif %}{% if decimal_end %}item-decimal-end={{ decimal_end }}&{% endif %}{% if year_start %}year-start={{ year_start }}&{% endif %}{% if year_end %}year-end={{ year_end }}&{% endif %}show={{ request.GET.show|default:'10' }}">
                                All 
-                               <!--({{ total_books }})-->
+                               ({{ total_books }})
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% if status_filter == 'found' %}active{% endif %} text-body" 
                                href="?status=found{% if search_query %}&search={{ search_query }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}&show={{ request.GET.show|default:'10' }}">
                                Found 
-                               <!--({{ found_books }})-->
+                               ({{ found_books }})
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% if status_filter == 'not_found' %}active{% endif %} text-body" 
                                href="?status=not_found{% if search_query %}&search={{ search_query }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}&show={{ request.GET.show|default:'10' }}">
                                Not Found 
-                               <!--({{ not_found_books }})-->
+                               ({{ not_found_books }})
                             </a>
                         </li>
                     </ul>

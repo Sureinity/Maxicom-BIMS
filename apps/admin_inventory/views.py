@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.views.decorators.cache import never_cache
 
 from .models import Booklist, Inventory, InventoryHistory
@@ -18,7 +18,7 @@ ADMIN SIDE | INVENTORY
 
 Description is yet to come...
 """
-# Create your views here.
+
 @never_cache
 @admin_required
 def dashboard_page(request):
@@ -198,7 +198,7 @@ def delete_listbooks_page(request, id):
 @never_cache
 @admin_required
 def inventory_page(request):
-    # Get filter parameters
+    # Fetch filter parameters from request
     search_query = request.GET.get('search', '')
     status_filter = request.GET.get('status', '')
     
@@ -245,7 +245,7 @@ def inventory_page(request):
 @never_cache
 @admin_required
 def bookcollections_page(request):
-    # Get filter parameters
+    # Fetch filter parameters from request
     search_query = request.GET.get('search', '')
     collection_filter = request.GET.get('book-collections', '')
     decimal_start = request.GET.get('item-decimal-start', '')
@@ -255,11 +255,11 @@ def bookcollections_page(request):
     status_filter = request.GET.get('status', '')
     
     # Start with all books and prefetch related inventory data
-    bookData = Booklist.objects.prefetch_related('inventory_set').all()
+    base_queryset = Booklist.objects.prefetch_related('inventories').all()
     
-    # Apply filters using the reusable function
-    filtered_books = apply_book_filters(
-        bookData,
+    # Apply non-status filters
+    filtered_queryset = apply_book_filters(
+        base_queryset,
         search_query=search_query,
         collection_filter=collection_filter,
         decimal_start=decimal_start,
@@ -268,50 +268,32 @@ def bookcollections_page(request):
         year_end=year_end
     )
 
-    # Still on testing: This cause performance issues
+    # Calculate counts from filtered queryset before applying status filter
+    annotated_queryset = filtered_queryset.annotate(
+        found_books=Count('inventories', filter=Q(inventories__status__in=[
+            Inventory.GOOD_CONDITION, 
+            Inventory.NO_BARCODE_TAG, 
+            Inventory.FOR_REPAIR, 
+            Inventory.FOR_DISPOSAL
+        ])),
+        not_found_books=Count('inventories', filter=Q(inventories__status=Inventory.NOT_FOUND))
+    )
 
-    # total_books = len(filtered_books)
-    # found_books = len([
-    #     book for book in filtered_books 
-    #     if book.inventory_set.filter(status__in=[
-    #         Inventory.GOOD_CONDITION, 
-    #         Inventory.NO_BARCODE_TAG, 
-    #         Inventory.FOR_REPAIR, 
-    #         Inventory.FOR_DISPOSAL
-    #     ]).exists()
-    # ])
+    # Tabs
+    total_books = annotated_queryset.count()
+    total_found = sum(book.found_books for book in annotated_queryset)
+    total_not_found = sum(book.not_found_books for book in annotated_queryset)
 
-    # Partial data for testing
-    total_books = 0
-    found_books = 0
-    not_found_books = total_books - found_books
-
-    # Apply status filter if "Found or Not Found" is present
+    # Apply status filter if present
     if status_filter == 'found':
-        filtered_books = [
-            book for book in filtered_books 
-            if book.inventory_set.filter(status__in=[
-                Inventory.GOOD_CONDITION, 
-                Inventory.NO_BARCODE_TAG, 
-                Inventory.FOR_REPAIR, 
-                Inventory.FOR_DISPOSAL
-            ]).exists()
-        ]
+        annotated_queryset = annotated_queryset.filter(found_books__gt=0)
     elif status_filter == 'not_found':
-        filtered_books = [
-            book for book in filtered_books 
-            if not book.inventory_set.filter(status__in=[
-                Inventory.GOOD_CONDITION, 
-                Inventory.NO_BARCODE_TAG, 
-                Inventory.FOR_REPAIR, 
-                Inventory.FOR_DISPOSAL
-            ]).exists()
-        ]
+        annotated_queryset = annotated_queryset.filter(not_found_books__gt=0)
 
     # Pagination
     page_number = request.GET.get('page', 1)
     items_per_page = request.GET.get('show', 10)
-    paginator = Paginator(filtered_books, items_per_page)
+    paginator = Paginator(annotated_queryset, items_per_page)
     page_obj = paginator.get_page(page_number)
 
     context = {
@@ -319,6 +301,9 @@ def bookcollections_page(request):
         "page_range": paginator.page_range,
         "current_page": int(page_number) if page_number else 1,
         "total_pages": paginator.num_pages,
+        "total_books": total_books,
+        "found_books": total_found,
+        "not_found_books": total_not_found,
         "search_query": search_query,
         "collection_filter": collection_filter,
         "decimal_start": decimal_start,
@@ -326,9 +311,6 @@ def bookcollections_page(request):
         "year_start": year_start,
         "year_end": year_end,
         "status_filter": status_filter,
-        "total_books": total_books,
-        "found_books": found_books,
-        "not_found_books": not_found_books,
     }
     
     return render(request, "pages/book_collection_page.html", context)
@@ -345,8 +327,7 @@ def user_management_page(request):
             Q(sys_firstname__icontains=search_query) |
             Q(sys_lastname__icontains=search_query)
         )
-    
-    # Paginate results
+
     paginator = Paginator(users, int(show))
     page = request.GET.get('page', 1)
     users = paginator.get_page(page)

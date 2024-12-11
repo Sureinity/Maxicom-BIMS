@@ -5,11 +5,10 @@ import datetime
 
 from apps.users.models import User
 
-# Create your models here.
-
 class Booklist(models.Model):
     id = models.BigAutoField(primary_key=True, db_column="b_id")
     item_call_num = models.CharField(max_length=255, blank=False, db_column="b_item_call_num")
+    decimal_part = models.FloatField(null=True, blank=True, db_column="b_decimal_part")  # Store decimal part
     col_code = models.CharField(max_length=255, blank=False, db_column="b_col_code")
     barcode = models.CharField(max_length=255, blank=False, db_column="b_barcode")
     itype = models.CharField(max_length=255, blank=False, db_column="b_itype")
@@ -19,19 +18,37 @@ class Booklist(models.Model):
     date_accessioned = models.CharField(max_length=255, blank=True, db_column="b_date_accessioned")
     copyrightdate = models.CharField(max_length=255, blank=True, db_column="b_copyrightdate")
     isbn = models.CharField(max_length=255, blank=False, db_column="b_isbn")
-    copy_num = models.CharField(max_length=255, db_column="b_copy_num", blank=True,  help_text="Copy number starting from 1")
+    copy_num = models.CharField(max_length=255, db_column="b_copy_num", blank=True, help_text="Copy number starting from 1")
     volume = models.CharField(max_length=255, blank=True, null=True, db_column="b_volume")
     edition_stmt = models.CharField(max_length=255, blank=True, null=True, db_column="b_edition_stmt")
     subtitle = models.TextField(db_column="b_subtitle", blank=True, null=True)
     paidfor = models.CharField(max_length=255, blank=True, null=True, db_column="b_paidfor")
-    price = models.CharField(max_length=255, null=True, blank=True, db_column="b_price") # PHP Peso
+    price = models.CharField(max_length=255, null=True, blank=True, db_column="b_price")  # PHP Peso
     bookseller_id = models.CharField(max_length=255, blank=False, db_column="b_bookseller_id")
 
     class Meta:
         ordering = ['title']
+        indexes = [
+            models.Index(fields=["title"]),
+            models.Index(fields=["isbn"]),
+            models.Index(fields=["decimal_part"]),
+            models.Index(fields=["col_code"]),
+            models.Index(fields=["copyrightdate"]),
+        ]
+    
+    def save(self, *args, **kwargs):
+        """Override save method to extract decimal part from item_call_num"""
+        if self.item_call_num:
+            parts = self.item_call_num.split()
+            if len(parts) >= 2:
+                try:
+                    self.decimal_part = float(parts[1])
+                except ValueError:
+                    self.decimal_part = None
+        super().save(*args, **kwargs)
         
 class Inventory(models.Model):
-    # Book status
+    # Status choices
     GOOD_CONDITION = 1
     NO_BARCODE_TAG = 2
     FOR_REPAIR = 3
@@ -47,14 +64,13 @@ class Inventory(models.Model):
     ]
 
     id = models.BigAutoField(primary_key=True, db_column="inv_id")
-    book = models.ForeignKey(Booklist, on_delete=models.CASCADE, db_index=True)
+    book = models.ForeignKey(Booklist, on_delete=models.CASCADE, db_index=True, related_name='inventories')  # Add related_name
     datetime_checked = models.DateTimeField(auto_now=True, db_column="inv_datetime_checked", db_index=True)
     status =  models.IntegerField(choices=BOOK_STATUS_CHOICES, default=NOT_FOUND, db_column="inv_status", db_index=True)
 
     class Meta:
         ordering = ['-datetime_checked']
 
-# Partial model layout for InventoryHistory
 class InventoryHistory(models.Model):
     id = models.BigAutoField(primary_key=True, db_column="h_id")
     inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE, related_name="history")
