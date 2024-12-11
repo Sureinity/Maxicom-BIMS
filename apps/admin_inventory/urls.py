@@ -22,4 +22,5 @@ urlpatterns = [
 
     # Print (TEST)
     path("print/", print.listbook_print, name="print_listbooks"),
+    path("print/<int:id>", print.bookDetails_print, name="print_bookDetails"),
 ]

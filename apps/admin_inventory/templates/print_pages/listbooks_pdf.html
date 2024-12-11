@@ -66,40 +66,15 @@
             </thead>
             <tbody>
                 <!-- sample data -->
-
+                {% for book in data %}
                 <tr class="table-body text-center">
-                    <td class="text-wrap" style="max-width: 150px;">23581
-                    </td>
-                    <th scope="row">DFIL</th>
-                    <td class="text-wrap" style="max-width: 150px;">Basic baking and cake decorating
-                    </td>
-                    <td class="text-wrap" style="max-width: 150px;">Tria-Natad, Ma. Felisa
-                    </td>
-                    <td class="text-wrap" style="max-width: 150px;">2024-09-25
-                    </td>
-                    <td class="text-wrap" style="max-width: 150px;">
-                        For Repair
-                    </td>
+                    <td class="text-wrap" style="max-width: 150px;">{{ book.barcode }}</td>
+                    <th scope="row">{{ book.col_code }}</th>
+                    <td class="text-wrap" style="max-width: 150px;">{{ book.title }}</td>
+                    <td class="text-wrap" style="max-width: 150px;">{{ book.author }}</td>
+                    <td class="text-wrap" style="max-width: 150px;">{{ book.checked_at }}</td>
                 </tr>
-
-                <tr class="table-body text-center">
-                    <td class="text-wrap" style="max-width: 150px;">23581
-                    </td>
-                    <th scope="row">DFIL</th>
-                    <td class="text-wrap" style="max-width: 150px;">Speed Point is in the shaattt
-                    </td>
-                    <td class="text-wrap" style="max-width: 150px;">Maria Leonora Teresa
-                    </td>
-                    <td class="text-wrap" style="max-width: 150px;">2024-09-24
-                    </td>
-
-                    <td class="text-wrap" style="max-width: 150px;">
-                        Good Condition
-                    </td>
-                </tr>
-                <!-- sample data -->
-
-
+                {% endfor %}
             </tbody>
         </table>
     </div>

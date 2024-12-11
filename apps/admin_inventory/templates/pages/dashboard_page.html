@@ -212,36 +212,12 @@
 
 </body>
 <script src="{% static 'admin_inventory/function.js' %}"></script>
+<script src="{% static 'admin_inventory/printPDF.js' %}"></script>
 <script>
     const hamBurger = document.querySelector(".toggle-btn");
 
 hamBurger.addEventListener("click", function () {
   document.querySelector("#sidebar").classList.toggle("expand");
 });
-
-function printPage(url) {
-        // This uses the Djangourl from the print button
-        var printUrl = url;
-        
-        fetch(printUrl)
-            .then(response => response.text())
-            .then(content => {
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                document.body.appendChild(iframe);
-                
-                iframe.contentWindow.document.write(content);
-                iframe.contentWindow.document.close();
-                
-                iframe.contentWindow.onload = function() {
-                    iframe.contentWindow.print();
-                    document.body.removeChild(iframe);
-                };
-            })
-            .catch(error => {
-                console.error('Error fetching print content:', error);
-            });
-    }
-
 </script>
 </html>
