@@ -7,17 +7,17 @@ from apps.users.models import User
 
 class Booklist(models.Model):
     id = models.BigAutoField(primary_key=True, db_column="b_id")
-    item_call_num = models.CharField(max_length=255, blank=False, db_column="b_item_call_num")
+    item_call_num = models.CharField(max_length=255, blank=False, unique=True, db_column="b_item_call_num") # Unique
     decimal_part = models.FloatField(null=True, blank=True, db_column="b_decimal_part")  # Store decimal part
-    col_code = models.CharField(max_length=255, blank=False, db_column="b_col_code")
-    barcode = models.CharField(max_length=255, blank=False, db_column="b_barcode")
+    col_code = models.CharField(max_length=255, blank=False, db_column="b_col_code") 
+    barcode = models.CharField(max_length=255, blank=False, unique=True, db_column="b_barcode") # Unique
     itype = models.CharField(max_length=255, blank=False, db_column="b_itype")
     title = models.CharField(max_length=255, blank=False, db_column="b_title")
     author = models.CharField(max_length=255, blank=False, db_column="b_author")
     publisher_code = models.CharField(max_length=255, blank=True, db_column="b_publisher_code")
     date_accessioned = models.CharField(max_length=255, blank=True, db_column="b_date_accessioned")
     copyrightdate = models.CharField(max_length=255, blank=True, db_column="b_copyrightdate")
-    isbn = models.CharField(max_length=255, blank=False, db_column="b_isbn")
+    isbn = models.CharField(max_length=255, blank=False, unique=True, db_column="b_isbn") # Unique
     copy_num = models.CharField(max_length=255, db_column="b_copy_num", blank=True, help_text="Copy number starting from 1")
     volume = models.CharField(max_length=255, blank=True, null=True, db_column="b_volume")
     edition_stmt = models.CharField(max_length=255, blank=True, null=True, db_column="b_edition_stmt")

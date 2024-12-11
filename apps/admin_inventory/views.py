@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.db.models import Q, Count
 from django.views.decorators.cache import never_cache
+from django.db import IntegrityError
 
 from .models import Booklist, Inventory, InventoryHistory
 from .export import export_books_to_excel
@@ -95,25 +96,25 @@ def listbooks_page(request):
 @admin_required
 def create_listbooks_page(request):
     if request.method == "POST":
-        try:
-            barcode = request.POST.get('barcode')
-            title = request.POST.get('title')
-            subtitle = request.POST.get('subtitle')
-            col_code = request.POST.get('col_code')
-            author = request.POST.get('author')
-            copyrightdate = request.POST.get('copyrightdate')
-            date_accessioned = request.POST.get('date_accessioned')
-            isbn = request.POST.get('isbn')
-            publisher_code = request.POST.get('publisher_code')
-            itype = request.POST.get('itype')
-            item_call_num = request.POST.get('item_call_num')
-            copy_num = request.POST.get('copy_num')
-            volume = request.POST.get('volume')
-            edition_stmt = request.POST.get('edition_stmt')
-            paidfor = request.POST.get('paidfor')
-            price = request.POST.get('price')
-            bookseller_id = request.POST.get('bookseller_id')
+        barcode = request.POST.get('barcode')
+        title = request.POST.get('title')
+        subtitle = request.POST.get('subtitle')
+        col_code = request.POST.get('col_code')
+        author = request.POST.get('author')
+        copyrightdate = request.POST.get('copyrightdate')
+        date_accessioned = request.POST.get('date_accessioned')
+        isbn = request.POST.get('isbn')
+        publisher_code = request.POST.get('publisher_code')
+        itype = request.POST.get('itype')
+        item_call_num = request.POST.get('item_call_num')
+        copy_num = request.POST.get('copy_num')
+        volume = request.POST.get('volume')
+        edition_stmt = request.POST.get('edition_stmt')
+        paidfor = request.POST.get('paidfor')
+        price = request.POST.get('price')
+        bookseller_id = request.POST.get('bookseller_id')
 
+        try:
             book = Booklist(
                 barcode=barcode,
                 title=title,
@@ -136,9 +137,26 @@ def create_listbooks_page(request):
             
             book.clean()
             book.save()
-
-        except ValidationError as e:
-            return HttpResponse(f"Error: {e.message}", status=400)
+            
+            # Return JSON response for AJAX requests
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                messages.success(request, 'Book created successfully.')
+                return JsonResponse({
+                    'success': True,
+                    'messages': [{'message': m.message, 'tags': m.tags} for m in messages.get_messages(request)]
+                })
+            return redirect("admin_listbooks")
+            
+        except IntegrityError as e:
+            messages.error(request, 'This data already exists in the database.')
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'error': 'Either the ISBN, barcode, or item call number already exists in the database.',
+                    'messages': [{'message': m.message, 'tags': m.tags} for m in messages.get_messages(request)]
+                })
+    
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'error': 'Invalid request method'})
     return redirect("admin_listbooks")
 
 @never_cache
