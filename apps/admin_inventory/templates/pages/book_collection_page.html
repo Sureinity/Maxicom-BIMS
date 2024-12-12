@@ -175,8 +175,8 @@
                                 <td class="text-truncate" style="max-width: 150px;">{{ data.title }}</td>
                                 <td class="text-truncate" style="max-width: 150px;">{{ data.author }}</td>
                                 <td class="text-truncate" style="max-width: 150px;">
-                                    {% if data.inventory_set.all.first %}
-                                        {{ data.inventory_set.all.first.datetime_checked|date:"Y-m-d" }}
+                                    {% if data.inventories.first.history.first %}
+                                        {{ data.inventories.first.history.first.datetime_checked|date:"Y-m-d" }}
                                     {% else %}
                                         Not checked
                                     {% endif %}
