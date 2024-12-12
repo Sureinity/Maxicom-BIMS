@@ -127,12 +127,12 @@ h1 {
   background-color: transparent;
   cursor: pointer;
   border: 0;
-  padding: 1rem 1.5rem;
+  padding: 1rem 1.7rem;
 }
 
 .toggle-btn i {
   font-size: 1.5rem;
-  color: #49d898;
+  color: #6d6d6d;
 }
 
 .sidebar-logo {
@@ -191,7 +191,7 @@ a.sidebar-link:hover {
 
 #sidebar:not(.expand) .sidebar-item:hover .has-dropdown + .sidebar-dropdown {
   display: block;
-  max-height: 15em;
+  max-height: 20em;
   width: 100%;
   opacity: 1;
 }
@@ -248,4 +248,22 @@ select.show-select > option {
 
 .nav-tabs .nav-link.active {
   background-color: #9bffd2;
+}
+
+.head-1 {
+  font-weight: 500;
+  border-bottom: #646464b2 1px solid;
+}
+
+.head-2 {
+  font-weight: 300;
+}
+
+.table-header {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.table-body {
+  font-size: 0.9rem;
 }
