@@ -70,14 +70,13 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <div class="d-grid gap-2">
-                                    <div class="btn btn-outline-secondary"
-                                        onclick="printPage('{% url 'print_listbooks' %}')">List of Acquisitions</div>
+                                  <form method="POST" action="{% url 'print_listbooks' %}">
+                                    {% csrf_token %}
+                                    <div class="d-grid"><button type="submit" class="btn btn-outline-secondary">List of Acquisitions</button></div>
+                                  </form>
                                     <div class="btn btn-outline-secondary">No Barcode Tag</div>
                                     <div class="btn btn-outline-secondary">For Repair</div>
                                     <div class="btn btn-outline-secondary">For Disposal</div>
-                                </div>
-
                             </div>
                         </div>
                     </div>

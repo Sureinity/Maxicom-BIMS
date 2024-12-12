@@ -1,11 +1,30 @@
-from .models import Booklist, Inventory, InventoryHistory
 from django.shortcuts import render
-from .models import Booklist, Inventory
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.templatetags.static import static
 
-# Testing...
+from weasyprint import HTML, CSS
+from .models import Booklist
+
 def listbook_print(request):
-    books = Booklist.objects.all()[:5000].iterator(chunk_size=1000)
-    return render(request, "print_pages/listbooks_pdf.html", {"data": books})
+    books = Booklist.objects.all()[:100].iterator(chunk_size=1000)
+    
+    um_logo_url = request.build_absolute_uri(static('admin_inventory/assets/um-logo.png'))
+    bims_logo_url = request.build_absolute_uri(static('admin_inventory/assets/logo-bims.png'))
+
+    html_content = render_to_string(
+        "print_pages/listbooks_pdf.html",
+        {"data": books, "um_logo_url": um_logo_url, "bims_logo_url": bims_logo_url}
+    )
+
+    css_url = static('admin_inventory/styles.css')
+    css_absolute_path = request.build_absolute_uri(css_url)
+
+    pdf = HTML(string=html_content).write_pdf(stylesheets=[CSS(css_absolute_path)])
+
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="output.pdf"'
+    return response
 
 def bookDetails_print(request, id):
     book = Booklist.objects.get(id=id)

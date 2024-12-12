@@ -30,8 +30,8 @@
             <div class="row">
                 <div class="col">
                     <div class="d-flex grid gap-4">
-                        <img src="{% static 'admin_inventory/assets/um-logo.png' %}" alt="UM Logo" style="height: 4rem; width: 4rem;">
-                        <img src="{% static 'admin_inventory/assets/logo-bims.png' %}" alt="BIMS Logo" style="height: 4rem; width: 10rem;">
+                        <img src="{{ um_logo_url }}" alt="UM Logo" style="height: 4rem; width: 4rem;">
+                        <img src="{{ bims_logo_url }}" alt="BIMS Logo" style="height: 4rem; width: 10rem;">
                     </div>
                 </div>
                 <div class="col text-end">
@@ -73,6 +73,7 @@
                     <td class="text-wrap" style="max-width: 150px;">{{ book.title }}</td>
                     <td class="text-wrap" style="max-width: 150px;">{{ book.author }}</td>
                     <td class="text-wrap" style="max-width: 150px;">{{ book.checked_at }}</td>
+                    <td class="text-wrap" style="max-width: 150px;">{{ book.datetime_checked|date:"Y-m-d" }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
