@@ -76,13 +76,13 @@
                                     <div class="d-flex">
                                         <p class="m-0 me-2">Showing</p>
                                         <select class="show-select text-dark" name="show" onchange="this.form.submit()">
-                                            <option value="10" {% if request.GET.show=='10' %}selected{% endif %}>10
+                                            <option value="10" {% if request.GET.show == '10' %}selected{% endif %}>10
                                             </option>
-                                            <option value="20" {% if request.GET.show=='20' %}selected{% endif %}>20
+                                            <option value="20" {% if request.GET.show == '20' %}selected{% endif %}>20
                                             </option>
-                                            <option value="30" {% if request.GET.show=='30' %}selected{% endif %}>30
+                                            <option value="30" {% if request.GET.show == '30' %}selected{% endif %}>30
                                             </option>
-                                            <option value="40" {% if request.GET.show=='40' %}selected{% endif %}>40
+                                            <option value="40" {% if request.GET.show == '40' %}selected{% endif %}>40
                                             </option>
                                         </select>
                                     </div>
@@ -164,7 +164,7 @@
                         {% for num in users.paginator.page_range %}
                         {% if num >= users.number|add:'-2' and num <= users.number|add:'2' %} <li class="nav-item">
                             <a href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}"
-                                class="{% if users.number == num %}active{% endif %} text-body">{{ num }}</a>
+                                class="{% if users.number == num %}active text-dark{% else %}text-body{% endif %}">{{ num }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}

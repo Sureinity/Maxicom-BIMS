@@ -20,14 +20,23 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <link rel="stylesheet" href="{% static 'users/styles.css' %}">
+   <!-- favicon -->
+   <link rel="shortcut icon" href="{% static 'admin_inventory/assets/bims-favicon.png' %}" type="image/x-icon">
 </head>
 
 <body>
   <!--Navbar Area-->
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"> <img src="{% static 'users/assets/logo-bims.png' %}" alt="logo-bims"
-          style="height: 2em; width: 6em;"></a>
+      <div class="row d-flex grid">
+        <div class="col"><a href="#"> <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims"
+          style="height: 3em; width: 3em;"></a>
+</div>
+        <div class="col"><a href="#"> <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims"
+          style="height: 3em; width: 12em;"></a>
+</div>
+        <div class="col"></div>
+      </div>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
         aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -51,7 +60,8 @@
             </a>
             <a class="nav-link" href="#">About BMIS</a>
             <a class="nav-link" href="{% url 'login' %}">
-              <button type="button" class="btn uni-btn px-4">Login</button>
+              <button type="button" class="btn btn-outline-secondary px-4">
+              <i class="fa-solid fa-right-to-bracket"></i> &nbsp; Login</button>
             </a>
           </div>
         </div>
@@ -64,7 +74,7 @@
   <div class="container-fluid mt-5 pt-4">
     <div class="row vh-100">
       <div class="col col-lg-7 d-flex justify-content-center align-items-center d-none d-lg-flex">
-        <img src="{% static 'users/assets/image-book.png' %}" alt="book image" class="img-fluid">
+        <img src="{% static 'users/assets/image-book-red.png' %}" alt="book image" class="img-fluid">
       </div>
       <div class="col col-lg-5 col-md-12 d-flex justify-content-center align-items-center">
         <div class="card" style="width:35rem;">
@@ -85,7 +95,7 @@
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="lastname" class="form-label">last name</label>
+                        <label for="lastname" class="form-label">Last name</label>
                         <input type="text" class="form-control" id="sys_lastname" name="sys_lastname" required>
                       </div>
                       {% if form.sys_lastname.errors %}
@@ -122,11 +132,11 @@
 
 
                 <div class="d-grid pt-4">
-                  <button type="submit" class="btn uni-btn px-4">Sign Up</button>
+                  <button type="submit" class="btn uni-btn px-4 text-light">Sign Up</button>
                 </div>
 
                 <div class="signin text-center pt-4">
-                  <p>Already had an account? <a href="{% url 'login' %}" style="color: rgb(0, 206, 165);"><strong>Login
+                  <p>Already had an account? <a href="{% url 'login' %}" style="color:#a74514;"><strong>Login
                         here.</strong></a></p>
                 </div>
 

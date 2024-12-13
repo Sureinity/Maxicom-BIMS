@@ -41,8 +41,9 @@
 }
 
 .theme-switch:checked {
-  background-color: #5ae4a7;
+  background-color: #a82541;
   color: black;
+  border-color: rgb(96, 39, 39);
 }
 
 .option-card:hover {

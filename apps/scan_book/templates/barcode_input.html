@@ -26,8 +26,16 @@
     <!--Navbar Area-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"> <img src="{% static 'users/assets/logo-bims.png' %}" alt="logo-bims"
-                    style="height: 2em; width: 6em;"></a>
+            <div class="row d-flex grid">
+                <div class="col"><a href="#"> <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims"
+                  style="height: 3em; width: 3em;"></a>
+                </div>
+                <div class="col"><a href="#"> <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims"
+                  style="height: 3em; width: 12em;"></a>
+                </div>
+                <div class="col"></div>
+              </div>
+
 
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -51,7 +59,10 @@
                                 <label class="form-check-label" for="switch-check"></label>
                             </div>
                         </a>
-                        {% include 'components/logout_button.html'%}
+                        <form action="{% url 'logout' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-secondary px-4"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; &nbsp; Logout</button>
+                        </form>
                     </div>
                 </div>
             </div>

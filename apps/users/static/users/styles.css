@@ -5,13 +5,13 @@
 }
 
 .uni-btn {
-  background-color: #5ae4a7;
+  background-color: #a82541;
   outline: 1px solid rgb(41, 41, 41);
   color: black;
 }
 
 .uni-btn:hover {
-  background-color: #00b061;
+  background-color: #6b0c21;
   outline: 1px solid rgb(188, 188, 188);
   color: rgb(255, 255, 255);
 }
@@ -41,8 +41,9 @@
 }
 
 .theme-switch:checked {
-  background-color: #5ae4a7;
+  background-color: #a82541;
   color: black;
+  border-color: rgb(96, 39, 39);
 }
 
 .option-card:hover {

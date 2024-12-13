@@ -45,7 +45,7 @@
             <div id="content-container" class="container mt-3 p-4">
 
                 <div class="d-flex justify-content-start mb-5">
-                    <img src="{% static 'admin_inventory/assets/inventory.png' %}" alt="inventory icon" style="width: 2em; height: 2em;">
+                    <img src="{% static 'admin_inventory/assets/inventory_page.png' %}" alt="inventory icon" style="width: 2em; height: 2em;">
                     <h4 class="m-0 ps-3">Inventory</h4>
                 </div>
 
@@ -76,7 +76,7 @@
                                     <li class="nav-item d-flex align-items-center">
                                         <div class="d-flex">
                                             <p class="m-0 me-2">Showing</p>
-                                            <select class="show-select text-dark" name="show">
+                                            <select class="show-select text-body" name="show">
                                                 <option value="10" {% if request.GET.show == '10' %}selected{% endif %}>10</option>
                                                 <option value="25" {% if request.GET.show == '25' %}selected{% endif %}>25</option>
                                                 <option value="50" {% if request.GET.show == '50' %}selected{% endif %}>50</option>
@@ -376,7 +376,7 @@
                         {% if page_num >= current_page|add:'-2' and page_num <= current_page|add:'2' %}
                             <li class="nav-item">
                                 <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}&status={{ status_filter }}" 
-                                   class="{% if page_num == current_page %}active{% endif %} text-body">
+                                   class="{% if page_num == current_page %}active{% endif %} text-dark">
                                     {{ page_num }}
                                 </a>
                             </li>
