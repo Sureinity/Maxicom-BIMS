@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export to PDF</title>
+</head>
+
+
+<style>
+    * {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .container {
+        margin: 3em 3em;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    p {
+        margin: 2px;
+        text-align: end;
+    }
+
+    .label {
+        text-align: center;
+        margin: 3rem;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 5rem;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        text-align: center;
+        text-wrap: wrap;
+    }
+</style>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="col">
+                <img src="assets/um-logo.png" alt="UM Logo" style="width: 5rem; height: 5rem;">
+            </div>
+
+            <div class="col">
+                <div class="col">
+                    <div class="row">
+                        <p><strong>UM Digos College</strong></p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <p><strong>Learning and Information Center</strong></p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <p>Roxas Extension, Digos City</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <p>Telefax: (082)553-2914</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <hr>
+
+        <div class="label">
+            <h2>List of Acquisitions</h2>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Acc No.</th>
+                    <th>Item Call No.</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>ISBN</th>
+                    <th>Copy</th>
+                    <th>Volume</th>
+                    <th>Checked At</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <!-- data here -->
+                    <td>23581</td>
+
+                    <td style="width: 15rem;">DFIL 302 3500 2345</td>
+
+                    <td style="width: 20rem;">Basic baking and cake decorating</td>
+
+                    <td>Tria-Natad, Ma. Felisa</td>
+
+                    <td>234-456-56756</td>
+
+                    <td>2</td>
+
+                    <td>Volume 1</td>
+
+                    <td>2024-09-25</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

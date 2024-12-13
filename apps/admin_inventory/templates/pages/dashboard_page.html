@@ -29,6 +29,9 @@
     <!-- custom css -->
     <link rel="stylesheet" href="{% static 'admin_inventory/styles.css' %}">
     <script src="{% static 'admin_inventory/setTheme.js' %}"></script>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'admin_inventory/assets/bims-favicon.png' %}" type="image/x-icon">
 </head>
 
 <body>
@@ -70,13 +73,14 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                  <form method="POST" action="{% url 'print_listbooks' %}">
+                                <form method="POST" action="{% url 'print_listbooks' %}">
                                     {% csrf_token %}
-                                    <div class="d-grid"><button type="submit" class="btn btn-outline-secondary">List of Acquisitions</button></div>
-                                  </form>
-                                    <div class="btn btn-outline-secondary">No Barcode Tag</div>
-                                    <div class="btn btn-outline-secondary">For Repair</div>
-                                    <div class="btn btn-outline-secondary">For Disposal</div>
+                                    <div class="d-grid"><button type="submit" class="btn btn-outline-secondary">List of
+                                            Acquisitions</button></div>
+                                </form>
+                                <div class="btn btn-outline-secondary">No Barcode Tag</div>
+                                <div class="btn btn-outline-secondary">For Repair</div>
+                                <div class="btn btn-outline-secondary">For Disposal</div>
                             </div>
                         </div>
                     </div>
@@ -85,14 +89,11 @@
 
                 <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
                     <h6 class="m-0">Overview</h6>
-                    <!-- <button type="button" class="btn btn-outline-secondary" onclick="printPage('{% url 'print_listbooks' %}')">
-                        <i class="fa-solid fa-print"></i>&nbsp; Print
-                    </button> -->
                 </div>
 
                 <div class="row g-4">
                     <div class="col-lg-3 col-md-12 col-sm-12">
-                        <div class="card text-dark" style="background-color:#5ae4a7;">
+                        <div class="card text-dark" style="background-color:#a82541;">
                             <div class="card-body p-4">
                                 <div class="d-flex justify-content-between">
                                     <p class="m-0">Total Books</p>
@@ -108,7 +109,7 @@
                     </div>
 
                     <div class="col-lg-3 col-md-12 col-sm-12">
-                        <div class="card text-dark" style=" background-color:#5ae4a7;">
+                        <div class="card text-dark" style=" background-color:#a82541;">
                             <div class="card-body p-4">
                                 <div class="d-flex justify-content-between">
                                     <p class="m-0">Registered Books</p>
@@ -124,7 +125,7 @@
                     </div>
 
                     <div class="col-lg-3 col-md-12 col-sm-12">
-                        <div class="card text-dark" style=" background-color:#5ae4a7;">
+                        <div class="card text-dark" style=" background-color:#a82541;">
                             <div class="card-body p-4">
                                 <div class="d-flex justify-content-between">
                                     <p class="m-0">Unregistered Books</p>
@@ -140,7 +141,7 @@
                     </div>
 
                     <div class="col-lg-3 col-md-12 col-sm-12">
-                        <div class="card text-dark" style=" background-color:#5ae4a7;">
+                        <div class="card text-dark" style=" background-color:#a82541;">
                             <div class="card-body p-4">
                                 <div class="d-flex justify-content-between">
                                     <p class="m-0">Total Users</p>

@@ -13,13 +13,13 @@ nav,
 }
 
 .uni-btn {
-  background-color: #5ae4a7;
+  background-color: #ffbf00;
   outline: 1px solid rgb(41, 41, 41);
   color: black;
 }
 
 .uni-btn:hover {
-  background-color: #00b061;
+  background-color: #c86100;
   outline: 1px solid rgb(41, 41, 41);
   color: rgb(255, 255, 255);
 }
@@ -49,8 +49,9 @@ nav,
 }
 
 .theme-switch:checked {
-  background-color: #5ae4a7;
+  background-color: #a82541;
   color: black;
+  border-color: rgb(96, 39, 39);
 }
 
 .option-card:hover {
@@ -139,13 +140,6 @@ h1 {
   margin: auto 0;
 }
 
-.sidebar-logo a {
-  color: #49d898;
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin: 0;
-}
-
 #sidebar:not(.expand) .sidebar-logo,
 #sidebar:not(.expand) a.sidebar-link span {
   display: none;
@@ -172,7 +166,7 @@ a.sidebar-link {
 
 a.sidebar-link:hover {
   background-color: #d0d0d03e;
-  border-left: 3px solid #5ae4a7;
+  border-left: 3px solid #a82541;
 }
 
 .sidebar-item {
@@ -226,7 +220,7 @@ a.sidebar-link:hover {
 }
 
 select.show-select {
-  background-color: #9bffd2;
+  background-color: #ffde7c;
   border: none;
   border-radius: 3px;
 }
@@ -242,12 +236,13 @@ select.show-select > option {
 }
 
 .pagination a.active {
-  background-color: #5ae4a657;
+  background-color: #ffe597;
   border-radius: 50%;
 }
 
 .nav-tabs .nav-link.active {
-  background-color: #9bffd2;
+  background-color: #ffd65c;
+  color: #424242;
 }
 
 .head-1 {

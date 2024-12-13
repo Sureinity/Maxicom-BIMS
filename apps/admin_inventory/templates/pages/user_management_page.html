@@ -26,6 +26,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'admin_inventory/styles.css' %}">
     <script src="{% static 'admin_inventory/setTheme.js' %}"></script>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'admin_inventory/assets/bims-favicon.png' %}" type="image/x-icon">
 </head>
 
 <body>
@@ -40,19 +43,20 @@
             <div id="content-container" class="container mt-3 p-4">
                 <!-- Page header -->
                 <div class="d-flex justify-content-start mb-5">
-                    <img src="{% static 'admin_inventory/assets/inventory.png' %}" alt="inventory icon" style="width: 2em; height: 2em;">
+                    <img src="{% static 'admin_inventory/assets/user_management.png' %}" alt="inventory icon"
+                        style="width: 2em; height: 2em;">
                     <h4 class="m-0 ps-3">User Management</h4>
                 </div>
 
                 <!-- Search and Options -->
                 <nav class="navbar navbar-expand-lg bg-body mb-3">
                     <div class="container-fluid">
-             
+
                         <form method="GET" class="d-flex">
                             <input class="form-control me-2" type="search" placeholder="Search" style="width: 15rem;"
-                            aria-label="Search" name="search" value="{{ search_query }}" >
+                                aria-label="Search" name="search" value="{{ search_query }}">
                             <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form> 
+                        </form>
 
                         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
@@ -72,10 +76,14 @@
                                     <div class="d-flex">
                                         <p class="m-0 me-2">Showing</p>
                                         <select class="show-select text-dark" name="show" onchange="this.form.submit()">
-                                            <option value="10" {% if request.GET.show == '10' %}selected{% endif %}>10</option>
-                                            <option value="20" {% if request.GET.show == '20' %}selected{% endif %}>20</option>
-                                            <option value="30" {% if request.GET.show == '30' %}selected{% endif %}>30</option>
-                                            <option value="40" {% if request.GET.show == '40' %}selected{% endif %}>40</option>
+                                            <option value="10" {% if request.GET.show=='10' %}selected{% endif %}>10
+                                            </option>
+                                            <option value="20" {% if request.GET.show=='20' %}selected{% endif %}>20
+                                            </option>
+                                            <option value="30" {% if request.GET.show=='30' %}selected{% endif %}>30
+                                            </option>
+                                            <option value="40" {% if request.GET.show=='40' %}selected{% endif %}>40
+                                            </option>
                                         </select>
                                     </div>
                                 </form>
@@ -119,7 +127,8 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header" style="border: none;">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete User / {{ user.sys_firstname }} {{ user.sys_lastname }}</h1>
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete User / {{
+                                                user.sys_firstname }} {{ user.sys_lastname }}</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
@@ -153,20 +162,19 @@
                         {% endif %}
 
                         {% for num in users.paginator.page_range %}
-                            {% if num >= users.number|add:'-2' and num <= users.number|add:'2' %}
-                                <li class="nav-item">
-                                    <a href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}"
-                                        class="{% if users.number == num %}active{% endif %} text-body">{{ num }}</a>
-                                </li>
+                        {% if num >= users.number|add:'-2' and num <= users.number|add:'2' %} <li class="nav-item">
+                            <a href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}"
+                                class="{% if users.number == num %}active{% endif %} text-body">{{ num }}</a>
+                            </li>
                             {% endif %}
-                        {% endfor %}
+                            {% endfor %}
 
-                        {% if users.has_next %}
-                        <li class="nav-item">
-                            <a href="?page={{ users.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}"
-                                class="text-body">&raquo;</a>
-                        </li>
-                        {% endif %}
+                            {% if users.has_next %}
+                            <li class="nav-item">
+                                <a href="?page={{ users.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.show %}&show={{ request.GET.show }}{% endif %}"
+                                    class="text-body">&raquo;</a>
+                            </li>
+                            {% endif %}
                     </ul>
                 </nav>
             </div>
@@ -176,7 +184,7 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
+        </script>
 
     <!-- Custom JS -->
     <script src="{% static 'admin_inventory/function.js' %}"></script>
@@ -184,9 +192,9 @@
 <script>
     const hamBurger = document.querySelector(".toggle-btn");
 
-hamBurger.addEventListener("click", function () {
-  document.querySelector("#sidebar").classList.toggle("expand");
-});
+    hamBurger.addEventListener("click", function () {
+        document.querySelector("#sidebar").classList.toggle("expand");
+    });
 </script>
 
 </html>
