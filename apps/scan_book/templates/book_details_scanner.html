@@ -51,7 +51,10 @@
                                 <label class="form-check-label" for="switch-check"></label>
                             </div>
                         </a>
-                        {% include 'components/logout_button.html'%}
+                        <form action="{% url 'logout' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-secondary px-4"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; &nbsp; Logout</button>
+                        </form>
                     </div>
                 </div>
             </div>
