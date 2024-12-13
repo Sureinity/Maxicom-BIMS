@@ -11,11 +11,12 @@
 <style>
     * {
         font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px
     }
 
-    .container {
+    /* .container {
         margin: 3em 3em;
-    }
+    } */
 
     .header {
         display: flex;
@@ -54,7 +55,7 @@
     <div class="container">
         <div class="header">
             <div class="col">
-                <img src="assets/um-logo.png" alt="UM Logo" style="width: 5rem; height: 5rem;">
+                <img src="{{ um_logo_url }}" alt="UM Logo" style="width: 5rem; height: 5rem;">
             </div>
 
             <div class="col">
@@ -85,7 +86,7 @@
         <hr>
 
         <div class="label">
-            <h2>List of Acquisitions</h2>
+            <h1 style="font-size: 18px;">List of Acquisitions</h1>
         </div>
 
         <table>
@@ -95,7 +96,7 @@
                     <th>Item Call No.</th>
                     <th>Title</th>
                     <th>Author</th>
-                    <th>ISBN</th>
+                    <th style="width: 1px;">ISBN</th>
                     <th>Copy</th>
                     <th>Volume</th>
                     <th>Checked At</th>
@@ -104,24 +105,17 @@
             </thead>
             <tbody>
                 <tr>
-                    <!-- data here -->
-                    <td>23581</td>
-
-                    <td style="width: 15rem;">DFIL 302 3500 2345</td>
-
-                    <td style="width: 20rem;">Basic baking and cake decorating</td>
-
-                    <td>Tria-Natad, Ma. Felisa</td>
-
-                    <td>234-456-56756</td>
-
-                    <td>2</td>
-
-                    <td>Volume 1</td>
-
-                    <td>2024-09-25</td>
-                </tr>
-
+                    {% for book in data %}
+                        <td>{{ book.barcode }}</td>
+                        <td style="width: 15rem;">{{ book.item_call_num }}</td>
+                        <td style="width: 20rem;">{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td style="width: 1px;">{{ book.isbn }}</td>
+                        <td>{{ book.copy_num }}</td>
+                        <td>{{ book.volume }}</td>
+                        <td>{{ book.inventories.first.datetime_checked|date:"Y-m-d" }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
