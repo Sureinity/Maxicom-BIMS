@@ -28,13 +28,16 @@
         <div class="container-fluid">
             <div class="row d-flex grid">
                 <div class="col"><a href="#"> <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims"
-                  style="height: 3em; width: 3em;"></a>
+                            style="height: 3em; width: 3em;"></a>
+                </div>
+                <div class="col"><a href="#"> <img src="{% static 'users/assets/lic-logo.png' %}" alt="logo-bims"
+                            style="height: 3em; width: 3em;"></a>
                 </div>
                 <div class="col"><a href="#"> <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims"
-                  style="height: 3em; width: 12em;"></a>
+                            style="height: 3em; width: 12em;"></a>
                 </div>
                 <div class="col"></div>
-              </div>
+            </div>
 
 
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -61,7 +64,8 @@
                         </a>
                         <form action="{% url 'logout' %}" method="POST">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-secondary px-4"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; &nbsp; Logout</button>
+                            <button type="submit" class="btn btn-outline-secondary px-4"><i
+                                    class="fa-solid fa-right-from-bracket"></i>&nbsp; &nbsp; Logout</button>
                         </form>
                     </div>
                 </div>
@@ -75,7 +79,7 @@
         <div class="container d-flex justify-content-center">
             <div class="card" style="width: 40rem;">
                 <div class="card-body">
-                
+
                     <!-- Error Message Section -->
                     {% if messages %}
                     <div class="container mt-3">
@@ -88,7 +92,7 @@
                     </div>
                     {% endif %}
                     <!-- End of Error Message Section -->
-                
+
                     <form method="POST" action="{% url 'input_process_barcode' %}">
                         {% csrf_token %}
                         <div class="p-3 m-2">

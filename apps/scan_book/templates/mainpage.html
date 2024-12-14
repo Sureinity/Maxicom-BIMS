@@ -21,7 +21,7 @@
 
     <link rel="stylesheet" href="{% static 'scan_book/styles.css'%}">
     <!-- favicon -->
-   <link rel="shortcut icon" href="{% static 'admin_inventory/assets/bims-favicon.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'admin_inventory/assets/bims-favicon.png' %}" type="image/x-icon">
 </head>
 
 <body>
@@ -30,13 +30,15 @@
         <div class="container-fluid">
             <div class="row d-flex grid">
                 <div class="col"><a href="#"> <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims"
-                  style="height: 3em; width: 3em;"></a>
-        </div>
+                            style="height: 3em; width: 3em;"></a>
+                </div>
+                <div class="col"><a href="#"> <img src="{% static 'users/assets/lic-logo.png' %}" alt="logo-bims"
+                            style="height: 3em; width: 3em;"></a>
+                </div>
                 <div class="col"><a href="#"> <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims"
-                  style="height: 3em; width: 12em;"></a>
-        </div>
-                <div class="col"></div>
-              </div>
+                            style="height: 3em; width: 12em;"></a>
+                </div>
+            </div>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -62,9 +64,10 @@
                         </a>
                         <form action="{% url 'logout' %}" method="POST">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-secondary px-4"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; &nbsp; Logout</button>
+                            <button type="submit" class="btn btn-outline-secondary px-4"><i
+                                    class="fa-solid fa-right-from-bracket"></i>&nbsp; &nbsp; Logout</button>
                         </form>
-                        
+
                     </div>
                 </div>
             </div>
@@ -114,4 +117,5 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 <script src="{% static 'scan_book/function.js' %}"></script>
+
 </html>

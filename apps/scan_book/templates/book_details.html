@@ -21,7 +21,7 @@
 
     <link rel="stylesheet" href="{% static 'users/styles.css' %}">
     <!-- favicon -->
-   <link rel="shortcut icon" href="{% static 'admin_inventory/assets/bims-favicon.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'admin_inventory/assets/bims-favicon.png' %}" type="image/x-icon">
 </head>
 
 <body class="vh-100">
@@ -30,13 +30,16 @@
         <div class="container-fluid">
             <div class="row d-flex grid">
                 <div class="col"><a href="#"> <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims"
-                  style="height: 3em; width: 3em;"></a>
+                            style="height: 3em; width: 3em;"></a>
+                </div>
+                <div class="col"><a href="#"> <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims"
+                            style="height: 3em; width: 3em;"></a>
                 </div>
                 <div class="col"><a href="#"> <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims"
-                  style="height: 3em; width: 12em;"></a>
+                            style="height: 3em; width: 12em;"></a>
                 </div>
                 <div class="col"></div>
-              </div>
+            </div>
 
 
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -63,7 +66,8 @@
                         </a>
                         <form action="{% url 'logout' %}" method="POST">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-secondary px-4"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; &nbsp; Logout</button>
+                            <button type="submit" class="btn btn-outline-secondary px-4"><i
+                                    class="fa-solid fa-right-from-bracket"></i>&nbsp; &nbsp; Logout</button>
                         </form>
                     </div>
                 </div>
@@ -84,9 +88,11 @@
                                 Barcode
                             </label>
                             {% if request.path == '/barcode-input/input/book-details/' %}
-                            <input type="text" class="form-control" id="barcode" name="barcode" value="{{ barcode_result }}" readonly>
+                            <input type="text" class="form-control" id="barcode" name="barcode"
+                                value="{{ barcode_result }}" readonly>
                             {% else %}
-                            <input type="text" class="form-control" id="barcode" name="barcode" value="{{ scanner_process_barcode }}" readonly>
+                            <input type="text" class="form-control" id="barcode" name="barcode"
+                                value="{{ scanner_process_barcode }}" readonly>
                             {% endif %}
                         </div>
 
@@ -94,28 +100,32 @@
                             <label for="callnumber" class="form-label mb-2">
                                 Item Call No.
                             </label>
-                            <input type="text" class="form-control" id="callnumber" name="callnumber" value="{{ book_details.item_call_num}}" readonly>
+                            <input type="text" class="form-control" id="callnumber" name="callnumber"
+                                value="{{ book_details.item_call_num}}" readonly>
                         </div>
 
                         <div class="p-3 m-1">
                             <label for="booktitle" class="form-label mb-2">
                                 Title
                             </label>
-                            <input type="text" class="form-control" id="booktitle" name="booktitle" value="{{ book_details.title}}" readonly>
+                            <input type="text" class="form-control" id="booktitle" name="booktitle"
+                                value="{{ book_details.title}}" readonly>
                         </div>
 
                         <div class="p-3 m-1">
                             <label for="author" class="form-label mb-2">
                                 Author(s)
                             </label>
-                            <input type="text" class="form-control" id="author" name="author" value="{{ book_details.author}}" readonly>
+                            <input type="text" class="form-control" id="author" name="author"
+                                value="{{ book_details.author}}" readonly>
                         </div>
 
                         <div class="p-3 m-1">
                             <label for="yearpub" class="form-label mb-2">
                                 Copyright
                             </label>
-                            <input type="text" class="form-control" id="yearpub" name="yearpub" value="{{ book_details.copyrightdate}}" readonly>
+                            <input type="text" class="form-control" id="yearpub" name="yearpub"
+                                value="{{ book_details.copyrightdate}}" readonly>
                         </div>
 
                         <form method="POST" action="{% url 'input_process_barcode' %}">
@@ -132,18 +142,18 @@
                                 </select>
                             </div>
 
-                        <div class="buttons d-flex justify-content-end gap-3 mt-4 p-3 m-1">
-                          {% if request.path == '/barcode-input/input/book-details/' %}
-                            <a href="{% url 'barcode_input' %}">
-                          {% else %}
-                             <a href="{% url 'barcode_scan' %}">
-                          {% endif %}
-                                <button type="button" class="btn sec-btn">Go back</button>
-                            </a>
-                            <button type="submit" class="btn uni-btn" data-bs-toggle="modal"
-                                data-bs-target="#successmsg">Submit</button>
-                        </div>
-                    </form>
+                            <div class="buttons d-flex justify-content-end gap-3 mt-4 p-3 m-1">
+                                {% if request.path == '/barcode-input/input/book-details/' %}
+                                <a href="{% url 'barcode_input' %}">
+                                    {% else %}
+                                    <a href="{% url 'barcode_scan' %}">
+                                        {% endif %}
+                                        <button type="button" class="btn sec-btn">Go back</button>
+                                    </a>
+                                    <button type="submit" class="btn uni-btn" data-bs-toggle="modal"
+                                        data-bs-target="#successmsg">Submit</button>
+                            </div>
+                        </form>
                 </div>
             </div>
         </div>
