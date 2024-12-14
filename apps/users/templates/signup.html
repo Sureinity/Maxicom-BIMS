@@ -20,8 +20,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <link rel="stylesheet" href="{% static 'users/styles.css' %}">
-   <!-- favicon -->
-   <link rel="shortcut icon" href="{% static 'admin_inventory/assets/bims-favicon.png' %}" type="image/x-icon">
+  <!-- favicon -->
+  <link rel="shortcut icon" href="{% static 'admin_inventory/assets/bims-favicon.png' %}" type="image/x-icon">
 </head>
 
 <body>
@@ -30,43 +30,45 @@
     <div class="container-fluid">
       <div class="row d-flex grid">
         <div class="col"><a href="#"> <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims"
-          style="height: 3em; width: 3em;"></a>
-</div>
-        <div class="col"><a href="#"> <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims"
-          style="height: 3em; width: 12em;"></a>
-</div>
-        <div class="col"></div>
-      </div>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-
-
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">BIMS</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              style="height: 3em; width: 3em;"></a>
         </div>
-        <div class="offcanvas-body d-flex justify-content-lg-end">
-          <div class="navbar-nav gap-4 d-flex align-items-center">
-            <a class="nav-link" href="#">
-              <div class="form-check form-switch">
-                <input class="form-check-input theme-switch" type="checkbox" role="switch" id="switch-check">
-                <label class="form-check-label" for="switch-check"></label>
-              </div>
-            </a>
-            <a class="nav-link" href="#">About BMIS</a>
-            <a class="nav-link" href="{% url 'login' %}">
-              <button type="button" class="btn btn-outline-secondary px-4">
-              <i class="fa-solid fa-right-to-bracket"></i> &nbsp; Login</button>
-            </a>
+        <div class="col"><a href="#"> <img src="{% static 'users/assets/lic-logo.png' %}" alt="logo-bims"
+              style="height: 3em; width: 3em;"></a>
+        </div>
+        <div class="col"><a href="#"> <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims"
+              style="height: 3em; width: 12em;"></a>
+        </div>
+
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">BIMS</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body d-flex justify-content-lg-end">
+            <div class="navbar-nav gap-4 d-flex align-items-center">
+              <a class="nav-link" href="#">
+                <div class="form-check form-switch">
+                  <input class="form-check-input theme-switch" type="checkbox" role="switch" id="switch-check">
+                  <label class="form-check-label" for="switch-check"></label>
+                </div>
+              </a>
+              <a class="nav-link" href="#">About BMIS</a>
+              <a class="nav-link" href="{% url 'login' %}">
+                <button type="button" class="btn btn-outline-secondary px-4">
+                  <i class="fa-solid fa-right-to-bracket"></i> &nbsp; Login</button>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   </nav>
   <!--Navbar Area-->
 
