@@ -85,7 +85,13 @@
         <hr>
 
         <div class="label">
-            <h2>List of 'No Barcode Tag' Books</h2>
+            {% if report_type == "no_barcode_tag" %}
+                <h2>List of 'No Barcode Tag' Books</h2>
+            {% elif report_type == "for_repair" %}
+                <h2>List of 'For Repair' Books</h2>
+            {% elif report_type == "for_disposal" %}
+                <h2>List of 'For Disposal' Books</h2>
+            {% endif %}
         </div>
 
         <table>
@@ -103,24 +109,17 @@
             </thead>
             <tbody>
                 <tr>
-                    <!-- data here -->
-                    <td>23581</td>
-
-                    <td style="width: 15rem;">DFIL 302 3500 2345</td>
-
-                    <td style="width: 20rem;">Basic baking and cake decorating</td>
-
-                    <td>Tria-Natad, Ma. Felisa</td>
-
-                    <td>234-456-56756</td>
-
-                    <td>2</td>
-
-                    <td>Volume 1</td>
-
-                    <td>2024-09-25</td>
-                </tr>
-
+                    {% for book in data %}
+                        <td>{{ book.barcode }}</td>
+                        <td style="width: 15rem;">{{ book.item_call_num }}</td>
+                        <td style="width: 20rem;">{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td style="width: 1px;">{{ book.isbn }}</td>
+                        <td>{{ book.copy_num }}</td>
+                        <td>{{ book.volume }}</td>
+                        <td>{{ book.inventories.first.datetime_checked|date:"Y-m-d" }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

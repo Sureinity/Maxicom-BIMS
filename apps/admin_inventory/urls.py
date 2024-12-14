@@ -17,10 +17,13 @@ urlpatterns = [
     # usersettings_page CRUD
     path("user-settings/<int:id>/delete", views.delete_usersettings_page, name="delete_usersettings"),
 
-    # Exportation (TEST)
+    # Exportation
     path("export/", export.export_books_to_excel, name="admin_exportbooks"),
 
-    # Print (TEST)
+    # Generate PDF report
     path("print/", print.listbook_print, name="print_listbooks"),
-    path("print/<int:id>", print.bookDetails_print, name="print_bookDetails"),
+    path("print/no-barcode-tag", print.no_barcode_tag_print, name="no_barcode_tag_print"),
+    path("print/for-repair", print.for_repair_print, name="for_repair_print"),
+    path("print/for-disposal", print.for_disposal_print, name="for_disposal_print"),
+    path("print/<int:id>", print.bookDetails_print, name="print_bookDetails"), # For Book Details
 ]
