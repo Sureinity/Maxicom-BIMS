@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q, Count
 from django.views.decorators.cache import never_cache
 from django.db import IntegrityError
+from django.views.decorators.cache import cache_page
 
 from .models import Booklist, Inventory, InventoryHistory
 from .export import export_books_to_excel
@@ -262,6 +263,7 @@ def inventory_page(request):
 
 @never_cache
 @admin_required
+@cache_page(60 * 15)
 def bookcollections_page(request):
     # Fetch filter parameters from request
     search_query = request.GET.get('search', '')

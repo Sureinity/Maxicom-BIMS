@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
+def user_profile_picture_path(self, filename):
+    return f'profile_pictures/{self.username}/{filename}'
+
 class User(AbstractUser):
     # User role
     ADMIN = 0
@@ -40,6 +44,7 @@ class User(AbstractUser):
     sys_acc_updated = models.DateTimeField(auto_now=True)
     sys_acc_role = models.IntegerField(choices=ROLE_CHOICES, default=USER)
     sys_status = models.IntegerField(choices=STATUS_CHOICES, default=ACTIVE)
+    profile_picture = models.ImageField(upload_to=user_profile_picture_path, null=True, blank=True, default='profile_pictures/profile.png')
 
     REQUIRED_FIELDS = ['sys_acc_role']
     USERNAME_FIELD = 'username'
