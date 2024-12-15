@@ -264,7 +264,6 @@ def inventory_page(request):
 
 @never_cache
 @admin_required
-@cache_page(60 * 15)
 def bookcollections_page(request):
     # Fetch filter parameters from request
     search_query = request.GET.get('search', '')
