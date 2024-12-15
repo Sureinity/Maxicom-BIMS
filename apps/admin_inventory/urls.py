@@ -10,6 +10,8 @@ urlpatterns = [
     path("manage-user/", views.user_management_page, name="admin_manageuser"),
     path("settings/", views.admin_settings, name="admin_settings"),
 
+    # Edit Admin Account
+    path("settings/edit-account", views.admin_edit_account, name="admin_edit_account"),
 
     
     # listbooks_page CRUD

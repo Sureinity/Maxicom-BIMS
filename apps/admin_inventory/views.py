@@ -7,6 +7,7 @@ from django.db.models import Q, Count
 from django.views.decorators.cache import never_cache
 from django.db import IntegrityError
 from django.views.decorators.cache import cache_page
+from django.contrib.auth import authenticate, login
 
 from .models import Booklist, Inventory, InventoryHistory
 from .export import export_books_to_excel
@@ -370,8 +371,38 @@ def delete_user_page(request, id):
 @never_cache
 @admin_required
 def admin_settings(request):
+
     return render(request, "pages/settings_page.html")
 
-#def admin_edit_account(request):
-#    if request.method == "POST":
+def admin_edit_account(request):
+    if request.method == "POST":
+        firstname = request.POST.get('firstname')
+        lastname = request.POST.get('lastname')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        password2 = request.POST.get('password2')
+        
+        if password != password2:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'error': 'Passwords do not match.',
+                    'messages': [{'message': m.message, 'tags': m.tags} for m in messages.get_messages(request)]
+                })
+        else:
+            user = User.objects.get(id=request.user.id)
+            user.sys_firstname = firstname
+            user.sys_lastname = lastname
+            user.sys_username = username
+            user.set_password(password)
+            user.save()
+            
+            userAuth = authenticate(request, username=username, password=password)
+            login(request, userAuth)
 
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': True,
+                    'messages': [{'message': m.message, 'tags': m.tags} for m in messages.get_messages(request)]
+                })
+
+        return redirect("admin_settings")
