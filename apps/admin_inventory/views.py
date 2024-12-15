@@ -382,28 +382,42 @@ def admin_edit_account(request):
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
 
+        # Case 1: Passwords do not match
         if password != password2:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({
                     'error': 'Passwords do not match.',
                     'messages': [{'message': m.message, 'tags': m.tags} for m in messages.get_messages(request)]
                 })
+
+        # Case 2: Both passwords are empty (no password update)
+        elif password == "" and password2 == "":
+            # Update user details without changing password
+            user = User.objects.get(id=request.user.id)
+            user.sys_firstname = firstname
+            user.sys_lastname = lastname
+            user.sys_username = username
+            user.save()
         else:
+            # Case 3: Update password and user details
             user = User.objects.get(id=request.user.id)
             user.sys_firstname = firstname
             user.sys_lastname = lastname
             user.sys_username = username
             user.set_password(password)
             user.save()
-            
-            userAuth = authenticate(request, username=username, password=password)
-            login(request, userAuth)
 
-            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                return JsonResponse({
-                    'success': True,
-                    'messages': [{'message': m.message, 'tags': m.tags} for m in messages.get_messages(request)]
-                })
+            userAuth = authenticate(request, username=username, password=password)
+            if userAuth:
+                login(request, userAuth)
+
+            print(f"Updated Password Hash: {user.password}")
+
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                'success': True,
+                'messages': [{'message': m.message, 'tags': m.tags} for m in messages.get_messages(request)]
+            })
 
         return redirect("admin_settings")
 
