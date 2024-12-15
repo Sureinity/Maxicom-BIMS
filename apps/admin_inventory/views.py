@@ -11,7 +11,6 @@ from django.contrib.auth import authenticate, login
 
 from .models import Booklist, Inventory, InventoryHistory
 from .export import export_books_to_excel
-from .forms import CreateBook
 from apps.users.models import User
 from .decorators import admin_required
 from .filters import apply_book_filters
@@ -365,7 +364,7 @@ def delete_user_page(request, id):
         user.sys_status = 1
         user.save()
 
-    return redirect("admin_usersettings")
+    return redirect("admin_manageuser")
 
 @never_cache
 @admin_required
