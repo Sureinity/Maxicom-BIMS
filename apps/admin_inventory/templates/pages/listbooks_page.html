@@ -380,7 +380,7 @@
 
                                     <div class="mb-3">
                                         <label for="book-itemcall" class="form-label">Barcode / Acquisition No.</label>
-                                        <input type="text" id="book-itemcall" class="form-control" name="barcode">
+                                        <input type="text" id="book-itemcall" class="form-control" name="barcode" required>
                                     </div>
 
                                     <div class="mb-3">
@@ -418,7 +418,7 @@
 
                                     <div class="mb-3">
                                         <label for="book-isbn" class="form-label">ISBN</label>
-                                        <input type="text" id="book-isbn" class="form-control" name="isbn">
+                                        <input type="text" id="book-isbn" class="form-control" name="isbn" required>
                                     </div>
 
                                     <div class="mb-3">
@@ -433,7 +433,7 @@
 
                                     <div class="mb-3">
                                         <label for="book-itemcall" class="form-label">Item Call Number</label>
-                                        <input type="text" id="book-itemcall" class="form-control" name="item_call_num">
+                                        <input type="text" id="book-itemcall" class="form-control" name="item_call_num" required>
                                     </div>
 
                                     <div class="mb-3">
@@ -741,10 +741,8 @@
                                             {% csrf_token %}
                                             <div class="modal-body">
                                                 <div class="mb-3">
-                                                    <label for="book-itemcall" class="form-label">Barcode / Acquisition
-                                                        No.</label>
-                                                    <input type="text" id="book-itemcall" class="form-control"
-                                                        name="barcode" value="{{ data.barcode }}">
+                                                    <label for="book-itemcall" class="form-label">Barcode / Acquisition No.</label>
+                                                    <input type="text" id="book-itemcall" class="form-control" name="barcode" value="{{ data.barcode }}" required>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -786,7 +784,7 @@
                                                 <div class="mb-3">
                                                     <label for="book-isbn" class="form-label">ISBN</label>
                                                     <input type="text" id="book-isbn" class="form-control" name="isbn"
-                                                        value="{{ data.isbn }}">
+                                                        value="{{ data.isbn }}" required>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -802,10 +800,9 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="book-itemcall" class="form-label">Item Call
-                                                        Number</label>
+                                                    <label for="book-itemcall" class="form-label">Item Call Number</label>
                                                     <input type="text" id="book-itemcall" class="form-control"
-                                                        name="item_call_num" value="{{ data.item_call_num }}">
+                                                        name="item_call_num" value="{{ data.item_call_num }}" required>
                                                 </div>
 
                                                 <div class="mb-3">
