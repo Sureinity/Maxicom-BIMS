@@ -371,9 +371,10 @@ def delete_user_page(request, id):
 @never_cache
 @admin_required
 def admin_settings(request):
-
     return render(request, "pages/settings_page.html")
 
+@never_cache
+@admin_required
 def admin_edit_account(request):
     if request.method == "POST":
         firstname = request.POST.get('firstname')
@@ -381,7 +382,7 @@ def admin_edit_account(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
-        
+
         if password != password2:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({
@@ -406,3 +407,22 @@ def admin_edit_account(request):
                 })
 
         return redirect("admin_settings")
+
+@never_cache
+@admin_required
+def admin_edit_profile_picture(request):
+    if request.method == "POST":
+        removeImage = request.POST.get('removeImage')
+        user = User.objects.get(id=request.user.id)
+        if removeImage == "remove":
+            user.profile_picture = "profile_pictures/profile.png"
+            user.save()
+        else:
+            if "profile_picture" in request.FILES:
+                profilePicture = request.FILES["profile_picture"]
+                print(profilePicture)
+                user = User.objects.get(id=request.user.id)
+                user.profile_picture = profilePicture
+                user.save()
+
+    return redirect("admin_settings")

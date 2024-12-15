@@ -68,12 +68,26 @@
                                 </div>
 
                                 <div class="edit-btn d-flex justify-content-center grid gap-3">
-                                    <button class="btn btn-outline-secondary"><i class="fa-solid fa-xmark"></i>
-                                        &nbsp;Remove
-                                        Image</button>
-                                    <button class="btn uni-btn"><i class="fa-solid fa-upload"></i> &nbsp;Upload
-                                        New</button>
+                                    <!-- Remove image: This will set image to blank profile picture -->
+                                    <form action="{% url 'admin_edit_profile_picture' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="removeImage" value="remove">
+                                        <button type="submit" class="btn btn-outline-secondary">
+                                            <i class="fa-solid fa-xmark"></i>&nbsp;Remove Image
+                                        </button>
+                                    </form>
+                                
+                                    <!-- Upload new image -->
+                                    <form action="{% url 'admin_edit_profile_picture' %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="file" name="profile_picture" id="profile_picture" style="display: none;" accept="image/*"  onchange="submitForm()" >
+                                        <button type="button" class="btn uni-btn" onclick="document.getElementById('profile_picture').click();">
+                                            <i class="fa-solid fa-upload"></i>&nbsp;Upload New
+                                        </button>
+                                        <button type="submit" id="upload_submit" class="btn uni-btn" style="display: none">Submit</button>
+                                    </form>
                                 </div>
+                                
                             </div>
 
                             <div class="col-lg-6 ps-5">
@@ -199,7 +213,6 @@
         .then(response => response.json())
         .then(data => {
             if (data.error) {
-                // Show error message
                 messageContainer.textContent = data.error;
                 messageContainer.style.display = 'block';
             } else if (data.success) {
@@ -219,5 +232,14 @@ const hamBurger = document.querySelector(".toggle-btn");
 hamBurger.addEventListener("click", function () {
     document.querySelector("#sidebar").classList.toggle("expand");
 });
+</script>
+<script>
+    function submitForm() {
+        const fileInput = document.getElementById('profile_picture');
+        
+        if (fileInput.files.length > 0) {
+            fileInput.form.submit();
+        }
+    }
 </script>
 </html>

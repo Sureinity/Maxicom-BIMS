@@ -12,6 +12,7 @@ urlpatterns = [
 
     # Edit Admin Account
     path("settings/edit-account", views.admin_edit_account, name="admin_edit_account"),
+    path("settings/edit-profile-picture", views.admin_edit_profile_picture, name="admin_edit_profile_picture"),
 
     
     # listbooks_page CRUD
