@@ -99,14 +99,10 @@
                                                 <p class="m-0 me-2">Showing</p>
                                                 <select class="show-select text-dark" name="show"
                                                     onchange="this.form.submit()">
-                                                    <option value="10" {% if request.GET.show=='10' or not
-                                                        request.GET.show %}selected{% endif %}>10</option>
-                                                    <option value="20" {% if request.GET.show=='20' %}selected{% endif
-                                                        %}>20</option>
-                                                    <option value="30" {% if request.GET.show=='30' %}selected{% endif
-                                                        %}>30</option>
-                                                    <option value="40" {% if request.GET.show=='40' %}selected{% endif
-                                                        %}>40</option>
+                                                    <option value="10" {% if request.GET.show == '10' or not request.GET.show %}selected{% endif %}>10</option>
+                                                    <option value="20" {% if request.GET.show == '20' %}selected{% endif %}>20</option>
+                                                    <option value="30" {% if request.GET.show == '30' %}selected{% endif %}>30</option>
+                                                    <option value="40" {% if request.GET.show == '40' %}selected{% endif %}>40</option>
                                                 </select>
                                             </div>
                                         </form>
@@ -181,26 +177,16 @@
                                         </label>
                                         <select class="form-select" name="book-collections">
                                             <option value="">All Collections</option>
-                                            <option value="DC" {% if collection_filter=='DC' %}selected{% endif %}>
-                                                Circulations</option>
-                                            <option value="DFIL" {% if collection_filter=='DFIL' %}selected{% endif %}>
-                                                Filipiniana</option>
-                                            <option value="DRES" {% if collection_filter=='DRES' %}selected{% endif %}>
-                                                Reserve</option>
-                                            <option value="DREF" {% if collection_filter=='DREF' %}selected{% endif %}>
-                                                General References</option>
-                                            <option value="DFIC" {% if collection_filter=='DFIC' %}selected{% endif %}>
-                                                Fictions</option>
-                                            <option value="PER" {% if collection_filter=='PER' %}selected{% endif %}>
-                                                Bound Periodicals</option>
-                                            <option value="UR" {% if collection_filter=='UR' %}selected{% endif %}>
-                                                Undergraduate Thesis</option>
-                                            <option value="BK" {% if collection_filter=='BK' %}selected{% endif %}>K-12
-                                            </option>
-                                            <option value="AV-CD" {% if collection_filter=='AV-CD' %}selected{% endif
-                                                %}>AV CDs</option>
-                                            <option value="AV-DVD" {% if collection_filter=='AV-DVD' %}selected{% endif
-                                                %}>AV DVDs</option>
+                                            <option value="DC" {% if collection_filter == 'DC' %}selected{% endif %}>Circulations</option>
+                                            <option value="DFIL" {% if collection_filter == 'DFIL' %}selected{% endif %}>Filipiniana</option>
+                                            <option value="DRES" {% if collection_filter == 'DRES' %}selected{% endif %}>Reserve</option>
+                                            <option value="DREF" {% if collection_filter == 'DREF' %}selected{% endif %}>General References</option>
+                                            <option value="DFIC" {% if collection_filter == 'DFIC' %}selected{% endif %}>Fictions</option>
+                                            <option value="PER" {% if collection_filter == 'PER' %}selected{% endif %}>Bound Periodicals</option>
+                                            <option value="UR" {% if collection_filter == 'UR' %}selected{% endif %}>Undergraduate Thesis</option>
+                                            <option value="BK" {% if collection_filter == 'BK' %}selected{% endif %}>K-12</option>
+                                            <option value="AV-CD" {% if collection_filter == 'AV-CD' %}selected{% endif%}>AV CDs</option>
+                                            <option value="AV-DVD" {% if collection_filter == 'AV-DVD' %}selected{% endif%}>AV DVDs</option>
                                         </select>
                                     </div>
                                 </div>
@@ -331,22 +317,14 @@
                                         <label for="book-collections" class="form-label mb-2">Book Collections</label>
                                         <select class="form-select" name="book-collections">
                                             <option value="">All Collections</option>
-                                            <option value="DC" {% if collection_filter=='DC' %}selected{% endif %}>
-                                                Circulations</option>
-                                            <option value="DFIL" {% if collection_filter=='DFIL' %}selected{% endif %}>
-                                                Filipiniana</option>
-                                            <option value="DREF" {% if collection_filter=='DREF' %}selected{% endif %}>
-                                                General References</option>
-                                            <option value="DFIC" {% if collection_filter=='DFIC' %}selected{% endif %}>
-                                                Fictions</option>
-                                            <option value="PER" {% if collection_filter=='PER' %}selected{% endif %}>
-                                                Bound Periodicals</option>
-                                            <option value="UR" {% if collection_filter=='UR' %}selected{% endif %}>
-                                                Undergraduate Thesis</option>
-                                            <option value="AV-CD" {% if collection_filter=='AV-CD' %}selected{% endif
-                                                %}>AV CDs</option>
-                                            <option value="AV-DVD" {% if collection_filter=='AV-DVD' %}selected{% endif
-                                                %}>AV DVDs</option>
+                                            <option value="DC" {% if collection_filter == 'DC' %}selected{% endif %}>Circulations</option>
+                                            <option value="DFIL" {% if collection_filter == 'DFIL' %}selected{% endif %}>Filipiniana</option>
+                                            <option value="DREF" {% if collection_filter == 'DREF' %}selected{% endif %}>General References</option>
+                                            <option value="DFIC" {% if collection_filter == 'DFIC' %}selected{% endif %}>Fictions</option>
+                                            <option value="PER" {% if collection_filter == 'PER' %}selected{% endif %}>Bound Periodicals</option>
+                                            <option value="UR" {% if collection_filter == 'UR' %}selected{% endif %}>Undergraduate Thesis</option>
+                                            <option value="AV-CD" {% if collection_filter == 'AV-CD' %}selected{% endif%}>AV CDs</option>
+                                            <option value="AV-DVD" {% if collection_filter == 'AV-DVD' %}selected{% endif%}>AV DVDs</option>
                                         </select>
                                     </div>
 
@@ -894,8 +872,8 @@
                         {% endif %}
 
                         {% for page_num in bookData.paginator.page_range %}
-                        {% if page_num >= current_page|add:'-2' and page_num <= current_page|add:'2' %} {% if
-                            page_num==current_page %} <li class="nav-item">
+                        {% if page_num >= current_page|add:'-2' and page_num <= current_page|add:'2' %} 
+                          {% if page_num == current_page %} <li class="nav-item">
                             <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
                                 class="active text-dark">{{ page_num }}</a>
                             </li>

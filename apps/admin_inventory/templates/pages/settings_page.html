@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" data-bs-theme=" " id="htmlPage">
 
@@ -26,11 +27,11 @@
         rel="stylesheet">
 
     <!-- custom css -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static 'admin_inventory/styles.css' %}">
 
     <!-- favicon -->
     <link rel="shortcut icon" href="{% static 'admin_inventory/assets/bims-favicon.png' %}" type="image/x-icon">
-
+    <script src="{% static 'admin_inventory/setTheme.js' %}"></script>
 </head>
 
 <body>
@@ -180,5 +181,5 @@
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
                 crossorigin="anonymous"></script>
 </body>
-
+<script src="{% static 'admin_inventory/function.js' %}"></script>
 </html>

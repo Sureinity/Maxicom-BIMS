@@ -7,7 +7,10 @@ urlpatterns = [
     path("list-books/", views.listbooks_page, name="admin_listbooks"),
     path("inventory/", views.inventory_page, name="admin_inventory"),
     path("book-collections/", views.bookcollections_page, name="admin_collections"),
-    path("user-settings/", views.user_management_page, name="admin_usersettings"),
+    path("manage-user/", views.user_management_page, name="admin_manageuser"),
+    path("settings/", views.admin_settings, name="admin_settings"),
+
+
     
     # listbooks_page CRUD
     path("list-books/create", views.create_listbooks_page, name="create_listbooks"),
@@ -15,7 +18,7 @@ urlpatterns = [
     path("list-books/<int:id>/delete", views.delete_listbooks_page, name="delete_listbooks"),
 
     # usersettings_page CRUD
-    path("user-settings/<int:id>/delete", views.delete_usersettings_page, name="delete_usersettings"),
+    path("user-settings/<int:id>/delete", views.delete_user_page, name="admin_delete_user"),
 
     # Exportation
     path("export/", export.export_books_to_excel, name="admin_exportbooks"),

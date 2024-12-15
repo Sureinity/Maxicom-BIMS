@@ -359,10 +359,19 @@ def user_management_page(request):
 
 @never_cache
 @admin_required
-def delete_usersettings_page(request, id):
+def delete_user_page(request, id):
     user = get_object_or_404(User, id=id)
     if request.method == "POST":
         user.sys_status = 1
         user.save()
 
     return redirect("admin_usersettings")
+
+@never_cache
+@admin_required
+def admin_settings(request):
+    return render(request, "pages/settings_page.html")
+
+#def admin_edit_account(request):
+#    if request.method == "POST":
+
