@@ -10,7 +10,6 @@ from django.views.decorators.cache import cache_page
 from django.contrib.auth import authenticate, login
 
 from .models import Booklist, Inventory, InventoryHistory
-from .export import export_books_to_excel
 from apps.users.models import User
 from .decorators import admin_required
 from .filters import apply_book_filters

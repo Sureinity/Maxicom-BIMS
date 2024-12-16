@@ -14,7 +14,6 @@ urlpatterns = [
     path("settings/edit-account", views.admin_edit_account, name="admin_edit_account"),
     path("settings/edit-profile-picture", views.admin_edit_profile_picture, name="admin_edit_profile_picture"),
 
-    
     # listbooks_page CRUD
     path("list-books/create", views.create_listbooks_page, name="create_listbooks"),
     path("list-books/<int:id>/update", views.update_listbooks_page, name="update_listbooks"),
@@ -24,12 +23,12 @@ urlpatterns = [
     path("user-settings/<int:id>/delete", views.delete_user_page, name="admin_delete_user"),
 
     # Exportation
-    path("export/", export.export_books_to_excel, name="admin_exportbooks"),
+    path("export/list-of-acquisitions", export.export_listOfAcquisitions, name="export_list_of_acquisitions"),
+    path("export/no-barcode-tag", export.export_noBarcodeTag, name="export_no_barcode_tag"),
+    path("export/for-repair", export.export_forRepair, name="export_for_repair"),
+    path("export/for-disposal", export.export_forDisposal, name="export_for_disposal"),
+    path("export/not-found", export.export_notFound, name="export_not_found"),
 
     # Generate PDF report
-    path("print/", print.listbook_print, name="print_listbooks"),
-    path("print/no-barcode-tag", print.no_barcode_tag_print, name="no_barcode_tag_print"),
-    path("print/for-repair", print.for_repair_print, name="for_repair_print"),
-    path("print/for-disposal", print.for_disposal_print, name="for_disposal_print"),
-    path("print/<int:id>", print.bookDetails_print, name="print_bookDetails"), # For Book Details
+    path("pdf/<int:id>", print.pdf_bookDetails, name="pdf_bookDetails"), # For Book Details
 ]

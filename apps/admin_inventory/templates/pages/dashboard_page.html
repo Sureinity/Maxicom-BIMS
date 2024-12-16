@@ -73,30 +73,37 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form method="POST" action="{% url 'print_listbooks' %}">
+                                <form method="POST" action="{% url 'export_list_of_acquisitions' %}">
                                     {% csrf_token %}
                                     <div class="d-grid"><button type="submit" class="btn btn-outline-secondary mb-3">List of
                                             Acquisitions</button></div>
                                 </form>
-                                <form method="POST" action="{% url 'no_barcode_tag_print' %}">
+                                <form method="POST" action="{% url 'export_no_barcode_tag' %}">
                                     {% csrf_token %}
                                     <div class="d-grid">
                                         <input type="hidden" name="report_type" value="no_barcode_tag">
                                         <button type="submit" class="btn btn-outline-secondary mb-3">No Barcode Tag</button>
                                     </div>
                                 </form>
-                                <form method="POST" action="{% url 'for_repair_print' %}">
+                                <form method="POST" action="{% url 'export_for_repair' %}">
                                     {% csrf_token %}
                                     <div class="d-grid">
                                         <input type="hidden" name="report_type" value="for_repair">
                                         <button type="submit" class="btn btn-outline-secondary mb-3">For Repair</button>
                                     </div>
                                 </form>
-                                <form method="POST" action="{% url 'for_disposal_print' %}">
+                                <form method="POST" action="{% url 'export_for_disposal' %}">
                                     {% csrf_token %}
                                     <div class="d-grid">
                                         <input type="hidden" name="report_type" value="for_disposal">
-                                        <button type="submit" class="btn btn-outline-secondary">For Disposal</button>
+                                        <button type="submit" class="btn btn-outline-secondary mb-3">For Disposal</button>
+                                    </div>
+                                </form>
+                                 <form method="POST" action="{% url 'export_not_found' %}">
+                                    {% csrf_token %}
+                                    <div class="d-grid">
+                                        <input type="hidden" name="report_type" value="not_found">
+                                        <button type="submit" class="btn btn-outline-secondary">Not Found</button>
                                     </div>
                                 </form>
                             </div>
