@@ -271,7 +271,7 @@ def bookcollections_page(request):
     decimal_end = request.GET.get('item-decimal-end', '')
     year_start = request.GET.get('year-start', '')
     year_end = request.GET.get('year-end', '')
-    status_filter = request.GET.get('status', '')
+    status_filter = request.GET.get('status', 'found')
     
     # Start with all books and prefetch related inventory data
     base_queryset = Booklist.objects.prefetch_related('inventories').all()
