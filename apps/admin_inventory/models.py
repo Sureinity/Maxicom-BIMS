@@ -76,6 +76,7 @@ class InventoryHistory(models.Model):
     inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE, related_name="history")
     reviewed_by = models.ForeignKey(User, on_delete=models.CASCADE, db_column="h_reviewed_by")
     datetime_checked = models.DateTimeField(auto_now=True, db_column="h_datetime_checked")
+    remarks = models.CharField(max_length=60, blank=True, null=True, db_column="h_remarks")
     status = models.IntegerField(
         choices=Inventory.BOOK_STATUS_CHOICES,
         db_column="h_status"

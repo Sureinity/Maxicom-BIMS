@@ -27,6 +27,7 @@ urlpatterns = [
     path("export/no-barcode-tag", export.export_noBarcodeTag, name="export_no_barcode_tag"),
     path("export/for-repair", export.export_forRepair, name="export_for_repair"),
     path("export/for-disposal", export.export_forDisposal, name="export_for_disposal"),
+    path("export/found", export.export_Found, name="export_found"),
     path("export/not-found", export.export_notFound, name="export_not_found"),
 
     # Generate PDF report

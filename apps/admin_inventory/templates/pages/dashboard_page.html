@@ -99,6 +99,13 @@
                                         <button type="submit" class="btn btn-outline-secondary mb-3">For Disposal</button>
                                     </div>
                                 </form>
+                                <form method="POST" action="{% url 'export_found' %}">
+                                    {% csrf_token %}
+                                    <div class="d-grid">
+                                        <input type="hidden" name="report_type" value="found">
+                                        <button type="submit" class="btn btn-outline-secondary mb-3">Found</button>
+                                    </div>
+                                </form>
                                  <form method="POST" action="{% url 'export_not_found' %}">
                                     {% csrf_token %}
                                     <div class="d-grid">
