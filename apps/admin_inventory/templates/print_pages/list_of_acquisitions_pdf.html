@@ -112,10 +112,10 @@
                 <tr>
                     {% for book in data %}
                         <td>{{ book.barcode }}</td>
-                        <td style="width: 15rem;">{{ book.item_call_num }}</td>
-                        <td style="width: 20rem;">{{ book.title }}</td>
-                        <td>{{ book.author }}</td>
-                        <td style="width: 1px;">{{ book.isbn }}</td>
+                        <td style="max-width: 6px;">{{ book.item_call_num }}</td>
+                        <td style="width: 10px;">{{ book.title }}</td>
+                        <td style="max-width: 7px;">{{ book.author }}</td>
+                        <td style="width: 6px;">{{ book.isbn }}</td>
                         <td>{{ book.copy_num }}</td>
                         <td>{{ book.volume }}</td>
                         <td>{{ book.inventories.first.datetime_checked|date:"Y-m-d" }}</td>

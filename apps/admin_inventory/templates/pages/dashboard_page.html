@@ -68,28 +68,28 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Generate Report</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-file-lines"></i>&nbsp; &nbsp;Generate Report</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <form method="POST" action="{% url 'print_listbooks' %}">
                                     {% csrf_token %}
-                                    <div class="d-grid"><button type="submit" class="btn btn-outline-secondary">List of
+                                    <div class="d-grid"><button type="submit" class="btn btn-outline-secondary mb-3">List of
                                             Acquisitions</button></div>
                                 </form>
                                 <form method="POST" action="{% url 'no_barcode_tag_print' %}">
                                     {% csrf_token %}
                                     <div class="d-grid">
                                         <input type="hidden" name="report_type" value="no_barcode_tag">
-                                        <button type="submit" class="btn btn-outline-secondary">No Barcode Tag</button>
+                                        <button type="submit" class="btn btn-outline-secondary mb-3">No Barcode Tag</button>
                                     </div>
                                 </form>
                                 <form method="POST" action="{% url 'for_repair_print' %}">
                                     {% csrf_token %}
                                     <div class="d-grid">
                                         <input type="hidden" name="report_type" value="for_repair">
-                                        <button type="submit" class="btn btn-outline-secondary">For Repair</button>
+                                        <button type="submit" class="btn btn-outline-secondary mb-3">For Repair</button>
                                     </div>
                                 </form>
                                 <form method="POST" action="{% url 'for_disposal_print' %}">

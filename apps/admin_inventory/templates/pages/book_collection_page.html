@@ -74,7 +74,7 @@
                             {% endif %}
                             <input type="hidden" name="show" value="{{ request.GET.show|default:'10' }}">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                                name="search" value="{{ search_query }}">
+                                name="search" value="{{ search_query }}" autocomplete="off">
                             <button class="btn btn-outline-warning" type="submit">Search</button>
                         </form>
 
@@ -144,15 +144,9 @@
                         <li class="nav-item">
                             <a class="nav-link {% if not status_filter %}active text-dark{% else %}text-body{% endif %}"
                                 href="?{% if search_query %}search={{ search_query }}&{% endif %}{% if collection_filter %}book-collections={{ collection_filter }}&{% endif %}{% if decimal_start %}item-decimal-start={{ decimal_start }}&{% endif %}{% if decimal_end %}item-decimal-end={{ decimal_end }}&{% endif %}{% if year_start %}year-start={{ year_start }}&{% endif %}{% if year_end %}year-end={{ year_end }}&{% endif %}show={{ request.GET.show|default:'10' }}">
-                                All
-                                ({{ total_books }})
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if status_filter == 'found' %}active text-dark{% else %}text-body{% endif %}"
-                                href="?status=found{% if search_query %}&search={{ search_query }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}&show={{ request.GET.show|default:'10' }}">
                                 Found
                                 ({{ found_books }})
+                            </a>
                             </a>
                         </li>
                         <li class="nav-item">

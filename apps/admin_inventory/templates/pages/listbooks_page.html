@@ -74,7 +74,7 @@
                             {% endif %}
                             <input type="hidden" name="show" value="{{ request.GET.show|default:'10' }}">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                                name="search" value="{{ search_query }}">
+                                name="search" value="{{ search_query }}" autocomplete="off">
                             <button class="btn btn-outline-warning" type="submit">Search</button>
                         </form>
 
@@ -489,7 +489,7 @@
                                 <th scope="col" style="font-weight: 500;">Title</th>
                                 <th scope="col" style="font-weight: 500;">Author</th>
                                 <th scope="col" style="font-weight: 500;">Publisher</th>
-                                <th scope="col" style="font-weight: 500;">Barcode</th>
+                                <th scope="col" style="font-weight: 500;">Acc No.</th>
                                 <th scope="col" style="font-weight: 500;">ISBN</th>
                                 <th scope="col" style="font-weight: 500;">Copy No.</th>
                                 <th scope="col" style="font-weight: 500;">Volume</th>

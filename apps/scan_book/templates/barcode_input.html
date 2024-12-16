@@ -26,17 +26,15 @@
     <!--Navbar Area-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div class="container-fluid">
-            <div class="row d-flex grid">
-                <div class="col"><a href="#"> <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims"
-                            style="height: 3em; width: 3em;"></a>
-                </div>
-                <div class="col"><a href="#"> <img src="{% static 'users/assets/lic-logo.png' %}" alt="logo-bims"
-                            style="height: 3em; width: 3em;"></a>
-                </div>
-                <div class="col"><a href="#"> <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims"
-                            style="height: 3em; width: 12em;"></a>
-                </div>
-                <div class="col"></div>
+            <div class="row d-flex grid gap-2">
+                <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims" class="ms-3 p-0"
+                style="height: 3.5em; width: 3.5em;">
+  
+                <img src="{% static 'users/assets/lic-logo.png' %}" alt="logo-bims" class="p-0"
+                style="height: 3.5em; width: 3.5em;">
+        
+                <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims" class="p-0"
+                style="height: 3.5em; width: 14em;">
             </div>
 
 
@@ -97,14 +95,14 @@
                         {% csrf_token %}
                         <div class="p-3 m-2">
                             <label for="barcode-input" class="form-label mb-4">
-                                <h6>Enter acquisition number</h6>
+                                <h6>Enter Accessioned No.</h6>
                             </label>
                             <input type="text" class="form-control" id="barcode_manual" name="barcode_manual">
                             <div class="buttons d-flex justify-content-end gap-3 mt-4">
                                 <a href="{% url 'dashboard' %}">
                                     <button type="button" class="btn sec-btn">Go back</button>
                                 </a>
-                                <button type="submit" class="btn uni-btn">Check Book</button>
+                                <button type="submit" class="btn uni-btn text-light">Check Book</button>
                             </div>
                         </div>
                     </form>
