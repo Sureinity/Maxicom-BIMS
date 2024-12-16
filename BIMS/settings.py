@@ -32,8 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [config('ALLOWED_HOSTS')]
 
-SESSION_EXPIRE_AT_CLOSE = True
-#SESSION_COOKIE_AGE = 10
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 
 
@@ -41,7 +41,6 @@ SESSION_EXPIRE_AT_CLOSE = True
 
 INSTALLED_APPS = [
     'django_extensions',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

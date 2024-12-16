@@ -10,8 +10,6 @@ from django.views.decorators.cache import cache_page
 from django.contrib.auth import authenticate, login
 
 from .models import Booklist, Inventory, InventoryHistory
-from .export import export_books_to_excel
-from .forms import CreateBook
 from apps.users.models import User
 from .decorators import admin_required
 from .filters import apply_book_filters
@@ -264,7 +262,6 @@ def inventory_page(request):
 
 @never_cache
 @admin_required
-@cache_page(60 * 15)
 def bookcollections_page(request):
     # Fetch filter parameters from request
     search_query = request.GET.get('search', '')
@@ -273,7 +270,7 @@ def bookcollections_page(request):
     decimal_end = request.GET.get('item-decimal-end', '')
     year_start = request.GET.get('year-start', '')
     year_end = request.GET.get('year-end', '')
-    status_filter = request.GET.get('status', '')
+    status_filter = request.GET.get('status', 'found')
     
     # Start with all books and prefetch related inventory data
     base_queryset = Booklist.objects.prefetch_related('inventories').all()
@@ -366,7 +363,7 @@ def delete_user_page(request, id):
         user.sys_status = 1
         user.save()
 
-    return redirect("admin_usersettings")
+    return redirect("admin_manageuser")
 
 @never_cache
 @admin_required
@@ -383,28 +380,42 @@ def admin_edit_account(request):
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
 
+        # Case 1: Passwords do not match
         if password != password2:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({
                     'error': 'Passwords do not match.',
                     'messages': [{'message': m.message, 'tags': m.tags} for m in messages.get_messages(request)]
                 })
+
+        # Case 2: Both passwords are empty (no password update)
+        elif password == "" and password2 == "":
+            # Update user details without changing password
+            user = User.objects.get(id=request.user.id)
+            user.sys_firstname = firstname
+            user.sys_lastname = lastname
+            user.sys_username = username
+            user.save()
         else:
+            # Case 3: Update password and user details
             user = User.objects.get(id=request.user.id)
             user.sys_firstname = firstname
             user.sys_lastname = lastname
             user.sys_username = username
             user.set_password(password)
             user.save()
-            
-            userAuth = authenticate(request, username=username, password=password)
-            login(request, userAuth)
 
-            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                return JsonResponse({
-                    'success': True,
-                    'messages': [{'message': m.message, 'tags': m.tags} for m in messages.get_messages(request)]
-                })
+            userAuth = authenticate(request, username=username, password=password)
+            if userAuth:
+                login(request, userAuth)
+
+            print(f"Updated Password Hash: {user.password}")
+
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                'success': True,
+                'messages': [{'message': m.message, 'tags': m.tags} for m in messages.get_messages(request)]
+            })
 
         return redirect("admin_settings")
 

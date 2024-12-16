@@ -74,7 +74,7 @@
                             {% endif %}
                             <input type="hidden" name="show" value="{{ request.GET.show|default:'10' }}">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                                name="search" value="{{ search_query }}">
+                                name="search" value="{{ search_query }}" autocomplete="off">
                             <button class="btn btn-outline-warning" type="submit">Search</button>
                         </form>
 
@@ -97,13 +97,13 @@
                                         <div class="d-flex">
                                             <p class="m-0 me-2">Showing</p>
                                             <select class="show-select text-dark" name="rownum">
-                                                <option value="10" {% if request.GET.show=='10' %}selected{% endif %}>10
+                                                <option value="10" {% if request.GET.show == '10' %}selected{% endif %}>10
                                                 </option>
-                                                <option value="20" {% if request.GET.show=='20' %}selected{% endif %}>20
+                                                <option value="20" {% if request.GET.show == '20' %}selected{% endif %}>20
                                                 </option>
-                                                <option value="30" {% if request.GET.show=='30' %}selected{% endif %}>30
+                                                <option value="30" {% if request.GET.show == '30' %}selected{% endif %}>30
                                                 </option>
-                                                <option value="40" {% if request.GET.show=='40' %}selected{% endif %}>40
+                                                <option value="40" {% if request.GET.show == '40' %}selected{% endif %}>40
                                                 </option>
                                             </select>
                                         </div>
@@ -142,15 +142,8 @@
                     <!-- tabs -->
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link {% if not status_filter %}active text-dark{% else %}text-body{% endif %}"
+                            <a class="nav-link {% if status_filter == 'found' or not status_filter %}active text-dark{% else %}text-body{% endif %}"
                                 href="?{% if search_query %}search={{ search_query }}&{% endif %}{% if collection_filter %}book-collections={{ collection_filter }}&{% endif %}{% if decimal_start %}item-decimal-start={{ decimal_start }}&{% endif %}{% if decimal_end %}item-decimal-end={{ decimal_end }}&{% endif %}{% if year_start %}year-start={{ year_start }}&{% endif %}{% if year_end %}year-end={{ year_end }}&{% endif %}show={{ request.GET.show|default:'10' }}">
-                                All
-                                ({{ total_books }})
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if status_filter == 'found' %}active text-dark{% else %}text-body{% endif %}"
-                                href="?status=found{% if search_query %}&search={{ search_query }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}&show={{ request.GET.show|default:'10' }}">
                                 Found
                                 ({{ found_books }})
                             </a>
@@ -379,49 +372,11 @@
                                                     </div>
                                                 </span>
                                             </div>
-
-                                            <!-- 
-                                            <div class="details mt-4">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <p>Publisher</p>
-                                                        <p>Barcode</p>
-                                                        <p>Copyright</p>
-                                                        <p>ISBN</p>
-                                                        <p>Collection Code</p>
-                                                        <p>Itype</p>
-                                                        <p>Item Call Number</p>
-                                                        <p>Date Accessioned</p>
-                                                        <p>Copy Number</p>
-                                                        <p>Volume</p>
-                                                        <p>Edition Statement</p>
-                                                        <p>Paid For</p>
-                                                        <p>Price</p>
-                                                        <p>Book Seller</p>
-                                                    </div>
-                                                    <div class="col">
-                                                        <p>: {{ data.publisher_code }}</p>
-                                                        <p>: {{ data.barcode}}</p>
-                                                        <p>: {{ data.copyrightdate }}</p>
-                                                        <p>: {{ data.isbn }}</p>
-                                                        <p>: {{ data.col_code }}</p>
-                                                        <p>: {{ data.itype }}</p>
-                                                        <p>: {{ data.item_call_num }}</p>
-                                                        <p>: {{ data.date_accessioned }}</p>
-                                                        <p>: {{ data.copy_num }}</p>
-                                                        <p>: {{ data.volume }}</p>
-                                                        <p>: {{ data.edition_stmt }}</p>
-                                                        <p>: {{ data.paidfor }}</p>
-                                                        <p>: {{ data.price}}</p>
-                                                        <p>: {{ data.bookseller_id }}</p>
-                                                    </div>
-                                                </div>
-                                            </div> -->
                                         </div>
-                                        <!-- <div class="modal-footer">
+                                          <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Close</button>
-                                        </div> -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -439,23 +394,24 @@
                                 class="text-body">&laquo;</a>
                         </li>
                         {% endif %}
-
+                
                         {% for page_num in bookData.paginator.page_range %}
-                        {% if page_num >= current_page|add:'-2' and page_num <= current_page|add:'2' %} <li
-                            class="nav-item text-body">
-                            <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
-                                class="{% if page_num == current_page %}active text-dark{% else %} text-body{% endif %}">{{
-                                page_num }}</a>
+                            {% if page_num >= current_page|add:'-2' and page_num <= current_page|add:'2' %}
+                            <li class="nav-item text-body">
+                                <a href="?page={{ page_num }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
+                                   class="{% if page_num == current_page %}active text-dark{% else %} text-body{% endif %}">
+                                    {{ page_num }}
+                                </a>
                             </li>
                             {% endif %}
-                            {% endfor %}
-
-                            {% if bookData.has_next %}
-                            <li class="nav-item">
-                                <a href="?page={{ bookData.paginator.num_pages }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
-                                    class="text-body">&raquo;</a>
-                            </li>
-                            {% endif %}
+                        {% endfor %}
+                
+                        {% if bookData.has_next %}
+                        <li class="nav-item">
+                            <a href="?page={{ bookData.paginator.num_pages }}&show={{ request.GET.show|default:'10' }}&search={{ search_query }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if collection_filter %}&book-collections={{ collection_filter }}{% endif %}{% if decimal_start %}&item-decimal-start={{ decimal_start }}{% endif %}{% if decimal_end %}&item-decimal-end={{ decimal_end }}{% endif %}{% if year_start %}&year-start={{ year_start }}{% endif %}{% if year_end %}&year-end={{ year_end }}{% endif %}"
+                                class="text-body">&raquo;</a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </nav>
 
@@ -484,26 +440,16 @@
                                         <label for="book-collections" class="form-label mb-2">Select</label>
                                         <select class="form-select" name="book-collections">
                                             <option value="">All Collections</option>
-                                            <option value="DC" {% if collection_filter=='DC' %}selected{% endif %}>
-                                                Circulations</option>
-                                            <option value="DFIL" {% if collection_filter=='DFIL' %}selected{% endif %}>
-                                                Filipiniana</option>
-                                            <option value="DRES" {% if collection_filter=='DRES' %}selected{% endif %}>
-                                                Reserve</option>
-                                            <option value="DREF" {% if collection_filter=='DREF' %}selected{% endif %}>
-                                                General References</option>
-                                            <option value="DFIC" {% if collection_filter=='DFIC' %}selected{% endif %}>
-                                                Fictions</option>
-                                            <option value="PER" {% if collection_filter=='PER' %}selected{% endif %}>
-                                                Bound Periodicals</option>
-                                            <option value="UR" {% if collection_filter=='UR' %}selected{% endif %}>
-                                                Undergraduate Thesis</option>
-                                            <option value="BK" {% if collection_filter=='BK' %}selected{% endif %}>K-12
-                                            </option>
-                                            <option value="AV-CD" {% if collection_filter=='AV-CD' %}selected{% endif
-                                                %}>AV CDs</option>
-                                            <option value="AV-DVD" {% if collection_filter=='AV-DVD' %}selected{% endif
-                                                %}>AV DVDs</option>
+                                            <option value="DC" {% if collection_filter == 'DC' %}selected{% endif %}>Circulations</option>
+                                            <option value="DFIL" {% if collection_filter == 'DFIL' %}selected{% endif %}>Filipiniana</option>
+                                            <option value="DRES" {% if collection_filter == 'DRES' %}selected{% endif %}>Reserve</option>
+                                            <option value="DREF" {% if collection_filter == 'DREF' %}selected{% endif %}>General References</option>
+                                            <option value="DFIC" {% if collection_filter == 'DFIC' %}selected{% endif %}>Fictions</option>
+                                            <option value="PER" {% if collection_filter == 'PER' %}selected{% endif %}>Bound Periodicals</option>
+                                            <option value="UR" {% if collection_filter == 'UR' %}selected{% endif %}>Undergraduate Thesis</option>
+                                            <option value="BK" {% if collection_filter == 'BK' %}selected{% endif %}>K-12</option>
+                                            <option value="AV-CD" {% if collection_filter == 'AV-CD' %}selected{% endif %}>AV CDs</option>
+                                            <option value="AV-DVD" {% if collection_filter == 'AV-DVD' %}selected{% endif %}>AV DVDs</option>
                                         </select>
                                     </div>
                                 </div>
@@ -636,22 +582,14 @@
                                         <label for="book-collections" class="form-label mb-2">Book Collections</label>
                                         <select class="form-select" name="book-collections">
                                             <option value="">All Collections</option>
-                                            <option value="DC" {% if collection_filter=='DC' %}selected{% endif %}>
-                                                Circulations</option>
-                                            <option value="DFIL" {% if collection_filter=='DFIL' %}selected{% endif %}>
-                                                Filipiniana</option>
-                                            <option value="DREF" {% if collection_filter=='DREF' %}selected{% endif %}>
-                                                General References</option>
-                                            <option value="DFIC" {% if collection_filter=='DFIC' %}selected{% endif %}>
-                                                Fictions</option>
-                                            <option value="PER" {% if collection_filter=='PER' %}selected{% endif %}>
-                                                Bound Periodicals</option>
-                                            <option value="UR" {% if collection_filter=='UR' %}selected{% endif %}>
-                                                Undergraduate Thesis</option>
-                                            <option value="AV-CD" {% if collection_filter=='AV-CD' %}selected{% endif
-                                                %}>AV CDs</option>
-                                            <option value="AV-DVD" {% if collection_filter=='AV-DVD' %}selected{% endif
-                                                %}>AV DVDs</option>
+                                            <option value="DC" {% if collection_filter == 'DC' %}selected{% endif %}>Circulations</option>
+                                            <option value="DFIL" {% if collection_filter == 'DFIL' %}selected{% endif %}>Filipiniana</option>
+                                            <option value="DREF" {% if collection_filter == 'DREF' %}selected{% endif %}>General References</option>
+                                            <option value="DFIC" {% if collection_filter == 'DFIC' %}selected{% endif %}>Fictions</option>
+                                            <option value="PER" {% if collection_filter == 'PER' %}selected{% endif %}>Bound Periodicals</option>
+                                            <option value="UR" {% if collection_filter == 'UR' %}selected{% endif %}>Undergraduate Thesis</option>
+                                            <option value="AV-CD" {% if collection_filter == 'AV-CD' %}selected{% endif %}>AV CDs</option>
+                                            <option value="AV-DVD" {% if collection_filter == 'AV-DVD' %}selected{% endif %}>AV DVDs</option>
                                         </select>
                                     </div>
 

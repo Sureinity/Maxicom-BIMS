@@ -28,16 +28,15 @@
     <!--Navbar Area-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div class="container-fluid">
-            <div class="row d-flex grid">
-                <div class="col"><a href="#"> <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims"
-                            style="height: 3em; width: 3em;"></a>
-                </div>
-                <div class="col"><a href="#"> <img src="{% static 'users/assets/lic-logo.png' %}" alt="logo-bims"
-                            style="height: 3em; width: 3em;"></a>
-                </div>
-                <div class="col"><a href="#"> <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims"
-                            style="height: 3em; width: 12em;"></a>
-                </div>
+            <div class="row d-flex grid gap-2">
+                <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims" class="ms-3 p-0"
+                style="height: 3.5em; width: 3.5em;">
+  
+                <img src="{% static 'users/assets/lic-logo.png' %}" alt="logo-bims" class="p-0"
+                style="height: 3.5em; width: 3.5em;">
+        
+                <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims" class="p-0"
+                style="height: 3.5em; width: 14em;">
             </div>
 
 
@@ -163,7 +162,7 @@
                                         {% endif %}
                                         <button type="button" class="btn sec-btn">Go back</button>
                                     </a>
-                                    <button type="submit" class="btn uni-btn" data-bs-toggle="modal"
+                                    <button type="submit" class="btn uni-btn text-light" data-bs-toggle="modal"
                                         data-bs-target="#successmsg">Submit</button>
                             </div>
                         </form>

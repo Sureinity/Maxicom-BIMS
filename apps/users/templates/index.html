@@ -29,19 +29,15 @@
   <!--Navbar Area-->
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container-fluid">
-      <div class="row d-flex grid">
-        <div class="col"><a href="#"> <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims"
-              style="height: 3em; width: 3em;"></a>
-        </div>
+      <div class="row d-flex grid gap-2">
+        <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims" class="ms-3 p-0"
+              style="height: 3.5em; width: 3.5em;">
 
-        <div class="col"><a href="#"> <img src="{% static 'users/assets/lic-logo.png' %}" alt="logo-bims"
-              style="height: 3em; width: 3em;"></a>
-        </div>
+        <img src="{% static 'users/assets/lic-logo.png' %}" alt="logo-bims" class="p-0"
+        style="height: 3.5em; width: 3.5em;">
 
-        <div class="col"><a href="#"> <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims"
-              style="height: 3em; width: 12em;"></a>
-        </div>
-
+        <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims" class="p-0"
+        style="height: 3.5em; width: 14em;">
       </div>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -66,8 +62,7 @@
             </a>
             <a class="nav-link" href="#">About BMIS</a>
             <a class="nav-link" href="{% url 'signup'%}">
-              <button type="button" class="btn btn-outline-secondary px-4"><i class="fa-solid fa-right-to-bracket"></i>
-                &nbsp; Sign Up</button>
+              <button type="button" class="btn btn-outline-secondary px-4">Sign Up</button>
             </a>
           </div>
         </div>
@@ -90,7 +85,7 @@
               <h4 class="text-center mt-2 mb-5">LOGIN</h2>
                 <div class="mb-4">
                   <label for="username" class="form-label">Username</label>
-                  <input type="text" class="form-control" id="username" name="username" required>
+                  <input type="text" class="form-control" id="username" name="username" required autocomplete="off"> 
                 </div>
                 <div class="mb-4">
                   <label for="password" class="form-label">Password</label>

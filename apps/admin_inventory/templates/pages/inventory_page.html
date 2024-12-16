@@ -54,7 +54,7 @@
 
                         <form method="GET" class="d-flex">
                             <input class="form-control me-2" type="search" placeholder="Search" style="width: 15rem;"
-                            aria-label="Search" name="search" value="{{ search_query }}" >
+                            aria-label="Search" name="search" value="{{ search_query }}" autocomplete="off">
                             <button class="btn btn-outline-warning" type="submit">Search</button>
                         </form> 
 
@@ -434,9 +434,11 @@
         }
         window.location.search = urlParams.toString();
     });
-
+</script>
+<script>
     const hamBurger = document.querySelector(".toggle-btn");
-    hamBurger.addEventListener("click", function() {
+
+    hamBurger.addEventListener("click", function () {
         document.querySelector("#sidebar").classList.toggle("expand");
     });
 </script>

@@ -28,15 +28,15 @@
   <!--Navbar Area-->
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container-fluid">
-      <div class="row d-flex grid">
-        <div class="col"><a href="#"> <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims"
-              style="height: 3em; width: 3em;"></a>
-        </div>
-        <div class="col"><a href="#"> <img src="{% static 'users/assets/lic-logo.png' %}" alt="logo-bims"
-              style="height: 3em; width: 3em;"></a>
-        </div>
-        <div class="col"><a href="#"> <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims"
-              style="height: 3em; width: 12em;"></a>
+      <div class="row d-flex grid gap-2">
+        <img src="{% static 'users/assets/um-logo.png' %}" alt="logo-bims" class="ms-3 p-0"
+        style="height: 3.5em; width: 3.5em;">
+
+        <img src="{% static 'users/assets/lic-logo.png' %}" alt="logo-bims" class="p-0"
+        style="height: 3.5em; width: 3.5em;">
+
+        <img src="{% static 'users/assets/logo-bims-red.png' %}" alt="logo-bims" class="p-0"
+        style="height: 3.5em; width: 14em;">
         </div>
 
 
@@ -62,8 +62,7 @@
               </a>
               <a class="nav-link" href="#">About BMIS</a>
               <a class="nav-link" href="{% url 'login' %}">
-                <button type="button" class="btn btn-outline-secondary px-4">
-                  <i class="fa-solid fa-right-to-bracket"></i> &nbsp; Login</button>
+                <button type="button" class="btn btn-outline-secondary px-4">&nbsp;Login&nbsp;</button>
               </a>
             </div>
           </div>
@@ -89,7 +88,7 @@
                     <div class="col-md-6">
                       <div class="mb-4">
                         <label for="sys_firstname" class="form-label">First name</label>
-                        <input type="text" class="form-control" id="sys_firstname" name="sys_firstname" required>
+                        <input type="text" class="form-control" id="sys_firstname" name="sys_firstname" required autocomplete="off">
                       </div>
                       {% if form.sys_firstname.errors %}
                       <div class="mt-2 text-danger">{{ form.sys_firstname.errors }}</div>
@@ -98,7 +97,7 @@
                     <div class="col-md-6">
                       <div class="mb-4">
                         <label for="lastname" class="form-label">Last name</label>
-                        <input type="text" class="form-control" id="sys_lastname" name="sys_lastname" required>
+                        <input type="text" class="form-control" id="sys_lastname" name="sys_lastname" required autocomplete="off">
                       </div>
                       {% if form.sys_lastname.errors %}
                       <div class="mt-2 text-danger">{{ form.sys_lastname.errors }}</div>
@@ -109,7 +108,7 @@
                 </div>
                 <div class="mb-4">
                   <label for="username" class="form-label">Username</label>
-                  <input type="text" class="form-control" id="username" name="username" required>
+                  <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
                 </div>
                 {% if form.username.errors %}
                 <div class="mt-2 text-danger">{{ form.username.errors }}</div>
