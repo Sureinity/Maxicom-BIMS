@@ -77,7 +77,7 @@
             <div class="card" style="width: 40rem;">
                 <div class="card-body">
                     <h5 class="p-3 m-1 mb-3 text-center">Book Details</h5>
-                    <form action="{% url 'input_submit_status' %}" method="POST">
+                    <form action="{% url 'scanner_submit_status' %}" method="POST">
                         <div class="p-3 m-1">
                             <label for="barcode" class="form-label mb-2">
                                 Barcode
@@ -141,7 +141,7 @@
                                 <label for="yearpub" class="form-label mb-2">
                                     Remarks
                                 </label>
-                                <textarea name="the-textarea" id="the-textarea" type="text" class="form-control"
+                                <textarea name="remarks" id="the-textarea" type="text" class="form-control"
                                     style="resize: none; height: 70px;" maxlength="100"></textarea>
                                 <div class="d-flex justify-content-end">
                                     <div id="the-count">

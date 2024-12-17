@@ -90,6 +90,7 @@ def submit_status(request):
         user = request.user
         bookState = int(request.POST.get("bookstate"))
         barcode = request.POST.get("barcode")
+        remarks = request.POST.get("remarks")
         book = Booklist.objects.get(barcode=barcode)
 
         try:
@@ -99,8 +100,8 @@ def submit_status(request):
         except Inventory.DoesNotExist:
             inventory = Inventory.objects.create(book=book, status=bookState)
 
-        InventoryHistory.objects.create(inventory=inventory, reviewed_by=user, status=bookState)
-
+        InventoryHistory.objects.create(inventory=inventory, reviewed_by=user, status=bookState, remarks=remarks)
+        print(request.path)
         if request.path == '/barcode-input/input/book-details/submit/':
             return redirect("barcode_input")
         else:

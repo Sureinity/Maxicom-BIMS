@@ -55,8 +55,7 @@
                     <div class="navbar-nav gap-4 d-flex align-items-center">
                         <a class="nav-link" href="#">
                             <div class="form-check form-switch">
-                                <input class="form-check-input theme-switch" type="checkbox" role="switch"
-                                    id="switch-check">
+                                <input class="form-check-input theme-switch" type="checkbox" role="switch" id="switch-check">
                                 <label class="form-check-label" for="switch-check"></label>
                             </div>
                         </a>
@@ -97,7 +96,7 @@
                             <label for="barcode-input" class="form-label mb-4">
                                 <h6>Enter Accessioned No.</h6>
                             </label>
-                            <input type="text" class="form-control" id="barcode_manual" name="barcode_manual">
+                            <input type="text" class="form-control" id="barcode_manual" name="barcode_manual" autocomplete="off">
                             <div class="buttons d-flex justify-content-end gap-3 mt-4">
                                 <a href="{% url 'dashboard' %}">
                                     <button type="button" class="btn sec-btn">Go back</button>

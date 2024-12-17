@@ -72,9 +72,31 @@
             50% { transform: translateY(40vh); }
             100% { transform: translateY(-40vh); }
         }
+
+        /* Back Button Style */
+        #back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 4;
+        }
+
+        #back-button:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
     </style>
 </head>
 <body>
+    <!-- Back Button -->
+    <button id="back-button" onclick="window.location.href='/barcode-input/dashboard/'">&#8592; Back</button>
+
     <div id="interactive" class="viewport">
         <div class="scanner-laser"></div>
     </div>
