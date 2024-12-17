@@ -117,7 +117,6 @@
                                 <th scope="col" style="font-weight: 500;">C-Code</th>
                                 <th scope="col" style="font-weight: 500;">Title</th>
                                 <th scope="col" style="font-weight: 500;">Author</th>
-                                <th scope="col" style="font-weight: 500;">Reviewed By</th>
                                 <th scope="col" style="font-weight: 500;">Checked at</th>
                                 <th scope="col" style="font-weight: 500;">Status</th>
                             </tr>
@@ -129,13 +128,12 @@
                                 <th scope="row">{{ item.book.col_code }}</th>
                                 <td class="text-truncate" style="max-width: 150px;">{{ item.book.title }}</td>
                                 <td class="text-truncate" style="max-width: 150px;">{{ item.book.author }}</td>
-                                <td class="text-truncate" style="max-width: 150px;">{{ item.reviewed_by }}</td>
                                 <td class="text-truncate" style="max-width: 150px;">{{ item.datetime_checked|date:"Y-m-d" }}</td>
                                 <td class="text-truncate" style="max-width: 150px;">
                                     {% if item.status == 1 %}
                                         <p class="badge text-bg-success">Good Condition</p>
                                     {% elif item.status == 2 %}
-                                        <p class="badge text-bg-warning">No Barcode Tag</p>
+                                        <p class="badge text-bg-primary">No Barcode Tag</p>
                                     {% elif item.status == 3 %}
                                         <p class="badge text-bg-warning">For Repair</p>
                                     {% elif item.status == 4 %}
@@ -203,7 +201,7 @@
 
                                             <div class="barcode">
                                                 <span class="d-flex">
-                                                    <p>Barcode: </p>&nbsp;
+                                                    <p>Accessioned No.: </p>&nbsp;
                                                     <div class="barcode-value">
                                                         <p>{{ item.book.barcode }}</p>
                                                     </div>
@@ -333,27 +331,31 @@
                                             <th scope="col" style="font-weight: 500;">Reviewed By</th>
                                             <th scope="col" style="font-weight: 500;">Checked at</th>
                                             <th scope="col" style="font-weight: 500;">Status</th>
+                                            <th scope="col" style="font-weight: 500;">Remarks</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for history in item.history.all %}
                                         <tr>
-                                            <td class="text-truncate" style="max-width: 150px;">
+                                            <td class="text-truncate" style="max-width: 100px;">
                                                 {{ history.reviewed_by.sys_firstname }} {{ history.reviewed_by.sys_lastname }}
                                             </td>
-                                            <td class="text-truncate" style="max-width: 150px;">
+                                            <td class="text-truncate" style="max-width: 100px;">
                                                 {{ history.datetime_checked|date:"Y-m-d" }}
                                             </td>
-                                            <td class="text-truncate" style="max-width: 150px;">
+                                            <td class="text-truncate" style="max-width: 100px;">
                                                 {% if history.status == 1 %}
                                                     <p class="badge text-bg-success">Good Condition</p>
                                                 {% elif history.status == 2 %}
-                                                    <p class="badge text-bg-warning">No Barcode Tag</p>
+                                                    <p class="badge text-bg-primary">No Barcode Tag</p>
                                                 {% elif history.status == 3 %}
                                                     <p class="badge text-bg-warning">For Repair</p>
                                                 {% elif history.status == 4 %}
                                                     <p class="badge text-bg-danger">For Disposal</p>
                                                 {% endif %}
+                                            </td>
+                                            <td class="text-wrap" style="max-width: 160px;">
+                                                {{ history.remarks }}
                                             </td>
                                         </tr>
                                         {% endfor %}
