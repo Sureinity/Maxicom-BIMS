@@ -1,6 +1,6 @@
 import openpyxl
 from django.http import HttpResponse
-from apps.admin_inventory.models import Booklist, Inventory
+from apps.admin_inventory.models import Booklist, Inventory, InventoryHistory
 
 def export_listOfAcquisitions(request):
     workbook = openpyxl.Workbook()
@@ -59,16 +59,21 @@ def export_noBarcodeTag(request):
         "itemcallnumber", "ccode", "itype", "title", "subtitle", 
         "author", "copyrightdate", "publishercode", "barcode", 
         "isbn", "dateaccessioned", "copynumber", "volume", 
-        "editionstatement", "paidfor", "price", "booksellerid",
+        "editionstatement", "paidfor", "price", "booksellerid", "remarks"
     ]
     sheet.append(headers)
 
     books = Booklist.objects.filter(inventories__status=Inventory.NO_BARCODE_TAG)
 
     for book in books:
-        book_statuses = Inventory.objects.filter(book=book)
-        book_status = book_statuses.first().status if book_statuses.exists() else 'Unknown'
+        inventory = book.inventories.filter(status=Inventory.NO_BARCODE_TAG).first()
+
+        remark = None
+        if inventory:
+            history = inventory.history.order_by('-datetime_checked').first()
+            remark = history.remarks if history else None
         
+        # Append data to the sheet
         sheet.append([
             book.item_call_num,   # itemcallnumber
             book.col_code,        # ccode
@@ -87,6 +92,7 @@ def export_noBarcodeTag(request):
             book.paidfor,         # paidfor
             book.price,           # price
             book.bookseller_id,   # booksellerid
+            remark,               # remarks
         ])
 
     # Response headers for downloading the file
@@ -95,6 +101,7 @@ def export_noBarcodeTag(request):
 
     workbook.save(response)
     return response
+
 
 def export_forRepair(request):
     workbook = openpyxl.Workbook()
@@ -105,13 +112,19 @@ def export_forRepair(request):
         "itemcallnumber", "ccode", "itype", "title", "subtitle", 
         "author", "copyrightdate", "publishercode", "barcode", 
         "isbn", "dateaccessioned", "copynumber", "volume", 
-        "editionstatement", "paidfor", "price", "booksellerid",
+        "editionstatement", "paidfor", "price", "booksellerid", "remarks"
     ]
     sheet.append(headers)
 
     books = Booklist.objects.filter(inventories__status=Inventory.FOR_REPAIR)
 
     for book in books:
+        inventory = book.inventories.filter(status=Inventory.FOR_REPAIR).first()
+        remark = None
+        if inventory:
+            history = inventory.history.order_by('-datetime_checked').first()
+            remark = history.remarks if history else None
+
         sheet.append([
             book.item_call_num,   # itemcallnumber
             book.col_code,        # ccode
@@ -130,6 +143,7 @@ def export_forRepair(request):
             book.paidfor,         # paidfor
             book.price,           # price
             book.bookseller_id,   # booksellerid
+            remark,               # remarks
         ])
 
     # Response headers for downloading the file
@@ -148,13 +162,19 @@ def export_forDisposal(request):
         "itemcallnumber", "ccode", "itype", "title", "subtitle", 
         "author", "copyrightdate", "publishercode", "barcode", 
         "isbn", "dateaccessioned", "copynumber", "volume", 
-        "editionstatement", "paidfor", "price", "booksellerid",
+        "editionstatement", "paidfor", "price", "booksellerid", "remarks"
     ]
     sheet.append(headers)
 
     books = Booklist.objects.filter(inventories__status=Inventory.FOR_DISPOSAL)
 
     for book in books:
+        inventory = book.inventories.filter(status=Inventory.FOR_DISPOSAL).first()
+        remark = None
+        if inventory:
+            history = inventory.history.order_by('-datetime_checked').first()
+            remark = history.remarks if history else None
+
         sheet.append([
             book.item_call_num,   # itemcallnumber
             book.col_code,        # ccode
@@ -173,6 +193,7 @@ def export_forDisposal(request):
             book.paidfor,         # paidfor
             book.price,           # price
             book.bookseller_id,   # booksellerid
+            remark,               # remarks
         ])
 
     # Response headers for downloading the file
