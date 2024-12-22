@@ -45,6 +45,8 @@ class Booklist(models.Model):
                     self.decimal_part = float(parts[1])
                 except ValueError:
                     self.decimal_part = None
+        if self.isbn:
+            self.isbn = ''.join(filter(str.isdigit, self.isbn))
         super().save(*args, **kwargs)
         
 class Inventory(models.Model):
