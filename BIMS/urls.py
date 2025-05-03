@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', include("apps.admin_inventory.urls")),
     path("", include("apps.users.urls")),
+    path("api/", include("apps.admin_inventory.api.urls")),
     path("barcode-input/", include("apps.scan_book.urls")),
 ]
 
