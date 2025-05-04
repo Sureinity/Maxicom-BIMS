@@ -2,8 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
-from .serializer import BookQuerySerializer
-from ..models import Booklist
+from .serializer import BookQuerySerializer,  BookFoundAndNotFoundSerializer
+from ..models import Booklist, Inventory
 
 @api_view(['GET'])
 def book_query(request):
@@ -20,5 +20,27 @@ def book_query(request):
             Q(itype__icontains=search_query) |
             Q(isbn__icontains=search_query)
         )
+        print(data)
         serializer = BookQuerySerializer(data, many=True)
         return Response(serializer.data)
+
+
+INVENTORY_STATUS = [
+    Inventory.GOOD_CONDITION,
+    Inventory.NO_BARCODE_TAG,
+    Inventory.FOR_REPAIR,
+    Inventory.FOR_DISPOSAL,
+    Inventory.NOT_FOUND,
+]
+
+@api_view(['GET'])
+def book_not_found(request):
+    data = Inventory.objects.all().filter(status=Inventory.NOT_FOUND)
+    serializer = BookFoundAndNotFoundSerializer(data, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def book_found(request):
+    data = Inventory.objects.all().filter(status__in=INVENTORY_STATUS)
+    serializer = BookFoundAndNotFoundSerializer(data, many=True)
+    return Response(serializer.data)
